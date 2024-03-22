@@ -38,7 +38,7 @@ WITH Original AS
 GroupHeader AS
 (
   SELECT
-    ROW_NUMBER() OVER (ORDER BY OliId) - 1 AS GroupNum,
+    ROW_NUMBER() OVER (ORDER BY OhiId) - 1 AS GroupNum,
     OhiId
   FROM Original
   WHERE OhiId <> ''
@@ -64,7 +64,8 @@ DataSource AS
     OrderedQuantity,
     InvoiceToOrgCode,
     ErrorMessage,
-    SalesTableOIFRecId
+    SalesTableOIFRecId,
+    Original.GroupNum -- 保留原始的 GroupNum 列
   FROM Original
   LEFT JOIN GroupHeader ON Original.GroupNum = GroupHeader.GroupNum
 )
