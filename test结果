@@ -35,11 +35,27 @@ WITH Original AS
     DENSE_RANK() OVER (ORDER BY OrderSource, CustomerPoNumber) AS GroupNum
   FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
+EmptyHeader AS
+(
+  SELECT
+    OhiId,
+    ROW_NUMBER() OVER (ORDER BY OliId) GroupNum
+  FROM Original
+  WHERE OhiId = ''
+),
 GroupHeader AS
 (
   SELECT
-    ROW_NUMBER() OVER (ORDER BY OhiId) - 1 AS GroupNum,
-    OhiId
+    OhiId,
+    GroupNum
+  FROM EmptyHeader
+  WHERE GroupNum <= ISNULL((SELECT MAX(GroupNum) FROM Original WHERE OhiId = ''), 0)
+ 
+  UNION
+ 
+  SELECT
+    OhiId,
+    ROW_NUMBER() OVER (ORDER BY OliId) + ISNULL((SELECT MAX(GroupNum) FROM Original WHERE OhiId = ''), 0) GroupNum
   FROM Original
   WHERE OhiId <> ''
 ),
@@ -48,7 +64,7 @@ DataSource AS
   SELECT
     InterfaceId,
     ErrorClassification,
-    COALESCE(GroupHeader.OhiId, '') AS OhiId,
+    GroupHeader.OhiId AS OhiId,
     Status,
     OrigSysDocumentRef,
     OrderSource,
@@ -64,10 +80,8 @@ DataSource AS
     OrderedQuantity,
     InvoiceToOrgCode,
     ErrorMessage,
-    SalesTableOIFRecId,
-    Original.GroupNum -- 保留原始的 GroupNum 列
-  FROM Original
-  LEFT JOIN GroupHeader ON Original.GroupNum = GroupHeader.GroupNum
+    SalesTableOIFRecId
+  FROM Original LEFT JOIN GroupHeader ON GroupHeader.GroupNum = Original.GroupNum
 )
 SELECT
   CustomerNumber,
@@ -89,4 +103,4 @@ SELECT
   ShipmentPriorityCode,
   SalesTableOIFRecId,
   Status
-FROM DataSource;
+FROM DataSource
