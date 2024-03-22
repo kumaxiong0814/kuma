@@ -71,7 +71,7 @@ SELECT
     InterfaceId,
     InventoryItemSegment1,
     InvoiceToOrgCode,
-    IIF(RowNum = 1, MinOhiId, MinOhiId + RowNum - 1) AS OhiId,
+    IIF(RowNum = 1, MinOhiId, CONCAT(MinOhiId, RowNum - 1)) AS OhiId,
     OliId,
     OrderSource,
     OrderedQuantity,
