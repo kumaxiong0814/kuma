@@ -3,7 +3,7 @@ WITH Original AS
   SELECT
     '0174' AS InterfaceId,
     '0' AS ErrorClassification,
-    IIF(
+     IIF(
       ISNULL(OrderSource, '') = '',
       OrderSource,
       CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
@@ -35,33 +35,16 @@ WITH Original AS
   FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
 GroupedDataSource AS (
-  SELECT 
+ SELECT 
     *,
     ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS RowNum
   FROM Original
 ),
 HeaderIDGroupDataSource AS (
-  SELECT 
-    InterfaceId,
-    ErrorClassification,
-    MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber) AS MinOhiId,
-    Status,
-    OrigSysDocumentRef,
-    OrderSource,
-    CustomerPoNumber,
-    CustomerNumber,
-    ShipmentPriorityCode,
-    ShipToOrgCode,
-    OrganizationCode,
-    OliId,
-    SecondaryInventoryName,
-    OrigSysLineRef,
-    InventoryItemSegment1,
-    OrderedQuantity,
-    InvoiceToOrgCode,
-    ErrorMessage,
-    SalesTableOIFRecId
-  FROM GroupedDataSource
+ SELECT 
+      *,
+      MIN(RowNum) OVER (PARTITION BY OrderSource, CustomerPoNumber) AS MinRowNum
+ FROM GroupedDataSource
 )
 SELECT
     CustomerNumber,
@@ -71,7 +54,7 @@ SELECT
     InterfaceId,
     InventoryItemSegment1,
     InvoiceToOrgCode,
-    IIF(RowNum = 1, MinOhiId, CONCAT(MinOhiId, RowNum - 1)) AS OhiId,
+    IIF(ISNULL(OrderSource, ''), OrderSource, CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))) AS OhiId,
     OliId,
     OrderSource,
     OrderedQuantity,
