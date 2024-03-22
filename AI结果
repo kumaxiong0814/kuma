@@ -3,7 +3,7 @@ WITH Original AS
   SELECT
     '0174' AS InterfaceId,
     '0' AS ErrorClassification,
-    IIF(
+     IIF(
       ISNULL(OrderSource, '') = '',
       OrderSource,
       CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
@@ -37,7 +37,7 @@ WITH Original AS
 GroupedDataSource AS (
   SELECT 
     *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS GroupRowNumber
+    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS RowNum
   FROM Original
 ),
 HeaderIDGroupDataSource AS (
@@ -45,8 +45,8 @@ HeaderIDGroupDataSource AS (
     InterfaceId,
     ErrorClassification,
     CASE 
-      WHEN GroupRowNumber = 1 THEN MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber)
-      ELSE MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber) + GroupRowNumber - 1
+      WHEN RowNum = 1 THEN MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber)
+      ELSE MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber) + (RowNum - 1)
     END AS OhiId,
     Status,
     OrigSysDocumentRef,
@@ -67,23 +67,23 @@ HeaderIDGroupDataSource AS (
   FROM GroupedDataSource
 )
 SELECT
-  CustomerNumber,
-  CustomerPoNumber,
-  ErrorClassification,
-  ErrorMessage,
-  InterfaceId,
-  InventoryItemSegment1,
-  InvoiceToOrgCode,
-  OhiId,
-  OliId,
-  OrderSource,
-  OrderedQuantity,
-  OrganizationCode,
-  OrigSysDocumentRef,
-  OrigSysLineRef,
-  SecondaryInventoryName,
-  ShipToOrgCode,
-  ShipmentPriorityCode,
-  SalesTableOIFRecId,
-  Status
-FROM HeaderIDGroupDataSource
+    CustomerNumber,
+    CustomerPoNumber,
+    ErrorClassification,
+    ErrorMessage,
+    InterfaceId,
+    InventoryItemSegment1,
+    InvoiceToOrgCode,
+    OhiId,
+    OliId,
+    OrderSource,
+    OrderedQuantity,
+    OrganizationCode,
+    OrigSysDocumentRef,
+    OrigSysLineRef,
+    SecondaryInventoryName,
+    ShipToOrgCode,
+    ShipmentPriorityCode,
+    SalesTableOIFRecId,
+    Status
+FROM HeaderIDGroupDataSource;
