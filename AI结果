@@ -31,40 +31,76 @@ WITH Original AS
     OrderedQuantity,
     InvoiceToOrgCode,
     '' As ErrorMessage,
-    '' AS SalesTableOIFRecId
+    '' AS SalesTableOIFRecId,
+    DENSE_RANK() OVER (ORDER BY OrderSource, CustomerPoNumber) AS GroupNum
   FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
-GroupedDataSource AS (
- SELECT 
-    *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS RowNum,
-    ROW_NUMBER() OVER (ORDER BY OrderSource, CustomerPoNumber, OrigSysLineRef) AS OhiIdRowNum
+EmptyHeader AS
+(
+  SELECT
+    OhiId,
+    ROW_NUMBER() OVER (ORDER BY OliId) GroupNum
   FROM Original
+  WHERE OhiId = ''
 ),
-HeaderIDGroupDataSource AS (
- SELECT 
-      *,
-      MIN(RowNum) OVER (PARTITION BY OrderSource, CustomerPoNumber) AS MinRowNum
- FROM GroupedDataSource
+GroupHeader AS
+(
+  SELECT
+    OhiId,
+    GroupNum
+  FROM EmptyHeader
+  WHERE GroupNum <= ISNULL((SELECT MAX(GroupNum) FROM Original WHERE OhiId = ''), 0)
+ 
+  UNION
+ 
+  SELECT
+    OhiId,
+    ROW_NUMBER() OVER (ORDER BY OliId) + ISNULL((SELECT MAX(GroupNum) FROM Original WHERE OhiId = ''), 0) GroupNum
+  FROM Original
+  WHERE OhiId <> ''
+),
+DataSource AS
+(
+  SELECT
+    InterfaceId,
+    ErrorClassification,
+    GroupHeader.OhiId AS OhiId,
+    Status,
+    OrigSysDocumentRef,
+    OrderSource,
+    CustomerPoNumber,
+    CustomerNumber,
+    ShipmentPriorityCode,
+    ShipToOrgCode,
+    OrganizationCode,
+    OliId,
+    SecondaryInventoryName,
+    OrigSysLineRef,
+    InventoryItemSegment1,
+    OrderedQuantity,
+    InvoiceToOrgCode,
+    ErrorMessage,
+    SalesTableOIFRecId
+  FROM Original LEFT JOIN GroupHeader ON GroupHeader.GroupNum = Original.GroupNum
 )
 SELECT
-    CustomerNumber,
-    CustomerPoNumber,
-    ErrorClassification,
-    ErrorMessage,
-    InterfaceId,
-    InventoryItemSegment1,
-    InvoiceToOrgCode,
-    IIF(ISNULL(OrderSource, ''), OrderSource, CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))) AS OhiId,
-    OliId,
-    OrderSource,
-    OrderedQuantity,
-    OrganizationCode,
-    OrigSysDocumentRef,
-    OrigSysLineRef,
-    SecondaryInventoryName,
-    ShipToOrgCode,
-    ShipmentPriorityCode,
-    SalesTableOIFRecId,
-    Status
-FROM HeaderIDGroupDataSource;
+  CustomerNumber,
+  CustomerPoNumber,
+  ErrorClassification,
+  ErrorMessage,
+  InterfaceId,
+  InventoryItemSegment1,
+  InvoiceToOrgCode,
+  OhiId,
+  OliId,
+  OrderSource,
+  OrderedQuantity,
+  OrganizationCode,
+  OrigSysDocumentRef,
+  OrigSysLineRef,
+  SecondaryInventoryName,
+  ShipToOrgCode,
+  ShipmentPriorityCode,
+  SalesTableOIFRecId,
+  Status
+FROM DataSource
