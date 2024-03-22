@@ -1,16 +1,17 @@
-WITH DataSource AS (
+WITH Original AS
+(
   SELECT
-    InterfaceId,
-    ErrorClassification,
-    IIF(
-      ISNULL(OrderSource, '') = '', 
-      NULL,
+    '0174' AS InterfaceId,
+    '0' AS ErrorClassification,
+     IIF(
+      ISNULL(OrderSource, '') = '',
+      OrderSource,
       CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
     ) AS OhiId,
-    Status,
+    '0' AS Status,
     IIF(
-      ISNULL(OrderSource, '') = '', 
-      '',
+      ISNULL(OrderSource, '') = '',
+      OrderSource,
       CONCAT(SUBSTRING(OrderSource, 1, 3), IF0174Seq)
     ) AS OrigSysDocumentRef,
     CONVERT(INT, NULLIF(OrderSource, '')) AS OrderSource,
@@ -21,49 +22,59 @@ WITH DataSource AS (
     OrganizationCode,
     SecondaryInventoryName,
     IIF(
-      ISNULL(OrderSource, ''), 
-      NULL,
+      ISNULL(OrderSource, '') = '',
+      OrderSource,
       CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
     ) AS OliId,
     OrigSysLineRef,
     InventoryItemSegment1,
     OrderedQuantity,
     InvoiceToOrgCode,
-    ErrorMessage,
-    SalesTableOIFRecId
+    '' As ErrorMessage,
+    '' AS SalesTableOIFRecId
   FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
-GroupedOhiId AS (
-  SELECT 
-    *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS RowNum
-  FROM DataSource
-),
-NumberedOhiId AS (
-  SELECT
-    *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) - 1 AS GroupRowNum
-  FROM GroupedOhiId
+HeaderIDGroupDataSource AS (
+ SELECT 
+      InterfaceId,
+      ErrorClassification,
+      MIN(OhiId) OVER (PARTITION BY OrderSource,CustomerPoNumber ORDER BY (SELECT NULL)) AS OhiId,
+      Status,
+      OrigSysDocumentRef,
+      OrderSource,
+      CustomerPoNumber,
+      CustomerNumber,
+      ShipmentPriorityCode,
+      ShipToOrgCode,
+      OrganizationCode,
+      OliId,
+      SecondaryInventoryName,
+      OrigSysLineRef,
+      InventoryItemSegment1,
+      OrderedQuantity,
+      InvoiceToOrgCode,
+      ErrorMessage,
+      SalesTableOIFRecId
+	  FROM Original
 )
 SELECT
-  CustomerNumber,
-  CustomerPoNumber,
-  ErrorClassification,
-  ErrorMessage,
-  InterfaceId,
-  InventoryItemSegment1,
-  InvoiceToOrgCode,
-  CONCAT(SUBSTRING(OhiId, 1, 2), RIGHT('000' + CAST(GroupRowNum AS VARCHAR(3)), 3)) AS OhiId,
-  OliId,
-  OrderSource,
-  OrderedQuantity,
-  OrganizationCode,
-  OrigSysDocumentRef,
-  OrigSysLineRef,
-  SecondaryInventoryName,
-  ShipToOrgCode,
-  ShipmentPriorityCode,
-  SalesTableOIFRecId,
-  Status
-FROM NumberedOhiId
-ORDER BY OrigSysLineRef;
+    CustomerNumber,
+    CustomerPoNumber,
+    ErrorClassification,
+    ErrorMessage,
+    InterfaceId,
+    InventoryItemSegment1,
+    InvoiceToOrgCode,
+    OhiId,
+    OliId,
+    OrderSource,
+    OrderedQuantity,
+    OrganizationCode,
+    OrigSysDocumentRef,
+    OrigSysLineRef,
+    SecondaryInventoryName,
+    ShipToOrgCode,
+    ShipmentPriorityCode,
+    SalesTableOIFRecId,
+    Status
+  FROM HeaderIDGroupDataSource
