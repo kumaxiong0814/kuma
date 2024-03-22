@@ -44,10 +44,7 @@ SELECT
   InterfaceId,
   InventoryItemSegment1,
   InvoiceToOrgCode,
-  CASE 
-    WHEN RowNum = 1 THEN NULL
-    ELSE OhiId
-  END AS OhiId,
+  COALESCE(LAG(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef), '') AS OhiId,
   CASE 
     WHEN RowNum = 1 THEN OhiId
     ELSE CONCAT(CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8)), RIGHT('000' + CAST(ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS VARCHAR(3)), 3))
