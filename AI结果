@@ -1,14 +1,8 @@
 WITH Original AS
 (
   SELECT
-    *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS RowNum
-  FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
-),
-Updated AS (
-  SELECT
-    InterfaceId,
-    ErrorClassification,
+    '0174' AS InterfaceId,
+    '0' AS ErrorClassification,
     IIF(
       ISNULL(OrderSource, '') = '',
       OrderSource,
@@ -26,6 +20,7 @@ Updated AS (
     ShipmentPriorityCode,
     ShipToOrgCode,
     OrganizationCode,
+    SecondaryInventoryName,
     IIF(
       ISNULL(OrderSource, '') = '',
       OrderSource,
@@ -37,33 +32,33 @@ Updated AS (
     InvoiceToOrgCode,
     '' As ErrorMessage,
     '' AS SalesTableOIFRecId
-  FROM Original
+  FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
-Grouped AS (
-  SELECT
+GroupedOhiId AS (
+  SELECT 
     *,
-    MIN(OrigSysLineRef) OVER (PARTITION BY OrderSource, CustomerPoNumber) AS MinOrigSysLineRef
-  FROM Updated
+    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY (SELECT NULL)) AS GroupOhiId
+  FROM Original
 )
 SELECT
-  CustomerNumber,
-  CustomerPoNumber,
-  ErrorClassification,
-  ErrorMessage,
-  InterfaceId,
-  InventoryItemSegment1,
-  InvoiceToOrgCode,
-  CONCAT(OrderSource, ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) + (OrigSysLineRef - MinOrigSysLineRef)) AS OhiId,
-  OliId,
-  OrderSource,
-  OrderedQuantity,
-  OrganizationCode,
-  OrigSysDocumentRef,
-  OrigSysLineRef,
-  SecondaryInventoryName,
-  ShipToOrgCode,
-  ShipmentPriorityCode,
-  SalesTableOIFRecId,
-  Status
-FROM Grouped
-ORDER BY OrigSysLineRef;
+    CustomerNumber,
+    CustomerPoNumber,
+    ErrorClassification,
+    ErrorMessage,
+    InterfaceId,
+    InventoryItemSegment1,
+    InvoiceToOrgCode,
+    CONCAT(OhiId, GroupOhiId) AS OhiId, -- 将原始 OhiId 与组内编号组合以获得连续的 OhiId
+    OliId,
+    OrderSource,
+    OrderedQuantity,
+    OrganizationCode,
+    OrigSysDocumentRef,
+    OrigSysLineRef,
+    SecondaryInventoryName,
+    ShipToOrgCode,
+    ShipmentPriorityCode,
+    SalesTableOIFRecId,
+    Status
+FROM GroupedOhiId
+ORDER BY OliId;
