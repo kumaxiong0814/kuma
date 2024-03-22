@@ -44,10 +44,7 @@ HeaderIDGroupDataSource AS (
   SELECT 
     InterfaceId,
     ErrorClassification,
-    CASE 
-      WHEN RowNum = 1 THEN MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber)
-      ELSE MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber) + (RowNum - 1)
-    END AS OhiId,
+    MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber) AS MinOhiId,
     Status,
     OrigSysDocumentRef,
     OrderSource,
@@ -74,7 +71,7 @@ SELECT
     InterfaceId,
     InventoryItemSegment1,
     InvoiceToOrgCode,
-    OhiId,
+    MinOhiId + RowNum - 1 AS OhiId,
     OliId,
     OrderSource,
     OrderedQuantity,
