@@ -35,27 +35,11 @@ WITH Original AS
     DENSE_RANK() OVER (ORDER BY OrderSource, CustomerPoNumber) AS GroupNum
   FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
-EmptyHeader AS
-(
-  SELECT
-    OhiId,
-    ROW_NUMBER() OVER (ORDER BY OliId) GroupNum
-  FROM Original
-  WHERE OhiId = ''
-),
 GroupHeader AS
 (
   SELECT
-    OhiId,
-    GroupNum
-  FROM EmptyHeader
-  WHERE GroupNum <= ISNULL((SELECT MAX(GroupNum) FROM Original WHERE OhiId = ''), 0)
- 
-  UNION
- 
-  SELECT
-    OhiId,
-    ROW_NUMBER() OVER (ORDER BY OliId) + ISNULL((SELECT MAX(GroupNum) FROM Original WHERE OhiId = ''), 0) GroupNum
+    ROW_NUMBER() OVER (ORDER BY OliId) - 1 AS GroupNum,
+    OhiId
   FROM Original
   WHERE OhiId <> ''
 ),
@@ -64,7 +48,7 @@ DataSource AS
   SELECT
     InterfaceId,
     ErrorClassification,
-    GroupHeader.OhiId AS OhiId,
+    COALESCE(GroupHeader.OhiId, '') AS OhiId,
     Status,
     OrigSysDocumentRef,
     OrderSource,
@@ -81,7 +65,8 @@ DataSource AS
     InvoiceToOrgCode,
     ErrorMessage,
     SalesTableOIFRecId
-  FROM Original LEFT JOIN GroupHeader ON GroupHeader.GroupNum = Original.GroupNum
+  FROM Original
+  LEFT JOIN GroupHeader ON Original.GroupNum = GroupHeader.GroupNum
 )
 SELECT
   CustomerNumber,
@@ -103,4 +88,4 @@ SELECT
   ShipmentPriorityCode,
   SalesTableOIFRecId,
   Status
-FROM DataSource
+FROM DataSource;
