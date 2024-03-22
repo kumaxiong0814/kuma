@@ -34,31 +34,56 @@ WITH Original AS
     '' AS SalesTableOIFRecId
   FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
 ),
-GroupedOhiId AS (
+GroupedDataSource AS (
   SELECT 
     *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY (SELECT NULL)) AS GroupOhiId
+    ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) AS GroupRowNumber
   FROM Original
+),
+HeaderIDGroupDataSource AS (
+  SELECT 
+    InterfaceId,
+    ErrorClassification,
+    CASE 
+      WHEN GroupRowNumber = 1 THEN MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber)
+      ELSE MIN(OhiId) OVER (PARTITION BY OrderSource, CustomerPoNumber) + GroupRowNumber - 1
+    END AS OhiId,
+    Status,
+    OrigSysDocumentRef,
+    OrderSource,
+    CustomerPoNumber,
+    CustomerNumber,
+    ShipmentPriorityCode,
+    ShipToOrgCode,
+    OrganizationCode,
+    OliId,
+    SecondaryInventoryName,
+    OrigSysLineRef,
+    InventoryItemSegment1,
+    OrderedQuantity,
+    InvoiceToOrgCode,
+    ErrorMessage,
+    SalesTableOIFRecId
+  FROM GroupedDataSource
 )
 SELECT
-    CustomerNumber,
-    CustomerPoNumber,
-    ErrorClassification,
-    ErrorMessage,
-    InterfaceId,
-    InventoryItemSegment1,
-    InvoiceToOrgCode,
-    CONCAT(OhiId, GroupOhiId) AS OhiId, -- 将原始 OhiId 与组内编号组合以获得连续的 OhiId
-    OliId,
-    OrderSource,
-    OrderedQuantity,
-    OrganizationCode,
-    OrigSysDocumentRef,
-    OrigSysLineRef,
-    SecondaryInventoryName,
-    ShipToOrgCode,
-    ShipmentPriorityCode,
-    SalesTableOIFRecId,
-    Status
-FROM GroupedOhiId
-ORDER BY OliId;
+  CustomerNumber,
+  CustomerPoNumber,
+  ErrorClassification,
+  ErrorMessage,
+  InterfaceId,
+  InventoryItemSegment1,
+  InvoiceToOrgCode,
+  OhiId,
+  OliId,
+  OrderSource,
+  OrderedQuantity,
+  OrganizationCode,
+  OrigSysDocumentRef,
+  OrigSysLineRef,
+  SecondaryInventoryName,
+  ShipToOrgCode,
+  ShipmentPriorityCode,
+  SalesTableOIFRecId,
+  Status
+FROM HeaderIDGroupDataSource
