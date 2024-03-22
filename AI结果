@@ -71,7 +71,7 @@ SELECT
     InterfaceId,
     InventoryItemSegment1,
     InvoiceToOrgCode,
-    MinOhiId + RowNum - 1 AS OhiId,
+    MinOhiId + ROW_NUMBER() OVER (PARTITION BY OrderSource, CustomerPoNumber ORDER BY OrigSysLineRef) - 1 AS OhiId,
     OliId,
     OrderSource,
     OrderedQuantity,
