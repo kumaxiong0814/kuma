@@ -2,26 +2,52 @@ WITH Original AS
 (
   SELECT
     *,
-    ROW_NUMBER() OVER (PARTITION BY OrderSource ORDER BY CustomerPoNumber) AS RowNum
+    DENSE_RANK() OVER (PARTITION BY CustomerPoNumber ORDER BY OrderSource) AS GroupRank
   FROM
   (
-    VALUES
-    ('0174', '0', '13000000712', NULL, 'PS21-41065'),
-    ('0174', '0', '13000000713', NULL, 'PS21-41065'),
-    ('0174', '0', '13000000714', NULL, 'PS21-41065'),
-    ('0174', '0', '13000000715', NULL, 'PS21-41066'),
-    ('0174', '0', '13000000716', NULL, 'PS21-41066'),
-    ('0174', '0', '13000000717', NULL, 'PS21-41067')
-  ) AS Temp(InterfaceId, ErrorClassification, OhiId, Status, CustomerPoNumber)
+    SELECT
+      '0174' AS InterfaceId,
+      '0' AS ErrorClassification,
+      CONVERT(VARCHAR(10), ROW_NUMBER() OVER (ORDER BY OrderSource)) AS OhiId,
+      '0' AS Status,
+      CONVERT(VARCHAR(10), ROW_NUMBER() OVER (ORDER BY OrderSource)) AS OrigSysDocumentRef,
+      OrderSource,
+      CustomerPoNumber,
+      CustomerNumber,
+      ShipmentPriorityCode,
+      ShipToOrgCode,
+      OrganizationCode,
+      SecondaryInventoryName,
+      CONVERT(VARCHAR(10), ROW_NUMBER() OVER (ORDER BY OrderSource)) AS OliId,
+      OrigSysLineRef,
+      InventoryItemSegment1,
+      OrderedQuantity,
+      InvoiceToOrgCode,
+      '' AS ErrorMessage,
+      '' AS SalesTableOIFRecId
+    FROM earth_dp_SpoonsOrderIF_LS_IF_0174_TempWithSeq
+  ) AS Subquery
 )
 SELECT
   InterfaceId,
   ErrorClassification,
   OhiId,
   Status,
-  CustomerPoNumber
+  OrigSysDocumentRef,
+  OrderSource,
+  CustomerPoNumber,
+  CustomerNumber,
+  ShipmentPriorityCode,
+  ShipToOrgCode,
+  OrganizationCode,
+  SecondaryInventoryName,
+  OliId,
+  OrigSysLineRef,
+  InventoryItemSegment1,
+  OrderedQuantity,
+  InvoiceToOrgCode,
+  ErrorMessage,
+  SalesTableOIFRecId,
+  GroupRank
 FROM Original
-CROSS APPLY (
-  SELECT TOP 1 OhiId FROM Original o2 WHERE o2.OrderSource = Original.OrderSource ORDER BY CustomerPoNumber
-) AS OhiIdSource
-ORDER BY CustomerPoNumber;
+ORDER BY CustomerPoNumber, GroupRank;
