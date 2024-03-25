@@ -3,17 +3,15 @@ WITH Original AS
   SELECT
     '0174' AS InterfaceId,
     '0' AS ErrorClassification,
-    IIF(
-      ISNULL(OrderSource, ''), 
-      OrderSource, 
-      CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
-    ) AS OhiId,
+    CASE 
+      WHEN ISNULL(OrderSource, '') = '' THEN OrderSource
+      ELSE CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
+    END AS OhiId,
     '0' AS Status,
-    IIF(
-      ISNULL(OrderSource, ''), 
-      OrderSource, 
-      CONCAT(SUBSTRING(OrderSource, 1, 3), IF0174Seq)
-    ) AS OrigSysDocumentRef,
+    CASE 
+      WHEN ISNULL(OrderSource, '') = '' THEN OrderSource
+      ELSE CONCAT(SUBSTRING(OrderSource, 1, 3), IF0174Seq)
+    END AS OrigSysDocumentRef,
     CONVERT(INT, NULLIF(OrderSource, '')) AS OrderSource,
     CustomerPoNumber,
     CustomerNumber,
@@ -21,11 +19,10 @@ WITH Original AS
     ShipToOrgCode,
     OrganizationCode,
     SecondaryInventoryName,
-    IIF(
-      ISNULL(OrderSource, ''), 
-      OrderSource, 
-      CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
-    ) AS OliId,
+    CASE 
+      WHEN ISNULL(OrderSource, '') = '' THEN OrderSource
+      ELSE CONCAT(SUBSTRING(OrderSource, 1, 2), SUBSTRING(CONVERT(VARCHAR(10), IF0174Seq), 3, 8))
+    END AS OliId,
     OrigSysLineRef,
     InventoryItemSegment1,
     OrderedQuantity,
