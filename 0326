@@ -1,0 +1,9 @@
+SELECT *, NEXT VALUE FOR @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Sequence As IF0174Seq INTO @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_TempWithSeq
+FROM @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Temp
+WHERE OrderSource IS NULL OR OrderSource ='';
+
+INSERT @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_TempWithSeq
+SELECT *, NEXT VALUE FOR @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Sequence As IF0174Seq 
+FROM @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Temp
+WHERE OrderSource IS NOT NULL AND OrderSource <> ''
+GROUP BY OrderSource,CustomerPoNumber;
