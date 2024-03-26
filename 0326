@@ -1,9 +1,15 @@
-SELECT *, NEXT VALUE FOR @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Sequence As IF0174Seq INTO @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_TempWithSeq
+-- 查询并插入 OrderSource 为 NULL 或空字符串的记录，并按 OrderSource 和 CustomerPoNumber 列排序
+SELECT *, 
+    NEXT VALUE FOR Sequence1 OVER(ORDER BY OrderSource, CustomerPoNumber) As IF0174Seq1,
+    NEXT VALUE FOR Sequence2 OVER(ORDER BY OrderSource, CustomerPoNumber) As IF0174Seq2
+INTO @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_TempWithSeq
 FROM @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Temp
-WHERE OrderSource IS NULL OR OrderSource ='';
+WHERE OrderSource IS NULL OR OrderSource = '';
 
-INSERT @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_TempWithSeq
-SELECT *, NEXT VALUE FOR @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Sequence As IF0174Seq 
+-- 追加查询并插入 OrderSource 不为 NULL 且不为空字符串的记录，并按 OrderSource 和 CustomerPoNumber 列排序
+INSERT INTO @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_TempWithSeq
+SELECT *, 
+    NEXT VALUE FOR Sequence1 OVER(ORDER BY OrderSource, CustomerPoNumber) As IF0174Seq1,
+    NEXT VALUE FOR Sequence2 OVER(ORDER BY OrderSource, CustomerPoNumber) As IF0174Seq2
 FROM @{pipeline().parameters.TableName}_@{pipeline().parameters.FunctionId}_Temp
-WHERE OrderSource IS NOT NULL AND OrderSource <> ''
-GROUP BY OrderSource,CustomerPoNumber;
+WHERE OrderSource IS NOT NULL AND OrderSource <> '';
