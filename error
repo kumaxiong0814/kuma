@@ -1,1 +1,9 @@
-"Operation on target ac_ctrl_Error failed: Orchestrator function 'LS_BT_00174_FunctionOrchestration' failed: The activity function 'Do_LS_BT_00174_Action' failed: \"One or more errors occurred. (Exception of type 'System.Net.Http.HttpRequestException' was thrown.)\". See the function execution logs for additional details.",
+
+  SELECT
+    header.InvoiceNo AS HeaderInvoiceNo,
+    line.InvoiceNo AS LineInvoiceNo
+  FROM
+    dbo.earth_dp_ShipmentRequestInfoHeaderIF header
+    FULL JOIN dbo.earth_dp_ShipmentRequestInfoLineIF line ON header.InvoiceNo = line.InvoiceNo
+  WHERE
+    header.CREATEDDATETIME > '2000-1-1'
