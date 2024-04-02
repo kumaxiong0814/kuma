@@ -1,9 +1,1 @@
-
-  SELECT
-    header.InvoiceNo AS HeaderInvoiceNo,
-    line.InvoiceNo AS LineInvoiceNo
-  FROM
-    dbo.earth_dp_ShipmentRequestInfoHeaderIF header
-    FULL JOIN dbo.earth_dp_ShipmentRequestInfoLineIF line ON header.InvoiceNo = line.InvoiceNo
-  WHERE
-    header.CREATEDDATETIME > '2000-1-1'
+The expression 'or(\n    not(\n        equals(\n            variables('lineCount'),\n            activity('ac_tran_queryAvailability').output.rowSets[0].rows[0].LineCount\n        )\n    ),\n    not(\n        equals(\n            variables('isAvailable'),\n            bool(activity('ac_tran_queryAvailability').output.rowSets[0].rows[0].IsAvailable)\n        )\n    )\n)' cannot be evaluated because property 'rowSets' doesn't exist, available properties are 'resultSetCount, recordsAffected, resultSets, outputParameters, outputLogs, outputLogsLocation, outputTruncated, effectiveIntegrationRuntime, executionDuration, durationInQueue, billingReference'."
