@@ -1,1 +1,20 @@
-The expression 'or(\n    not(\n        equals(\n            variables('lineCount'),\n            activity('ac_tran_queryAvailability').output.rowSets[0].rows[0].LineCount\n        )\n    ),\n    not(\n        equals(\n            variables('isAvailable'),\n            bool(activity('ac_tran_queryAvailability').output.rowSets[0].rows[0].IsAvailable)\n        )\n    )\n)' cannot be evaluated because property 'rowSets' doesn't exist, available properties are 'resultSetCount, recordsAffected, resultSets, outputParameters, outputLogs, outputLogsLocation, outputTruncated, effectiveIntegrationRuntime, executionDuration, durationInQueue, billingReference'."
+WITH ds AS
+(
+  SELECT
+    header.InvoiceNo AS HeaderInvoiceNo,
+    line.InvoiceNo AS LineInvoiceNo
+  FROM
+    dbo.earth_dp_ShipmentRequestInfoHeaderIF header FULL JOIN
+    dbo.earth_dp_ShipmentRequestInfoLineIF line ON header.InvoiceNo = line.InvoiceNo
+  WHERE
+    header.DataLakeModified_DateTime > '@{variables('formattedLastExecutionTime')}' AND
+    line.DataLakeModified_DateTime > '@{variables('formattedLastExecutionTime')}'
+)
+SELECT
+  (SELECT COUNT(ALL LineInvoiceNo) FROM ds) AS LineCount,
+  IIF(
+    (SELECT COUNT(ALL LineInvoiceNo) FROM ds) > 0 AND
+    (SELECT COUNT(*) FROM ds WHERE HeaderInvoiceNo IS NULL OR LineInvoiceNo IS NULL) = 0,
+	  1,
+	  0
+  ) AS IsAvailable
