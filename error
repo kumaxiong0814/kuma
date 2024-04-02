@@ -1,690 +1,690 @@
 {
-    "name": "pl_0257",
-    "properties": {
-        "activities": [
-            {
-                "name": "ac_tran_CreateFileFromAzureDB",
-                "description": "Original processing \n\noverview\n-Extract the target data by comparing the previous cross section with the runtime \n-Convert data to csv file \n-Modify the query as needed \n\n",
-                "type": "Copy",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_Setquery",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "timeout": "7.00:00:00",
-                    "retry": 5,
-                    "retryIntervalInSeconds": 60,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "source": {
-                        "type": "SqlDWSource",
-                        "sqlReaderQuery": {
-                            "value": "@variables('query')",
-                            "type": "Expression"
-                        },
-                        "queryTimeout": "02:00:00",
-                        "partitionOption": "None"
-                    },
-                    "sink": {
-                        "type": "DelimitedTextSink",
-                        "storeSettings": {
-                            "type": "AzureBlobFSWriteSettings"
-                        },
-                        "formatSettings": {
-                            "type": "DelimitedTextWriteSettings",
-                            "quoteAllText": true,
-                            "fileExtension": ".txt"
-                        }
-                    },
-                    "enableStaging": false,
-                    "validateDataConsistency": true,
-                    "translator": {
-                        "type": "TabularTranslator",
-                        "typeConversion": true,
-                        "typeConversionSettings": {
-                            "allowDataTruncation": true,
-                            "treatBooleanAsNumber": false
-                        }
-                    }
-                },
-                "inputs": [
-                    {
-                        "referenceName": "ds_asyn_In",
-                        "type": "DatasetReference"
-                    }
-                ],
-                "outputs": [
-                    {
-                        "referenceName": "ds_ablb_adl_DelimitedTextCrLfWithDoubleQuoteChar",
-                        "type": "DatasetReference",
-                        "parameters": {
-                            "Container": {
-                                "value": "@pipeline().parameters.Container",
-                                "type": "Expression"
-                            },
-                            "Folder": {
-                                "value": "@pipeline().parameters.ResultFolder",
-                                "type": "Expression"
-                            },
-                            "FileName": {
-                                "value": "@pipeline().parameters.MainFile",
-                                "type": "Expression"
-                            },
-                            "Encoding": {
-                                "value": "@pipeline().parameters.Encoding",
-                                "type": "Expression"
-                            },
-                            "FirstRowAsHeader": {
-                                "value": "@pipeline().parameters.FirstRowAsHeader",
-                                "type": "Expression"
-                            },
-                            "ColumnDelimiter": {
-                                "value": "@pipeline().parameters.ColumnDelimiter",
-                                "type": "Expression"
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "ac_ctrl_SetqueryExecuteTime",
-                "description": "Common processing \n\noverview\n-Set query execution time to variable \n\n",
-                "type": "SetVariable",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_LookupExecuteTime",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "variableName": "nextExecutionTIme",
-                    "value": {
-                        "value": "@utcnow()",
-                        "type": "Expression"
-                    }
-                }
-            },
-            {
-                "name": "ac_ctrl_SetExecuteTime",
-                "description": "Common processing \n\noverview\n-Update the execution time with the variable ac_ctrl_SetqueryExecuteTime  ",
-                "type": "SqlServerStoredProcedure",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_OutboundEndProcess",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "timeout": "7.00:00:00",
-                    "retry": 0,
-                    "retryIntervalInSeconds": 30,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "storedProcedureName": "[dbo].[ls_SetLastExecutionTime]",
-                    "storedProcedureParameters": {
-                        "CompanyCode": {
-                            "value": {
-                                "value": "@pipeline().parameters.CompanyCode",
-                                "type": "Expression"
-                            },
-                            "type": "String"
-                        },
-                        "FunctionId": {
-                            "value": {
-                                "value": "@pipeline().parameters.FunctionId",
-                                "type": "Expression"
-                            },
-                            "type": "String"
-                        },
-                        "LastExecutionTime": {
-                            "value": {
-                                "value": "@variables('nextExecutionTIme')",
-                                "type": "Expression"
-                            },
-                            "type": "Datetimeoffset"
-                        }
-                    }
-                },
-                "linkedServiceName": {
-                    "referenceName": "AzureSqlMI_earthcmdevsqlmijpecom",
-                    "type": "LinkedServiceReference"
-                }
-            },
-            {
-                "name": "ac_ctrl_OutboundEndProcess",
-                "type": "ExecutePipeline",
-                "dependsOn": [
-                    {
-                        "activity": "ac_tran_ConvertFixedFileFromCsv",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    },
-                    {
-                        "activity": "ac_tran_ConvertFixedFileFromCsvDetail",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "userProperties": [],
-                "typeProperties": {
-                    "pipeline": {
-                        "referenceName": "pl_ifcm_ExecuteAzureFunctionOnly",
-                        "type": "PipelineReference"
-                    },
-                    "waitOnCompletion": true,
-                    "parameters": {
-                        "AzureFunctionName": {
-                            "value": "OutBoundEndProcessFunctionHttp/DoOutBoundEndProcessFunctionAction",
-                            "type": "Expression"
-                        },
-                        "AzureFunctionUrl": {
-                            "value": "@pipeline().parameters.ExternalIFComFunctionUrl",
-                            "type": "Expression"
-                        },
-                        "AzureFunctionBody": {
-                            "value": "[\n {\n    \"regioncode\":\"@{pipeline().parameters.RegionCode}\",\n    \"container\":\"@{pipeline().parameters.Container}\",\n    \"resultfolder\":\"@{pipeline().parameters.ResultFolder}\",\n    \"resultfile\":\"@{pipeline().parameters.ResultFile}\",\n    \"endfilefolder\":\"@{pipeline().parameters.EndFileFolder}\",\n    \"endfile\":\"@{pipeline().parameters.EndFile}\",\n    \"encoding\":\"@{if(equals(pipeline().parameters.Encoding, 'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding, 'EUC-JP'), 'EUC', 'UTF8'))}\",\n    \"zerofilelinkageflag\":\"@{pipeline().parameters.ZeroFileLinkageFlag}\",\n    \"endfilecreationflag\":\"@{pipeline().parameters.EndFileCreationFlag}\",\n    \"transfertype\":\"@{pipeline().parameters.TransferType}\",\n    \"excludelinesc\":\"@{pipeline().parameters.ExcludeLinesc}\",\n    \"sharedstoragecontainer\":\"@{pipeline().parameters.SharedStorageContainer}\",\n    \"sharedstorageiffilefolder\":\"@{pipeline().parameters.SharedStorageIFFileFolder}\",\n    \"sharedstoragearchivefolder\":\"@{pipeline().parameters.SharedStorageArchiveFolder}\",\n    \"fileid\":\"@{pipeline().parameters.FileId}\",\n    \"filler\":\"          \",\n    \"endNotificationFileNewlineCode\":\"CRLF\"\n },\n {\n    \"regioncode\":\"@{pipeline().parameters.RegionCode}\",\n    \"container\":\"@{pipeline().parameters.Container}\",\n    \"resultfolder\":\"@{pipeline().parameters.ResultFolderDetail}\",\n    \"resultfile\":\"@{pipeline().parameters.ResultFileDetail}\",\n    \"endfilefolder\":\"@{pipeline().parameters.EndFileFolderDetail}\",\n    \"endfile\":\"@{pipeline().parameters.EndFileDetail}\",\n    \"encoding\":\"@{if(equals(pipeline().parameters.Encoding, 'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding, 'EUC-JP'), 'EUC', 'UTF8'))}\",\n    \"zerofilelinkageflag\":\"@{pipeline().parameters.ZeroFileLinkageFlag}\",\n    \"endfilecreationflag\":\"@{pipeline().parameters.EndFileCreationFlag}\",\n    \"transfertype\":\"@{pipeline().parameters.TransferType}\",\n    \"excludelinesc\":\"@{pipeline().parameters.ExcludeLinesc}\",\n    \"sharedstoragecontainer\":\"@{pipeline().parameters.SharedStorageContainer}\",\n    \"sharedstorageiffilefolder\":\"@{pipeline().parameters.SharedStorageIFFileFolder}\",\n    \"sharedstoragearchivefolder\":\"@{pipeline().parameters.SharedStorageArchiveFolder}\",\n    \"fileid\":\"@{pipeline().parameters.FileId}\",\n    \"filler\":\"          \",\n    \"endNotificationFileNewlineCode\":\"CRLF\"\n }\n]",
-                            "type": "Expression"
-                        },
-                        "SecretName": {
-                            "value": "@pipeline().parameters.ExternalIFComFunctionSecretName",
-                            "type": "Expression"
-                        }
-                    }
-                }
-            },
-            {
-                "name": "ac_ctrl_LookupExecuteTime",
-                "description": "Common processing \n\noverview\n-Execute a stored procedure to get the last execution time \n\n\n\n",
-                "type": "Lookup",
-                "dependsOn": [],
-                "policy": {
-                    "timeout": "7.00:00:00",
-                    "retry": 0,
-                    "retryIntervalInSeconds": 30,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "source": {
-                        "type": "SqlMISource",
-                        "sqlReaderStoredProcedureName": "[dbo].[ls_GetLastExecutionTime]",
-                        "storedProcedureParameters": {
-                            "CompanyCode": {
-                                "type": "String",
-                                "value": "ALL"
-                            },
-                            "FunctionId": {
-                                "type": "String",
-                                "value": "LS_IF_0257"
-                            },
-                            "LastExecutionTime": {
-                                "type": "DateTime",
-                                "value": "2023-08-08 13:23:22"
-                            }
-                        },
-                        "partitionOption": "None"
-                    },
-                    "dataset": {
-                        "referenceName": "ds_sqlmi_In",
-                        "type": "DatasetReference",
-                        "parameters": {
-                            "SchemaName": "dbo",
-                            "TableName": {
-                                "value": "\"\"",
-                                "type": "Expression"
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "name": "ac_ctrl_Setquery",
-                "type": "SetVariable",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_ExecuteConvertCodeAzureFunction",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "variableName": "query",
-                    "value": {
-                        "value": "WITH convertionCodeTb AS (\nSELECT value,\nSUBSTRING(value, 0, CHARINDEX( ',' , value )) AS codeCategory,\nSUBSTRING(value, (firstComma+1), (secondComma-(firstComma+1))) AS CodeMeaning,\nSUBSTRING(value, (secondComma+1), (thirdComma-(secondComma+1))) AS codeSource,\nSUBSTRING(value, (thirdComma+1), LEN(value)) AS codeDestination\nFROM (\nSELECT value,\nCHARINDEX( ',' , value ) AS firstComma,\nCHARINDEX( ',' , value, CHARINDEX( ',' , value )+1) AS secondComma,\nCHARINDEX( ',' , value, CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1)+1) AS thirdComma\nFROM STRING_SPLIT(REPLACE(N'@{replace(activity('ac_ctrl_ExecuteConvertCodeAzureFunction').output.Response,'''' ,'''''' )}',CHAR(13) + CHAR(10),CHAR(10)), CHAR(10))\n) AS X\n)\n\n\nSELECT\n\nISNULL(InvoiceNo,'') AS InvoiceNo,\nISNULL(CustMIMECode,'') AS CustMIMECode,\nISNULL(AreaCode,'') AS AreaCode,\nISNULL(ExportForm,'') AS ExportForm,\nISNULL(SoldToCode,'') AS SoldToCode,\nISNULL(SoldToName1,'') AS SoldToName1,\nISNULL(SoldToName2,'') AS SoldToName2,\nREPLACE(REPLACE(SoldToAddress1, CHAR(13), ''), CHAR(10), '') AS SoldToAddress1,\nREPLACE(REPLACE(SoldToAddress2, CHAR(13), ''), CHAR(10), '') AS SoldToAddress2,\nREPLACE(REPLACE(SoldToAddress3, CHAR(13), ''), CHAR(10), '') AS SoldToAddress3,\nREPLACE(REPLACE(SoldToAddress4, CHAR(13), ''), CHAR(10), '') AS SoldToAddress4,\nISNULL(ConsigneeCode,'') AS ConsigneeCode,\nISNULL(ConsigneeName1,'') AS ConsigneeName1,\nISNULL(ConsigneeName2,'') AS ConsigneeName2,\nREPLACE(REPLACE(ConsigneeAddress1, CHAR(13), ''), CHAR(10), '') AS ConsigneeAddress1,\nREPLACE(REPLACE(ConsigneeAddress2, CHAR(13), ''), CHAR(10), '') AS ConsigneeAddress2,\nREPLACE(REPLACE(ConsigneeAddress3, CHAR(13), ''), CHAR(10), '') AS ConsigneeAddress3,\nREPLACE(REPLACE(ConsigneeAddress4, CHAR(13), ''), CHAR(10), '') AS ConsigneeAddress4,\nISNULL(DeliveryToCode,'') AS DeliveryToCode,\nISNULL(DeliveryToName1,'') AS DeliveryToName1,\nISNULL(DeliveryToName2,'') AS DeliveryToName2,\nREPLACE(REPLACE(DeliveryToAddress1, CHAR(13), ''), CHAR(10), '') AS DeliveryToAddress1,\nREPLACE(REPLACE(DeliveryToAddress2, CHAR(13), ''), CHAR(10), '') AS DeliveryToAddress2,\nREPLACE(REPLACE(DeliveryToAddress3, CHAR(13), ''), CHAR(10), '') AS DeliveryToAddress3,\nREPLACE(REPLACE(DeliveryToAddress4, CHAR(13), ''), CHAR(10), '') AS DeliveryToAddress4,\nISNULL(NotifyCode,'') AS NotifyCode,\nISNULL(NotifyName1,'') AS NotifyName1,\nISNULL(NotifyName2,'') AS NotifyName2,\nREPLACE(REPLACE(NotifyAddress1, CHAR(13), ''), CHAR(10), '') AS NotifyAddress1,\nREPLACE(REPLACE(NotifyAddress2, CHAR(13), ''), CHAR(10), '') AS NotifyAddress2,\nREPLACE(REPLACE(NotifyAddress3, CHAR(13), ''), CHAR(10), '') AS NotifyAddress3,\nREPLACE(REPLACE(NotifyAddress4, CHAR(13), ''), CHAR(10), '') AS NotifyAddress4,\nISNULL(LastSoldToCode,'') AS LastSoldToCode,\nISNULL(LastSoldToName1,'') AS LastSoldToName1,\nISNULL(LastSoldToName2,'') AS LastSoldToName2,\nREPLACE(REPLACE(LastSoldToAddress1, CHAR(13), ''), CHAR(10), '') AS LastSoldToAddress1,\nREPLACE(REPLACE(LastSoldToAddress2, CHAR(13), ''), CHAR(10), '') AS LastSoldToAddress2,\nREPLACE(REPLACE(LastSoldToAddress3, CHAR(13), ''), CHAR(10), '') AS LastSoldToAddress3,\nREPLACE(REPLACE(LastSoldToAddress4, CHAR(13), ''), CHAR(10), '') AS LastSoldToAddress4,\n-- 輸送方法コード\nCASE WHEN TransMethodCode = 'Sea' THEN\n '10'\nWHEN TransMethodCode = 'Air' THEN\n '40'\nWHEN TransMethodCode = 'Truck' THEN\n 'T'\nELSE\n TransMethodCode\nEND\nAS TransMethodCode,\nISNULL(A41.codeDestination,'') AS PayFreeType,\n-- 売上/未収区分\nCASE WHEN CONVERT(nvarchar,StillReceiptFlag) = '1' THEN\n '2'\nWHEN CONVERT(nvarchar,StillReceiptFlag) = '0' THEN\n '1'\nELSE\n CONVERT(nvarchar,StillReceiptFlag)\nEND\nAS StillReceiptFlag,\nISNULL(PayTerm1,'') AS PayTerm1,\nISNULL(PayTerm2,'') AS PayTerm2,\nISNULL(PayTerm3,'') AS PayTerm3,\nISNULL(CurrencyCode,'') AS CurrencyCode,\nISNULL(PricingTermCode,'') AS PricingTermCode,\nISNULL(PricingTermName,'') AS PricingTermName,\nISNULL(PricingTermPlaceCode,'') AS PricingTermPlaceCode,\nISNULL(PricingTermPlaceName,'') AS PricingTermPlaceName,\nISNULL(TradingTermCode,'') AS TradingTermCode,\nISNULL(TradingTermName,'') AS TradingTermName,\nISNULL(TradingTermPlaceCode,'') AS TradingTermPlaceCode,\nISNULL(TradingTermPlaceName,'') AS TradingTermPlaceName,\nCONVERT(nvarchar,TotalAmount) AS TotalAmount,\nISNULL(FreightPayCode,'') AS FreightPayCode,\nISNULL(ReferenceNo,'') AS ReferenceNo,\nCASE WHEN CONVERT(nvarchar,PriceDate,112) = '19000101' THEN\n ''\nELSE\n CONVERT(nvarchar,PriceDate,112)\nEND \nAS PriceDate,\nCASE WHEN CONVERT(nvarchar,FASDueDate,112) = '19000101' THEN\n ''\nELSE\n CONVERT(nvarchar,FASDueDate,112)\nEND \nAS FASDueDate,\nCASE WHEN CONVERT(nvarchar,FOBDueDate,112) = '19000101' THEN\n ''\nELSE\n CONVERT(nvarchar,FOBDueDate,112)\nEND \nAS FOBDueDate,\nGoodsType,\nISNULL(A62.codeDestination,'') AS FromImpSys,\nLastCustMIMECode,\nLastCustOrdCurrency,\nInvoicePersonCode,\nCASE WHEN CONVERT(nvarchar,InvoiceCreationDate,112) = '19000101' THEN\n ''\nELSE\n CONVERT(nvarchar,InvoiceCreationDate,112)\nEND \nAS InvoiceCreationDate,\nISNULL(Vessel,'') AS Vessel,\nISNULL(LoadingCode,'') AS LoadingCode,\nISNULL(DestinationCode,'') AS DestinationCode,\nISNULL(InvoiceTitleCode,'') AS InvoiceTitleCode,\nISNULL(CORemarks1,'') AS CORemarks1,\nISNULL(CORemarks2,'') AS CORemarks2,\nISNULL(CORemarks3,'') AS CORemarks3,\nISNULL(CORemarks4,'') AS CORemarks4,\nISNULL(CORemarks5,'') AS CORemarks5,\nISNULL(CORemarks6,'') AS CORemarks6,\nCONVERT(nvarchar,CONVERT(BIGINT,TotalPackQty)) AS TotalPackQty,\nISNULL(TotalPackCode,'') AS TotalPackCode,\nISNULL(InsidePackQty,'') AS InsidePackQty,\nISNULL(AddCalCode,'') AS AddCalCode,\nISNULL(Remarks1,'') AS Remarks1,\nISNULL(Remarks2,'') AS Remarks2,\nISNULL(Remarks3,'') AS Remarks3,\nISNULL(Remarks4,'') AS Remarks4,\nISNULL(Remarks5,'') AS Remarks5,\nISNULL(Remarks6,'') AS Remarks6,\nISNULL(Remarks7,'') AS Remarks7,\nISNULL(Remarks8,'') AS Remarks8,\nISNULL(Remarks9,'') AS Remarks9,\nISNULL(Remarks10,'') AS Remarks10,\nISNULL(Remarks11,'') AS Remarks11,\nISNULL(Remarks12,'') AS Remarks12,\nISNULL(Remarks13,'') AS Remarks13,\nISNULL(Remarks14,'') AS Remarks14,\nISNULL(Remarks15,'') AS Remarks15,\nISNULL(Remarks16,'') AS Remarks16,\nISNULL(Remarks17,'') AS Remarks17,\nISNULL(Remarks18,'') AS Remarks18,\nISNULL(Remarks19,'') AS Remarks19,\nISNULL(Remarks20,'') AS Remarks20,\nISNULL(Remarks21,'') AS Remarks21,\nISNULL(Remarks22,'') AS Remarks22,\nISNULL(Remarks23,'') AS Remarks23,\nISNULL(Remarks24,'') AS Remarks24,\nISNULL(CaseMarkCode,'') AS CaseMarkCode,\nISNULL(CaseMark1,'') AS CaseMark1,\nISNULL(CaseMark2,'') AS CaseMark2,\nISNULL(CaseMark3,'') AS CaseMark3,\nISNULL(CaseMark4,'') AS CaseMark4,\nISNULL(CaseMark5,'') AS CaseMark5,\nISNULL(CaseMark6,'') AS CaseMark6,\nISNULL(CaseMark7,'') AS CaseMark7,\nISNULL(CaseMark8,'') AS CaseMark8,\nISNULL(CaseMark9,'') AS CaseMark9,\nISNULL(CaseMark10,'') AS CaseMark10,\nISNULL(CaseMark11,'') AS CaseMark11,\nISNULL(CaseMark12,'') AS CaseMark12,\nISNULL(Attention,'') AS Attention,\nISNULL(InvoiceIssueLocation,'') AS InvoiceIssueLocation,\nISNULL(ForwarderCode,'') AS ForwarderCode,\nISNULL(ShipperCode,'') AS ShipperCode,\nCASE WHEN CONVERT(nvarchar,ETADate,112) = '19000101' THEN\n ''\nELSE\n CONVERT(nvarchar,ETADate,112)\nEND \nAS ETADate,\nCONVERT(nvarchar,GrossWeight) AS GrossWeight,\nCONVERT(nvarchar,Volume) AS Volume\n\nFROM\n\n@{concat(variables('dbName'),\n'earth_dp_ShipmentRequestInfoHeaderIF')} \n\nLEFT JOIN convertionCodeTb AS A41 ON A41.codeCategory = 'earth_dp_PayFreeTypeInterface' AND PayFreeType =  A41.codeSource\nLEFT JOIN convertionCodeTb AS A62 ON A62.codeCategory = 'earth_dp_FromImportSystem' AND FromImpSys =  A62.codeSource\n\nWHERE \n--出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME) > AzureDB.前回出力日時)\n--AND 出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME) <= AzureDB.次回出力日時)\n CREATEDDATETIME > '@{formatDateTime(activity('ac_ctrl_LookupExecuteTime').output.firstRow.LastExecutionTime, 'yyyy-MM-dd HH:mm:ss')}'\nAND CREATEDDATETIME <= '@{formatDateTime(variables('nextExecutionTIme'), 'yyyy-MM-dd HH:mm:ss')}'\n",
-                        "type": "Expression"
-                    }
-                }
-            },
-            {
-                "name": "ac_tran_ConvertFixedFileFromCsv",
-                "type": "ExecutePipeline",
-                "dependsOn": [
-                    {
-                        "activity": "ac_tran_CreateFileFromAzureDB",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "userProperties": [],
-                "typeProperties": {
-                    "pipeline": {
-                        "referenceName": "pl_ifcm_ExecuteAzureFunctionOnly",
-                        "type": "PipelineReference"
-                    },
-                    "waitOnCompletion": true,
-                    "parameters": {
-                        "AzureFunctionName": "HandleFileFunctionHttp/DoConvertFromCsvDataToFixDataAction",
-                        "AzureFunctionUrl": {
-                            "value": "@pipeline().parameters.HandleFileFunctionUrl",
-                            "type": "Expression"
-                        },
-                        "AzureFunctionBody": {
-                            "value": "{\n\"regionrshort\":\"@{pipeline().parameters.RegionCode}\",\n\"containername\":\"@{pipeline().parameters.Container}\",\n\"mainfilefolder\":\"@{pipeline().parameters.ResultFolder}\",\n\"mainfile\":\"@{pipeline().parameters.MainFile}\",\n\"propertyfilefolder\":\"@{pipeline().parameters.PropertyFolder}\",\n\"propertyfile\":\"@{pipeline().parameters.PropertyFile}\",\n\"resultfilefolder\":\"@{pipeline().parameters.ResultFolder}\",\n\"resultfile\":\"@{pipeline().parameters.ResultFile}\",\n\"connstr\":\"@{pipeline().parameters.Connstr}\",\n\"encoder\":\"@{if(equals(pipeline().parameters.Encoding, 'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding, 'EUC-JP'), 'EUC', 'UTF8'))}\",\n\"returnchar\":\"@{pipeline().parameters.ReturnChar}\"\n}",
-                            "type": "Expression"
-                        },
-                        "SecretName": {
-                            "value": "@pipeline().parameters.HandleFileFunctionSecretName",
-                            "type": "Expression"
-                        }
-                    }
-                }
-            },
-            {
-                "name": "ac_tran_CreateFileFromAzureDBDetail",
-                "description": "Original processing \n\noverview\n-Extract the target data by comparing the previous cross section with the runtime \n-Convert data to csv file \n-Modify the query as needed \n\n",
-                "type": "Copy",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_SetqueryDetail",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "timeout": "7.00:00:00",
-                    "retry": 5,
-                    "retryIntervalInSeconds": 60,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "source": {
-                        "type": "SqlDWSource",
-                        "sqlReaderQuery": {
-                            "value": "@variables('queryDetail')",
-                            "type": "Expression"
-                        },
-                        "queryTimeout": "02:00:00",
-                        "partitionOption": "None"
-                    },
-                    "sink": {
-                        "type": "DelimitedTextSink",
-                        "storeSettings": {
-                            "type": "AzureBlobFSWriteSettings"
-                        },
-                        "formatSettings": {
-                            "type": "DelimitedTextWriteSettings",
-                            "quoteAllText": true,
-                            "fileExtension": ".txt"
-                        }
-                    },
-                    "enableStaging": false,
-                    "validateDataConsistency": true,
-                    "translator": {
-                        "type": "TabularTranslator",
-                        "typeConversion": true,
-                        "typeConversionSettings": {
-                            "allowDataTruncation": true,
-                            "treatBooleanAsNumber": false
-                        }
-                    }
-                },
-                "inputs": [
-                    {
-                        "referenceName": "ds_asyn_In",
-                        "type": "DatasetReference"
-                    }
-                ],
-                "outputs": [
-                    {
-                        "referenceName": "ds_ablb_adl_DelimitedTextCrLfWithDoubleQuoteChar",
-                        "type": "DatasetReference",
-                        "parameters": {
-                            "Container": {
-                                "value": "@pipeline().parameters.Container",
-                                "type": "Expression"
-                            },
-                            "Folder": {
-                                "value": "@pipeline().parameters.ResultFolderDetail",
-                                "type": "Expression"
-                            },
-                            "FileName": {
-                                "value": "@pipeline().parameters.MainFileDetail",
-                                "type": "Expression"
-                            },
-                            "Encoding": {
-                                "value": "@pipeline().parameters.Encoding",
-                                "type": "Expression"
-                            },
-                            "FirstRowAsHeader": {
-                                "value": "@pipeline().parameters.FirstRowAsHeader",
-                                "type": "Expression"
-                            },
-                            "ColumnDelimiter": {
-                                "value": "@pipeline().parameters.ColumnDelimiter",
-                                "type": "Expression"
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                "name": "ac_ctrl_SetqueryDetail",
-                "type": "SetVariable",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_ExecuteConvertCodeAzureFunction",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "variableName": "queryDetail",
-                    "value": {
-                        "value": "SELECT\n\nISNULL(b.InvoiceNo,'') AS InvoiceNo,\nSUBSTRING(b.OrderNumber,6,LEN(b.OrderNumber)) AS OrderNumber,\nCONVERT(nvarchar,CONVERT(BIGINT,b.OrderLineNumber)) AS OrderLineNumber,\nISNULL(b.PartsNo,'') AS PartsNo,\nISNULL(b.ProductCode,'') AS ProductCode,\nISNULL(b.AssocMachineType,'') AS AssocMachineType,\nREPLACE(REPLACE(ProductName1, CHAR(13), ''), CHAR(10), '') AS ProductName1,\nREPLACE(REPLACE(ProductName2, CHAR(13), ''), CHAR(10), '') AS ProductName2,\nREPLACE(REPLACE(ProductName3, CHAR(13), ''), CHAR(10), '') AS ProductName3,\nISNULL(b.CustItemCode,'') AS CustItemCode,\nCONVERT(nvarchar,CONVERT(BIGINT,b.NetWeight)) AS NetWeight,\nISNULL(b.OriginCode,'') AS OriginCode,\nISNULL(b.HSCode,'') AS HSCode,\nISNULL(b.SpareModelCode,'') AS SpareModelCode,\nISNULL(b.SpareModelName,'') AS SpareModelName,\nISNULL(b.LastCustProductCode,'') AS LastCustProductCode,\nREPLACE(REPLACE(LastCustProductName1, CHAR(13), ''), CHAR(10), '') AS LastCustProductName1,\nREPLACE(REPLACE(LastCustProductName2, CHAR(13), ''), CHAR(10), '') AS LastCustProductName2,\nREPLACE(REPLACE(LastCustProductName3, CHAR(13), ''), CHAR(10), '') AS LastCustProductName3,\nCONVERT(nvarchar,b.LastCustOrdPrice) AS LastCustOrdPrice,\nCONVERT(nvarchar,CONVERT(BIGINT,b.Quantity)) AS Quantity,\nISNULL(b.OrderQuantityUom,'') AS OrderQuantityUom,\nCONVERT(nvarchar,b.UnitPrice) AS UnitPrice,\nCONVERT(nvarchar,b.Amount) AS Amount,\nISNULL(b.CustomerPONo1,'') AS CustomerPONo1,\nISNULL(b.CustomerPONo2,'') AS CustomerPONo2,\nISNULL(b.CustomerPONo3,'') AS CustomerPONo3,\nISNULL(b.CustomerPONo4,'') AS CustomerPONo4,\nISNULL(b.CustomerPONo5,'') AS CustomerPONo5,\nISNULL(b.ChargeDeptCode,'') AS ChargeDeptCode,\nISNULL(b.ProjectCode1,'') AS ProjectCode1,\nISNULL(b.ChargeDeptCode2,'') AS ChargeDeptCode2,\nISNULL(b.ProjectCode2,'') AS ProjectCode2,\nISNULL(b.ChargeDeptCode3,'') AS ChargeDeptCode3,\nISNULL(b.ProjectCode3,'') AS ProjectCode3,\nISNULL(b.VanWhseCode,'') AS VanWhseCode,\nISNULL(b.AccountDeptCode,'') AS AccountDeptCode,\nCONVERT(nvarchar,b.Imoh) AS Imoh,\nCONVERT(nvarchar,b.Markup) AS Markup,\nCONVERT(nvarchar,b.ChargeFOB) AS ChargeFOB,\nCONVERT(nvarchar,b.ChargeOther) AS ChargeOther,\nISNULL(b.ProductLineName,'') AS ProductLineName,\nISNULL(b.ProductLineCode,'') AS ProductLineCode,\nISNULL(b.PTANo,'') AS PTANo,\nISNULL(b.LOS,'') AS LOS,\nCONVERT(nvarchar,b.GoodsCharge) AS GoodsCharge,\nCONVERT(nvarchar,b.ToolingCharge) AS ToolingCharge\n\nFROM\n@{concat(variables('dbName'),'earth_dp_ShipmentRequestInfoHeaderIF')} a\nINNER JOIN @{concat(variables('dbName'),'earth_dp_ShipmentRequestInfoLineIF')} b ON a.InvoiceNo = b.InvoiceNo\nWHERE \n--出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME) > AzureDB.前回出力日時)\n--AND 出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME) <= AzureDB.次回出力日時)\na.CREATEDDATETIME > '@{formatDateTime(activity('ac_ctrl_LookupExecuteTime').output.firstRow.LastExecutionTime, 'yyyy-MM-dd HH:mm:ss')}'\nAND a.CREATEDDATETIME <= '@{formatDateTime(variables('nextExecutionTIme'), 'yyyy-MM-dd HH:mm:ss')}'\n",
-                        "type": "Expression"
-                    }
-                }
-            },
-            {
-                "name": "ac_tran_ConvertFixedFileFromCsvDetail",
-                "type": "ExecutePipeline",
-                "dependsOn": [
-                    {
-                        "activity": "ac_tran_CreateFileFromAzureDBDetail",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "userProperties": [],
-                "typeProperties": {
-                    "pipeline": {
-                        "referenceName": "pl_ifcm_ExecuteAzureFunctionOnly",
-                        "type": "PipelineReference"
-                    },
-                    "waitOnCompletion": true,
-                    "parameters": {
-                        "AzureFunctionName": "HandleFileFunctionHttp/DoConvertFromCsvDataToFixDataAction",
-                        "AzureFunctionUrl": {
-                            "value": "@pipeline().parameters.HandleFileFunctionUrl",
-                            "type": "Expression"
-                        },
-                        "AzureFunctionBody": {
-                            "value": "{\n\"regionrshort\":\"@{pipeline().parameters.RegionCode}\",\n\"containername\":\"@{pipeline().parameters.Container}\",\n\"mainfilefolder\":\"@{pipeline().parameters.ResultFolderDetail}\",\n\"mainfile\":\"@{pipeline().parameters.MainFileDetail}\",\n\"propertyfilefolder\":\"@{pipeline().parameters.PropertyFolderDetail}\",\n\"propertyfile\":\"@{pipeline().parameters.PropertyFileDetail}\",\n\"resultfilefolder\":\"@{pipeline().parameters.ResultFolderDetail}\",\n\"resultfile\":\"@{pipeline().parameters.ResultFileDetail}\",\n\"connstr\":\"@{pipeline().parameters.Connstr}\",\n\"encoder\":\"@{if(equals(pipeline().parameters.Encoding, 'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding, 'EUC-JP'), 'EUC', 'UTF8'))}\",\n\"returnchar\":\"@{pipeline().parameters.ReturnChar}\"\n}",
-                            "type": "Expression"
-                        },
-                        "SecretName": {
-                            "value": "@pipeline().parameters.HandleFileFunctionSecretName",
-                            "type": "Expression"
-                        }
-                    }
-                }
-            },
-            {
-                "name": "ac_ctrl_ExecuteConvertCodeAzureFunction",
-                "description": "",
-                "type": "AzureFunctionActivity",
-                "dependsOn": [
-                    {
-                        "activity": "ac_ctrl_SetqueryExecuteTime",
-                        "dependencyConditions": [
-                            "Succeeded"
-                        ]
-                    }
-                ],
-                "policy": {
-                    "timeout": "7.00:00:00",
-                    "retry": 0,
-                    "retryIntervalInSeconds": 30,
-                    "secureOutput": false,
-                    "secureInput": false
-                },
-                "userProperties": [],
-                "typeProperties": {
-                    "functionName": "GetConvertionCode",
-                    "method": "POST",
-                    "body": {
-                        "value": "@pipeline().parameters.ConvertCodeFunctionParam",
-                        "type": "Expression"
-                    }
-                },
-                "linkedServiceName": {
-                    "referenceName": "AzureFunction_earthdevfuncjpelsconvertcode",
-                    "type": "LinkedServiceReference"
-                }
-            }
-        ],
-        "concurrency": 1,
-        "parameters": {
-            "FunctionId": {
-                "type": "string",
-                "defaultValue": "LS_IF_0257"
-            },
-            "RegionCode": {
-                "type": "string",
-                "defaultValue": "ls"
-            },
-            "Container": {
-                "type": "string",
-                "defaultValue": "externalif-ne"
-            },
-            "MainFile": {
-                "type": "string",
-                "defaultValue": "LS_IF_0257_FLONE0006"
-            },
-            "MainFileDetail": {
-                "type": "string",
-                "defaultValue": "LS_IF_0257_FLONE0007"
-            },
-            "PropertyFolder": {
-                "type": "string",
-                "defaultValue": "uttech/conf/0257"
-            },
-            "PropertyFolderDetail": {
-                "type": "string",
-                "defaultValue": "uttech/conf/0258"
-            },
-            "PropertyFile": {
-                "type": "string",
-                "defaultValue": "FLONE0006_Definition.csv"
-            },
-            "PropertyFileDetail": {
-                "type": "string",
-                "defaultValue": "FLONE0007_Definition.csv"
-            },
-            "ResultFolder": {
-                "type": "string",
-                "defaultValue": "uttech/azure/0257/conv"
-            },
-            "ResultFolderDetail": {
-                "type": "string",
-                "defaultValue": "uttech/azure/0258/conv"
-            },
-            "ResultFile": {
-                "type": "string",
-                "defaultValue": "FLONE0006"
-            },
-            "ResultFileDetail": {
-                "type": "string",
-                "defaultValue": "FLONE0007"
-            },
-            "EndFileFolder": {
-                "type": "string",
-                "defaultValue": "uttech/azure/0257/endfile"
-            },
-            "EndFileFolderDetail": {
-                "type": "string",
-                "defaultValue": "uttech/azure/0258/endfile"
-            },
-            "EndFile": {
-                "type": "string",
-                "defaultValue": "FLONE0006.fen"
-            },
-            "EndFileDetail": {
-                "type": "string",
-                "defaultValue": "FLONE0007.fen"
-            },
-            "SharedStorageContainer": {
-                "type": "string",
-                "defaultValue": "fileif-ne"
-            },
-            "SharedStorageIFFileFolder": {
-                "type": "string",
-                "defaultValue": "ftp/dpne0009"
-            },
-            "SharedStorageArchiveFolder": {
-                "type": "string",
-                "defaultValue": "backup/data/dpne0009"
-            },
-            "ZeroFileLinkageFlag": {
-                "type": "bool",
-                "defaultValue": true
-            },
-            "EndFileCreationFlag": {
-                "type": "bool",
-                "defaultValue": true
-            },
-            "TransferType": {
-                "type": "string",
-                "defaultValue": "PUT"
-            },
-            "ReturnChar": {
-                "type": "string",
-                "defaultValue": "CRLF"
-            },
-            "Connstr": {
-                "type": "string",
-                "defaultValue": "0"
-            },
-            "Encoding": {
-                "type": "string",
-                "defaultValue": "SHIFT-JIS"
-            },
-            "FirstRowAsHeader": {
-                "type": "bool",
-                "defaultValue": false
-            },
-            "ColumnDelimiter": {
-                "type": "string",
-                "defaultValue": ","
-            },
-            "ExcludeLinesc": {
-                "type": "string",
-                "defaultValue": "0"
-            },
-            "SynapseSecretName": {
-                "type": "string",
-                "defaultValue": "earth-dev-lsasynloginlsexternaliffodeveda1c81cbd-secret"
-            },
-            "ExternalIFComFunctionUrl": {
-                "type": "string",
-                "defaultValue": "https://earth-dev-func-jpe-ls-general.azurewebsites.net"
-            },
-            "ExternalIFComFunctionSecretName": {
-                "type": "string",
-                "defaultValue": "earth-dev-lsfunckeygeneral-secret"
-            },
-            "HandleFileFunctionUrl": {
-                "type": "string",
-                "defaultValue": "https://earth-dev-func-jpe-ls-handlefile.azurewebsites.net"
-            },
-            "HandleFileFunctionSecretName": {
-                "type": "string",
-                "defaultValue": "earth-dev-lsfunckeyhandlefile-secret"
-            },
-            "ConvertCodeFunctionUrl": {
-                "type": "string",
-                "defaultValue": "https://earth-dev-func-jpe-cm-general.azurewebsites.net"
-            },
-            "ConvertCodeFunctionSecretName": {
-                "type": "string",
-                "defaultValue": "earth-dev-cmfunckeygeneral"
-            },
-            "ConvertCodeFunctionParam": {
-                "type": "string",
-                "defaultValue": {
-                    "codeCategory": "earth_dp_PayFreeTypeInterface,earth_dp_StillReceiptType,earth_dp_FromImportSystem",
-                    "conversionSource": "FO",
-                    "conversionDestination": "eHub"
-                }
-            },
-            "CompanyCode": {
-                "type": "string",
-                "defaultValue": "ALL"
-            },
-            "FileId": {
-                "type": "string",
-                "defaultValue": "dpne0009"
-            }
-        },
-        "variables": {
-            "nextExecutionTIme": {
-                "type": "String"
-            },
-            "query": {
-                "type": "String"
-            },
-            "queryDetail": {
-                "type": "String"
-            },
-            "dbName": {
-                "type": "String",
-                "defaultValue": "[ls-deveda1c81cbd-scp].[dbo]."
-            }
-        },
-        "folder": {
-            "name": "0257"
-        },
-        "annotations": [],
-        "lastPublishTime": "2022-10-19T05:17:00Z"
-    },
-    "type": "Microsoft.Synapse/workspaces/pipelines"
+"name":"pl_0257",
+"properties":{
+"activities":[
+{
+"name":"ac_tran_CreateFileFromAzureDB",
+"description":"Originalprocessing\n\noverview\n-Extractthetargetdatabycomparingthepreviouscrosssectionwiththeruntime\n-Convertdatatocsvfile\n-Modifythequeryasneeded\n\n",
+"type":"Copy",
+"dependsOn":[
+{
+"activity":"ac_ctrl_Setquery",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"timeout":"7.00:00:00",
+"retry":5,
+"retryIntervalInSeconds":60,
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"source":{
+"type":"SqlDWSource",
+"sqlReaderQuery":{
+"value":"@variables('query')",
+"type":"Expression"
+},
+"queryTimeout":"02:00:00",
+"partitionOption":"None"
+},
+"sink":{
+"type":"DelimitedTextSink",
+"storeSettings":{
+"type":"AzureBlobFSWriteSettings"
+},
+"formatSettings":{
+"type":"DelimitedTextWriteSettings",
+"quoteAllText":true,
+"fileExtension":".txt"
+}
+},
+"enableStaging":false,
+"validateDataConsistency":true,
+"translator":{
+"type":"TabularTranslator",
+"typeConversion":true,
+"typeConversionSettings":{
+"allowDataTruncation":true,
+"treatBooleanAsNumber":false
+}
+}
+},
+"inputs":[
+{
+"referenceName":"ds_asyn_In",
+"type":"DatasetReference"
+}
+],
+"outputs":[
+{
+"referenceName":"ds_ablb_adl_DelimitedTextCrLfWithDoubleQuoteChar",
+"type":"DatasetReference",
+"parameters":{
+"Container":{
+"value":"@pipeline().parameters.Container",
+"type":"Expression"
+},
+"Folder":{
+"value":"@pipeline().parameters.ResultFolder",
+"type":"Expression"
+},
+"FileName":{
+"value":"@pipeline().parameters.MainFile",
+"type":"Expression"
+},
+"Encoding":{
+"value":"@pipeline().parameters.Encoding",
+"type":"Expression"
+},
+"FirstRowAsHeader":{
+"value":"@pipeline().parameters.FirstRowAsHeader",
+"type":"Expression"
+},
+"ColumnDelimiter":{
+"value":"@pipeline().parameters.ColumnDelimiter",
+"type":"Expression"
+}
+}
+}
+]
+},
+{
+"name":"ac_ctrl_SetqueryExecuteTime",
+"description":"Commonprocessing\n\noverview\n-Setqueryexecutiontimetovariable\n\n",
+"type":"SetVariable",
+"dependsOn":[
+{
+"activity":"ac_ctrl_LookupExecuteTime",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"variableName":"nextExecutionTIme",
+"value":{
+"value":"@utcnow()",
+"type":"Expression"
+}
+}
+},
+{
+"name":"ac_ctrl_SetExecuteTime",
+"description":"Commonprocessing\n\noverview\n-Updatetheexecutiontimewiththevariableac_ctrl_SetqueryExecuteTime",
+"type":"SqlServerStoredProcedure",
+"dependsOn":[
+{
+"activity":"ac_ctrl_OutboundEndProcess",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"timeout":"7.00:00:00",
+"retry":0,
+"retryIntervalInSeconds":30,
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"storedProcedureName":"[dbo].[ls_SetLastExecutionTime]",
+"storedProcedureParameters":{
+"CompanyCode":{
+"value":{
+"value":"@pipeline().parameters.CompanyCode",
+"type":"Expression"
+},
+"type":"String"
+},
+"FunctionId":{
+"value":{
+"value":"@pipeline().parameters.FunctionId",
+"type":"Expression"
+},
+"type":"String"
+},
+"LastExecutionTime":{
+"value":{
+"value":"@variables('nextExecutionTIme')",
+"type":"Expression"
+},
+"type":"Datetimeoffset"
+}
+}
+},
+"linkedServiceName":{
+"referenceName":"AzureSqlMI_earthcmdevsqlmijpecom",
+"type":"LinkedServiceReference"
+}
+},
+{
+"name":"ac_ctrl_OutboundEndProcess",
+"type":"ExecutePipeline",
+"dependsOn":[
+{
+"activity":"ac_tran_ConvertFixedFileFromCsv",
+"dependencyConditions":[
+"Succeeded"
+]
+},
+{
+"activity":"ac_tran_ConvertFixedFileFromCsvDetail",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"userProperties":[],
+"typeProperties":{
+"pipeline":{
+"referenceName":"pl_ifcm_ExecuteAzureFunctionOnly",
+"type":"PipelineReference"
+},
+"waitOnCompletion":true,
+"parameters":{
+"AzureFunctionName":{
+"value":"OutBoundEndProcessFunctionHttp/DoOutBoundEndProcessFunctionAction",
+"type":"Expression"
+},
+"AzureFunctionUrl":{
+"value":"@pipeline().parameters.ExternalIFComFunctionUrl",
+"type":"Expression"
+},
+"AzureFunctionBody":{
+"value":"[\n{\n\"regioncode\":\"@{pipeline().parameters.RegionCode}\",\n\"container\":\"@{pipeline().parameters.Container}\",\n\"resultfolder\":\"@{pipeline().parameters.ResultFolder}\",\n\"resultfile\":\"@{pipeline().parameters.ResultFile}\",\n\"endfilefolder\":\"@{pipeline().parameters.EndFileFolder}\",\n\"endfile\":\"@{pipeline().parameters.EndFile}\",\n\"encoding\":\"@{if(equals(pipeline().parameters.Encoding,'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding,'EUC-JP'),'EUC','UTF8'))}\",\n\"zerofilelinkageflag\":\"@{pipeline().parameters.ZeroFileLinkageFlag}\",\n\"endfilecreationflag\":\"@{pipeline().parameters.EndFileCreationFlag}\",\n\"transfertype\":\"@{pipeline().parameters.TransferType}\",\n\"excludelinesc\":\"@{pipeline().parameters.ExcludeLinesc}\",\n\"sharedstoragecontainer\":\"@{pipeline().parameters.SharedStorageContainer}\",\n\"sharedstorageiffilefolder\":\"@{pipeline().parameters.SharedStorageIFFileFolder}\",\n\"sharedstoragearchivefolder\":\"@{pipeline().parameters.SharedStorageArchiveFolder}\",\n\"fileid\":\"@{pipeline().parameters.FileId}\",\n\"filler\":\"\",\n\"endNotificationFileNewlineCode\":\"CRLF\"\n},\n{\n\"regioncode\":\"@{pipeline().parameters.RegionCode}\",\n\"container\":\"@{pipeline().parameters.Container}\",\n\"resultfolder\":\"@{pipeline().parameters.ResultFolderDetail}\",\n\"resultfile\":\"@{pipeline().parameters.ResultFileDetail}\",\n\"endfilefolder\":\"@{pipeline().parameters.EndFileFolderDetail}\",\n\"endfile\":\"@{pipeline().parameters.EndFileDetail}\",\n\"encoding\":\"@{if(equals(pipeline().parameters.Encoding,'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding,'EUC-JP'),'EUC','UTF8'))}\",\n\"zerofilelinkageflag\":\"@{pipeline().parameters.ZeroFileLinkageFlag}\",\n\"endfilecreationflag\":\"@{pipeline().parameters.EndFileCreationFlag}\",\n\"transfertype\":\"@{pipeline().parameters.TransferType}\",\n\"excludelinesc\":\"@{pipeline().parameters.ExcludeLinesc}\",\n\"sharedstoragecontainer\":\"@{pipeline().parameters.SharedStorageContainer}\",\n\"sharedstorageiffilefolder\":\"@{pipeline().parameters.SharedStorageIFFileFolder}\",\n\"sharedstoragearchivefolder\":\"@{pipeline().parameters.SharedStorageArchiveFolder}\",\n\"fileid\":\"@{pipeline().parameters.FileId}\",\n\"filler\":\"\",\n\"endNotificationFileNewlineCode\":\"CRLF\"\n}\n]",
+"type":"Expression"
+},
+"SecretName":{
+"value":"@pipeline().parameters.ExternalIFComFunctionSecretName",
+"type":"Expression"
+}
+}
+}
+},
+{
+"name":"ac_ctrl_LookupExecuteTime",
+"description":"Commonprocessing\n\noverview\n-Executeastoredproceduretogetthelastexecutiontime\n\n\n\n",
+"type":"Lookup",
+"dependsOn":[],
+"policy":{
+"timeout":"7.00:00:00",
+"retry":0,
+"retryIntervalInSeconds":30,
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"source":{
+"type":"SqlMISource",
+"sqlReaderStoredProcedureName":"[dbo].[ls_GetLastExecutionTime]",
+"storedProcedureParameters":{
+"CompanyCode":{
+"type":"String",
+"value":"ALL"
+},
+"FunctionId":{
+"type":"String",
+"value":"LS_IF_0257"
+},
+"LastExecutionTime":{
+"type":"DateTime",
+"value":"2023-08-0813:23:22"
+}
+},
+"partitionOption":"None"
+},
+"dataset":{
+"referenceName":"ds_sqlmi_In",
+"type":"DatasetReference",
+"parameters":{
+"SchemaName":"dbo",
+"TableName":{
+"value":"\"\"",
+"type":"Expression"
+}
+}
+}
+}
+},
+{
+"name":"ac_ctrl_Setquery",
+"type":"SetVariable",
+"dependsOn":[
+{
+"activity":"ac_ctrl_ExecuteConvertCodeAzureFunction",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"variableName":"query",
+"value":{
+"value":"WITHconvertionCodeTbAS(\nSELECTvalue,\nSUBSTRING(value,0,CHARINDEX(',',value))AScodeCategory,\nSUBSTRING(value,(firstComma+1),(secondComma-(firstComma+1)))ASCodeMeaning,\nSUBSTRING(value,(secondComma+1),(thirdComma-(secondComma+1)))AScodeSource,\nSUBSTRING(value,(thirdComma+1),LEN(value))AScodeDestination\nFROM(\nSELECTvalue,\nCHARINDEX(',',value)ASfirstComma,\nCHARINDEX(',',value,CHARINDEX(',',value)+1)ASsecondComma,\nCHARINDEX(',',value,CHARINDEX(',',value,CHARINDEX(',',value)+1)+1)ASthirdComma\nFROMSTRING_SPLIT(REPLACE(N'@{replace(activity('ac_ctrl_ExecuteConvertCodeAzureFunction').output.Response,'''','''''')}',CHAR(13)+CHAR(10),CHAR(10)),CHAR(10))\n)ASX\n)\n\n\nSELECT\n\nISNULL(InvoiceNo,'')ASInvoiceNo,\nISNULL(CustMIMECode,'')ASCustMIMECode,\nISNULL(AreaCode,'')ASAreaCode,\nISNULL(ExportForm,'')ASExportForm,\nISNULL(SoldToCode,'')ASSoldToCode,\nISNULL(SoldToName1,'')ASSoldToName1,\nISNULL(SoldToName2,'')ASSoldToName2,\nREPLACE(REPLACE(SoldToAddress1,CHAR(13),''),CHAR(10),'')ASSoldToAddress1,\nREPLACE(REPLACE(SoldToAddress2,CHAR(13),''),CHAR(10),'')ASSoldToAddress2,\nREPLACE(REPLACE(SoldToAddress3,CHAR(13),''),CHAR(10),'')ASSoldToAddress3,\nREPLACE(REPLACE(SoldToAddress4,CHAR(13),''),CHAR(10),'')ASSoldToAddress4,\nISNULL(ConsigneeCode,'')ASConsigneeCode,\nISNULL(ConsigneeName1,'')ASConsigneeName1,\nISNULL(ConsigneeName2,'')ASConsigneeName2,\nREPLACE(REPLACE(ConsigneeAddress1,CHAR(13),''),CHAR(10),'')ASConsigneeAddress1,\nREPLACE(REPLACE(ConsigneeAddress2,CHAR(13),''),CHAR(10),'')ASConsigneeAddress2,\nREPLACE(REPLACE(ConsigneeAddress3,CHAR(13),''),CHAR(10),'')ASConsigneeAddress3,\nREPLACE(REPLACE(ConsigneeAddress4,CHAR(13),''),CHAR(10),'')ASConsigneeAddress4,\nISNULL(DeliveryToCode,'')ASDeliveryToCode,\nISNULL(DeliveryToName1,'')ASDeliveryToName1,\nISNULL(DeliveryToName2,'')ASDeliveryToName2,\nREPLACE(REPLACE(DeliveryToAddress1,CHAR(13),''),CHAR(10),'')ASDeliveryToAddress1,\nREPLACE(REPLACE(DeliveryToAddress2,CHAR(13),''),CHAR(10),'')ASDeliveryToAddress2,\nREPLACE(REPLACE(DeliveryToAddress3,CHAR(13),''),CHAR(10),'')ASDeliveryToAddress3,\nREPLACE(REPLACE(DeliveryToAddress4,CHAR(13),''),CHAR(10),'')ASDeliveryToAddress4,\nISNULL(NotifyCode,'')ASNotifyCode,\nISNULL(NotifyName1,'')ASNotifyName1,\nISNULL(NotifyName2,'')ASNotifyName2,\nREPLACE(REPLACE(NotifyAddress1,CHAR(13),''),CHAR(10),'')ASNotifyAddress1,\nREPLACE(REPLACE(NotifyAddress2,CHAR(13),''),CHAR(10),'')ASNotifyAddress2,\nREPLACE(REPLACE(NotifyAddress3,CHAR(13),''),CHAR(10),'')ASNotifyAddress3,\nREPLACE(REPLACE(NotifyAddress4,CHAR(13),''),CHAR(10),'')ASNotifyAddress4,\nISNULL(LastSoldToCode,'')ASLastSoldToCode,\nISNULL(LastSoldToName1,'')ASLastSoldToName1,\nISNULL(LastSoldToName2,'')ASLastSoldToName2,\nREPLACE(REPLACE(LastSoldToAddress1,CHAR(13),''),CHAR(10),'')ASLastSoldToAddress1,\nREPLACE(REPLACE(LastSoldToAddress2,CHAR(13),''),CHAR(10),'')ASLastSoldToAddress2,\nREPLACE(REPLACE(LastSoldToAddress3,CHAR(13),''),CHAR(10),'')ASLastSoldToAddress3,\nREPLACE(REPLACE(LastSoldToAddress4,CHAR(13),''),CHAR(10),'')ASLastSoldToAddress4,\n--輸送方法コード\nCASEWHENTransMethodCode='Sea'THEN\n'10'\nWHENTransMethodCode='Air'THEN\n'40'\nWHENTransMethodCode='Truck'THEN\n'T'\nELSE\nTransMethodCode\nEND\nASTransMethodCode,\nISNULL(A41.codeDestination,'')ASPayFreeType,\n--売上/未収区分\nCASEWHENCONVERT(nvarchar,StillReceiptFlag)='1'THEN\n'2'\nWHENCONVERT(nvarchar,StillReceiptFlag)='0'THEN\n'1'\nELSE\nCONVERT(nvarchar,StillReceiptFlag)\nEND\nASStillReceiptFlag,\nISNULL(PayTerm1,'')ASPayTerm1,\nISNULL(PayTerm2,'')ASPayTerm2,\nISNULL(PayTerm3,'')ASPayTerm3,\nISNULL(CurrencyCode,'')ASCurrencyCode,\nISNULL(PricingTermCode,'')ASPricingTermCode,\nISNULL(PricingTermName,'')ASPricingTermName,\nISNULL(PricingTermPlaceCode,'')ASPricingTermPlaceCode,\nISNULL(PricingTermPlaceName,'')ASPricingTermPlaceName,\nISNULL(TradingTermCode,'')ASTradingTermCode,\nISNULL(TradingTermName,'')ASTradingTermName,\nISNULL(TradingTermPlaceCode,'')ASTradingTermPlaceCode,\nISNULL(TradingTermPlaceName,'')ASTradingTermPlaceName,\nCONVERT(nvarchar,TotalAmount)ASTotalAmount,\nISNULL(FreightPayCode,'')ASFreightPayCode,\nISNULL(ReferenceNo,'')ASReferenceNo,\nCASEWHENCONVERT(nvarchar,PriceDate,112)='19000101'THEN\n''\nELSE\nCONVERT(nvarchar,PriceDate,112)\nEND\nASPriceDate,\nCASEWHENCONVERT(nvarchar,FASDueDate,112)='19000101'THEN\n''\nELSE\nCONVERT(nvarchar,FASDueDate,112)\nEND\nASFASDueDate,\nCASEWHENCONVERT(nvarchar,FOBDueDate,112)='19000101'THEN\n''\nELSE\nCONVERT(nvarchar,FOBDueDate,112)\nEND\nASFOBDueDate,\nGoodsType,\nISNULL(A62.codeDestination,'')ASFromImpSys,\nLastCustMIMECode,\nLastCustOrdCurrency,\nInvoicePersonCode,\nCASEWHENCONVERT(nvarchar,InvoiceCreationDate,112)='19000101'THEN\n''\nELSE\nCONVERT(nvarchar,InvoiceCreationDate,112)\nEND\nASInvoiceCreationDate,\nISNULL(Vessel,'')ASVessel,\nISNULL(LoadingCode,'')ASLoadingCode,\nISNULL(DestinationCode,'')ASDestinationCode,\nISNULL(InvoiceTitleCode,'')ASInvoiceTitleCode,\nISNULL(CORemarks1,'')ASCORemarks1,\nISNULL(CORemarks2,'')ASCORemarks2,\nISNULL(CORemarks3,'')ASCORemarks3,\nISNULL(CORemarks4,'')ASCORemarks4,\nISNULL(CORemarks5,'')ASCORemarks5,\nISNULL(CORemarks6,'')ASCORemarks6,\nCONVERT(nvarchar,CONVERT(BIGINT,TotalPackQty))ASTotalPackQty,\nISNULL(TotalPackCode,'')ASTotalPackCode,\nISNULL(InsidePackQty,'')ASInsidePackQty,\nISNULL(AddCalCode,'')ASAddCalCode,\nISNULL(Remarks1,'')ASRemarks1,\nISNULL(Remarks2,'')ASRemarks2,\nISNULL(Remarks3,'')ASRemarks3,\nISNULL(Remarks4,'')ASRemarks4,\nISNULL(Remarks5,'')ASRemarks5,\nISNULL(Remarks6,'')ASRemarks6,\nISNULL(Remarks7,'')ASRemarks7,\nISNULL(Remarks8,'')ASRemarks8,\nISNULL(Remarks9,'')ASRemarks9,\nISNULL(Remarks10,'')ASRemarks10,\nISNULL(Remarks11,'')ASRemarks11,\nISNULL(Remarks12,'')ASRemarks12,\nISNULL(Remarks13,'')ASRemarks13,\nISNULL(Remarks14,'')ASRemarks14,\nISNULL(Remarks15,'')ASRemarks15,\nISNULL(Remarks16,'')ASRemarks16,\nISNULL(Remarks17,'')ASRemarks17,\nISNULL(Remarks18,'')ASRemarks18,\nISNULL(Remarks19,'')ASRemarks19,\nISNULL(Remarks20,'')ASRemarks20,\nISNULL(Remarks21,'')ASRemarks21,\nISNULL(Remarks22,'')ASRemarks22,\nISNULL(Remarks23,'')ASRemarks23,\nISNULL(Remarks24,'')ASRemarks24,\nISNULL(CaseMarkCode,'')ASCaseMarkCode,\nISNULL(CaseMark1,'')ASCaseMark1,\nISNULL(CaseMark2,'')ASCaseMark2,\nISNULL(CaseMark3,'')ASCaseMark3,\nISNULL(CaseMark4,'')ASCaseMark4,\nISNULL(CaseMark5,'')ASCaseMark5,\nISNULL(CaseMark6,'')ASCaseMark6,\nISNULL(CaseMark7,'')ASCaseMark7,\nISNULL(CaseMark8,'')ASCaseMark8,\nISNULL(CaseMark9,'')ASCaseMark9,\nISNULL(CaseMark10,'')ASCaseMark10,\nISNULL(CaseMark11,'')ASCaseMark11,\nISNULL(CaseMark12,'')ASCaseMark12,\nISNULL(Attention,'')ASAttention,\nISNULL(InvoiceIssueLocation,'')ASInvoiceIssueLocation,\nISNULL(ForwarderCode,'')ASForwarderCode,\nISNULL(ShipperCode,'')ASShipperCode,\nCASEWHENCONVERT(nvarchar,ETADate,112)='19000101'THEN\n''\nELSE\nCONVERT(nvarchar,ETADate,112)\nEND\nASETADate,\nCONVERT(nvarchar,GrossWeight)ASGrossWeight,\nCONVERT(nvarchar,Volume)ASVolume\n\nFROM\n\n@{concat(variables('dbName'),\n'earth_dp_ShipmentRequestInfoHeaderIF')}\n\nLEFTJOINconvertionCodeTbASA41ONA41.codeCategory='earth_dp_PayFreeTypeInterface'ANDPayFreeType=A41.codeSource\nLEFTJOINconvertionCodeTbASA62ONA62.codeCategory='earth_dp_FromImportSystem'ANDFromImpSys=A62.codeSource\n\nWHERE\n--出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME)>AzureDB.前回出力日時)\n--AND出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME)<=AzureDB.次回出力日時)\nCREATEDDATETIME>'@{formatDateTime(activity('ac_ctrl_LookupExecuteTime').output.firstRow.LastExecutionTime,'yyyy-MM-ddHH:mm:ss')}'\nANDCREATEDDATETIME<='@{formatDateTime(variables('nextExecutionTIme'),'yyyy-MM-ddHH:mm:ss')}'\n",
+"type":"Expression"
+}
+}
+},
+{
+"name":"ac_tran_ConvertFixedFileFromCsv",
+"type":"ExecutePipeline",
+"dependsOn":[
+{
+"activity":"ac_tran_CreateFileFromAzureDB",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"userProperties":[],
+"typeProperties":{
+"pipeline":{
+"referenceName":"pl_ifcm_ExecuteAzureFunctionOnly",
+"type":"PipelineReference"
+},
+"waitOnCompletion":true,
+"parameters":{
+"AzureFunctionName":"HandleFileFunctionHttp/DoConvertFromCsvDataToFixDataAction",
+"AzureFunctionUrl":{
+"value":"@pipeline().parameters.HandleFileFunctionUrl",
+"type":"Expression"
+},
+"AzureFunctionBody":{
+"value":"{\n\"regionrshort\":\"@{pipeline().parameters.RegionCode}\",\n\"containername\":\"@{pipeline().parameters.Container}\",\n\"mainfilefolder\":\"@{pipeline().parameters.ResultFolder}\",\n\"mainfile\":\"@{pipeline().parameters.MainFile}\",\n\"propertyfilefolder\":\"@{pipeline().parameters.PropertyFolder}\",\n\"propertyfile\":\"@{pipeline().parameters.PropertyFile}\",\n\"resultfilefolder\":\"@{pipeline().parameters.ResultFolder}\",\n\"resultfile\":\"@{pipeline().parameters.ResultFile}\",\n\"connstr\":\"@{pipeline().parameters.Connstr}\",\n\"encoder\":\"@{if(equals(pipeline().parameters.Encoding,'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding,'EUC-JP'),'EUC','UTF8'))}\",\n\"returnchar\":\"@{pipeline().parameters.ReturnChar}\"\n}",
+"type":"Expression"
+},
+"SecretName":{
+"value":"@pipeline().parameters.HandleFileFunctionSecretName",
+"type":"Expression"
+}
+}
+}
+},
+{
+"name":"ac_tran_CreateFileFromAzureDBDetail",
+"description":"Originalprocessing\n\noverview\n-Extractthetargetdatabycomparingthepreviouscrosssectionwiththeruntime\n-Convertdatatocsvfile\n-Modifythequeryasneeded\n\n",
+"type":"Copy",
+"dependsOn":[
+{
+"activity":"ac_ctrl_SetqueryDetail",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"timeout":"7.00:00:00",
+"retry":5,
+"retryIntervalInSeconds":60,
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"source":{
+"type":"SqlDWSource",
+"sqlReaderQuery":{
+"value":"@variables('queryDetail')",
+"type":"Expression"
+},
+"queryTimeout":"02:00:00",
+"partitionOption":"None"
+},
+"sink":{
+"type":"DelimitedTextSink",
+"storeSettings":{
+"type":"AzureBlobFSWriteSettings"
+},
+"formatSettings":{
+"type":"DelimitedTextWriteSettings",
+"quoteAllText":true,
+"fileExtension":".txt"
+}
+},
+"enableStaging":false,
+"validateDataConsistency":true,
+"translator":{
+"type":"TabularTranslator",
+"typeConversion":true,
+"typeConversionSettings":{
+"allowDataTruncation":true,
+"treatBooleanAsNumber":false
+}
+}
+},
+"inputs":[
+{
+"referenceName":"ds_asyn_In",
+"type":"DatasetReference"
+}
+],
+"outputs":[
+{
+"referenceName":"ds_ablb_adl_DelimitedTextCrLfWithDoubleQuoteChar",
+"type":"DatasetReference",
+"parameters":{
+"Container":{
+"value":"@pipeline().parameters.Container",
+"type":"Expression"
+},
+"Folder":{
+"value":"@pipeline().parameters.ResultFolderDetail",
+"type":"Expression"
+},
+"FileName":{
+"value":"@pipeline().parameters.MainFileDetail",
+"type":"Expression"
+},
+"Encoding":{
+"value":"@pipeline().parameters.Encoding",
+"type":"Expression"
+},
+"FirstRowAsHeader":{
+"value":"@pipeline().parameters.FirstRowAsHeader",
+"type":"Expression"
+},
+"ColumnDelimiter":{
+"value":"@pipeline().parameters.ColumnDelimiter",
+"type":"Expression"
+}
+}
+}
+]
+},
+{
+"name":"ac_ctrl_SetqueryDetail",
+"type":"SetVariable",
+"dependsOn":[
+{
+"activity":"ac_ctrl_ExecuteConvertCodeAzureFunction",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"variableName":"queryDetail",
+"value":{
+"value":"SELECT\n\nISNULL(b.InvoiceNo,'')ASInvoiceNo,\nSUBSTRING(b.OrderNumber,6,LEN(b.OrderNumber))ASOrderNumber,\nCONVERT(nvarchar,CONVERT(BIGINT,b.OrderLineNumber))ASOrderLineNumber,\nISNULL(b.PartsNo,'')ASPartsNo,\nISNULL(b.ProductCode,'')ASProductCode,\nISNULL(b.AssocMachineType,'')ASAssocMachineType,\nREPLACE(REPLACE(ProductName1,CHAR(13),''),CHAR(10),'')ASProductName1,\nREPLACE(REPLACE(ProductName2,CHAR(13),''),CHAR(10),'')ASProductName2,\nREPLACE(REPLACE(ProductName3,CHAR(13),''),CHAR(10),'')ASProductName3,\nISNULL(b.CustItemCode,'')ASCustItemCode,\nCONVERT(nvarchar,CONVERT(BIGINT,b.NetWeight))ASNetWeight,\nISNULL(b.OriginCode,'')ASOriginCode,\nISNULL(b.HSCode,'')ASHSCode,\nISNULL(b.SpareModelCode,'')ASSpareModelCode,\nISNULL(b.SpareModelName,'')ASSpareModelName,\nISNULL(b.LastCustProductCode,'')ASLastCustProductCode,\nREPLACE(REPLACE(LastCustProductName1,CHAR(13),''),CHAR(10),'')ASLastCustProductName1,\nREPLACE(REPLACE(LastCustProductName2,CHAR(13),''),CHAR(10),'')ASLastCustProductName2,\nREPLACE(REPLACE(LastCustProductName3,CHAR(13),''),CHAR(10),'')ASLastCustProductName3,\nCONVERT(nvarchar,b.LastCustOrdPrice)ASLastCustOrdPrice,\nCONVERT(nvarchar,CONVERT(BIGINT,b.Quantity))ASQuantity,\nISNULL(b.OrderQuantityUom,'')ASOrderQuantityUom,\nCONVERT(nvarchar,b.UnitPrice)ASUnitPrice,\nCONVERT(nvarchar,b.Amount)ASAmount,\nISNULL(b.CustomerPONo1,'')ASCustomerPONo1,\nISNULL(b.CustomerPONo2,'')ASCustomerPONo2,\nISNULL(b.CustomerPONo3,'')ASCustomerPONo3,\nISNULL(b.CustomerPONo4,'')ASCustomerPONo4,\nISNULL(b.CustomerPONo5,'')ASCustomerPONo5,\nISNULL(b.ChargeDeptCode,'')ASChargeDeptCode,\nISNULL(b.ProjectCode1,'')ASProjectCode1,\nISNULL(b.ChargeDeptCode2,'')ASChargeDeptCode2,\nISNULL(b.ProjectCode2,'')ASProjectCode2,\nISNULL(b.ChargeDeptCode3,'')ASChargeDeptCode3,\nISNULL(b.ProjectCode3,'')ASProjectCode3,\nISNULL(b.VanWhseCode,'')ASVanWhseCode,\nISNULL(b.AccountDeptCode,'')ASAccountDeptCode,\nCONVERT(nvarchar,b.Imoh)ASImoh,\nCONVERT(nvarchar,b.Markup)ASMarkup,\nCONVERT(nvarchar,b.ChargeFOB)ASChargeFOB,\nCONVERT(nvarchar,b.ChargeOther)ASChargeOther,\nISNULL(b.ProductLineName,'')ASProductLineName,\nISNULL(b.ProductLineCode,'')ASProductLineCode,\nISNULL(b.PTANo,'')ASPTANo,\nISNULL(b.LOS,'')ASLOS,\nCONVERT(nvarchar,b.GoodsCharge)ASGoodsCharge,\nCONVERT(nvarchar,b.ToolingCharge)ASToolingCharge\n\nFROM\n@{concat(variables('dbName'),'earth_dp_ShipmentRequestInfoHeaderIF')}a\nINNERJOIN@{concat(variables('dbName'),'earth_dp_ShipmentRequestInfoLineIF')}bONa.InvoiceNo=b.InvoiceNo\nWHERE\n--出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME)>AzureDB.前回出力日時)\n--AND出荷依頼情報(表題)IF(earth_dp_ShipmentRequestInfoHeaderIF).作成日時(CREATEDDATETIME)<=AzureDB.次回出力日時)\na.CREATEDDATETIME>'@{formatDateTime(activity('ac_ctrl_LookupExecuteTime').output.firstRow.LastExecutionTime,'yyyy-MM-ddHH:mm:ss')}'\nANDa.CREATEDDATETIME<='@{formatDateTime(variables('nextExecutionTIme'),'yyyy-MM-ddHH:mm:ss')}'\n",
+"type":"Expression"
+}
+}
+},
+{
+"name":"ac_tran_ConvertFixedFileFromCsvDetail",
+"type":"ExecutePipeline",
+"dependsOn":[
+{
+"activity":"ac_tran_CreateFileFromAzureDBDetail",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"userProperties":[],
+"typeProperties":{
+"pipeline":{
+"referenceName":"pl_ifcm_ExecuteAzureFunctionOnly",
+"type":"PipelineReference"
+},
+"waitOnCompletion":true,
+"parameters":{
+"AzureFunctionName":"HandleFileFunctionHttp/DoConvertFromCsvDataToFixDataAction",
+"AzureFunctionUrl":{
+"value":"@pipeline().parameters.HandleFileFunctionUrl",
+"type":"Expression"
+},
+"AzureFunctionBody":{
+"value":"{\n\"regionrshort\":\"@{pipeline().parameters.RegionCode}\",\n\"containername\":\"@{pipeline().parameters.Container}\",\n\"mainfilefolder\":\"@{pipeline().parameters.ResultFolderDetail}\",\n\"mainfile\":\"@{pipeline().parameters.MainFileDetail}\",\n\"propertyfilefolder\":\"@{pipeline().parameters.PropertyFolderDetail}\",\n\"propertyfile\":\"@{pipeline().parameters.PropertyFileDetail}\",\n\"resultfilefolder\":\"@{pipeline().parameters.ResultFolderDetail}\",\n\"resultfile\":\"@{pipeline().parameters.ResultFileDetail}\",\n\"connstr\":\"@{pipeline().parameters.Connstr}\",\n\"encoder\":\"@{if(equals(pipeline().parameters.Encoding,'SHIFT-JIS'),'SJIS',if(equals(pipeline().parameters.Encoding,'EUC-JP'),'EUC','UTF8'))}\",\n\"returnchar\":\"@{pipeline().parameters.ReturnChar}\"\n}",
+"type":"Expression"
+},
+"SecretName":{
+"value":"@pipeline().parameters.HandleFileFunctionSecretName",
+"type":"Expression"
+}
+}
+}
+},
+{
+"name":"ac_ctrl_ExecuteConvertCodeAzureFunction",
+"description":"",
+"type":"AzureFunctionActivity",
+"dependsOn":[
+{
+"activity":"ac_ctrl_SetqueryExecuteTime",
+"dependencyConditions":[
+"Succeeded"
+]
+}
+],
+"policy":{
+"timeout":"7.00:00:00",
+"retry":0,
+"retryIntervalInSeconds":30,
+"secureOutput":false,
+"secureInput":false
+},
+"userProperties":[],
+"typeProperties":{
+"functionName":"GetConvertionCode",
+"method":"POST",
+"body":{
+"value":"@pipeline().parameters.ConvertCodeFunctionParam",
+"type":"Expression"
+}
+},
+"linkedServiceName":{
+"referenceName":"AzureFunction_earthdevfuncjpelsconvertcode",
+"type":"LinkedServiceReference"
+}
+}
+],
+"concurrency":1,
+"parameters":{
+"FunctionId":{
+"type":"string",
+"defaultValue":"LS_IF_0257"
+},
+"RegionCode":{
+"type":"string",
+"defaultValue":"ls"
+},
+"Container":{
+"type":"string",
+"defaultValue":"externalif-ne"
+},
+"MainFile":{
+"type":"string",
+"defaultValue":"LS_IF_0257_FLONE0006"
+},
+"MainFileDetail":{
+"type":"string",
+"defaultValue":"LS_IF_0257_FLONE0007"
+},
+"PropertyFolder":{
+"type":"string",
+"defaultValue":"uttech/conf/0257"
+},
+"PropertyFolderDetail":{
+"type":"string",
+"defaultValue":"uttech/conf/0258"
+},
+"PropertyFile":{
+"type":"string",
+"defaultValue":"FLONE0006_Definition.csv"
+},
+"PropertyFileDetail":{
+"type":"string",
+"defaultValue":"FLONE0007_Definition.csv"
+},
+"ResultFolder":{
+"type":"string",
+"defaultValue":"uttech/azure/0257/conv"
+},
+"ResultFolderDetail":{
+"type":"string",
+"defaultValue":"uttech/azure/0258/conv"
+},
+"ResultFile":{
+"type":"string",
+"defaultValue":"FLONE0006"
+},
+"ResultFileDetail":{
+"type":"string",
+"defaultValue":"FLONE0007"
+},
+"EndFileFolder":{
+"type":"string",
+"defaultValue":"uttech/azure/0257/endfile"
+},
+"EndFileFolderDetail":{
+"type":"string",
+"defaultValue":"uttech/azure/0258/endfile"
+},
+"EndFile":{
+"type":"string",
+"defaultValue":"FLONE0006.fen"
+},
+"EndFileDetail":{
+"type":"string",
+"defaultValue":"FLONE0007.fen"
+},
+"SharedStorageContainer":{
+"type":"string",
+"defaultValue":"fileif-ne"
+},
+"SharedStorageIFFileFolder":{
+"type":"string",
+"defaultValue":"ftp/dpne0009"
+},
+"SharedStorageArchiveFolder":{
+"type":"string",
+"defaultValue":"backup/data/dpne0009"
+},
+"ZeroFileLinkageFlag":{
+"type":"bool",
+"defaultValue":true
+},
+"EndFileCreationFlag":{
+"type":"bool",
+"defaultValue":true
+},
+"TransferType":{
+"type":"string",
+"defaultValue":"PUT"
+},
+"ReturnChar":{
+"type":"string",
+"defaultValue":"CRLF"
+},
+"Connstr":{
+"type":"string",
+"defaultValue":"0"
+},
+"Encoding":{
+"type":"string",
+"defaultValue":"SHIFT-JIS"
+},
+"FirstRowAsHeader":{
+"type":"bool",
+"defaultValue":false
+},
+"ColumnDelimiter":{
+"type":"string",
+"defaultValue":","
+},
+"ExcludeLinesc":{
+"type":"string",
+"defaultValue":"0"
+},
+"SynapseSecretName":{
+"type":"string",
+"defaultValue":"earth-dev-lsasynloginlsexternaliffodeveda1c81cbd-secret"
+},
+"ExternalIFComFunctionUrl":{
+"type":"string",
+"defaultValue":"https://earth-dev-func-jpe-ls-general.azurewebsites.net"
+},
+"ExternalIFComFunctionSecretName":{
+"type":"string",
+"defaultValue":"earth-dev-lsfunckeygeneral-secret"
+},
+"HandleFileFunctionUrl":{
+"type":"string",
+"defaultValue":"https://earth-dev-func-jpe-ls-handlefile.azurewebsites.net"
+},
+"HandleFileFunctionSecretName":{
+"type":"string",
+"defaultValue":"earth-dev-lsfunckeyhandlefile-secret"
+},
+"ConvertCodeFunctionUrl":{
+"type":"string",
+"defaultValue":"https://earth-dev-func-jpe-cm-general.azurewebsites.net"
+},
+"ConvertCodeFunctionSecretName":{
+"type":"string",
+"defaultValue":"earth-dev-cmfunckeygeneral"
+},
+"ConvertCodeFunctionParam":{
+"type":"string",
+"defaultValue":{
+"codeCategory":"earth_dp_PayFreeTypeInterface,earth_dp_StillReceiptType,earth_dp_FromImportSystem",
+"conversionSource":"FO",
+"conversionDestination":"eHub"
+}
+},
+"CompanyCode":{
+"type":"string",
+"defaultValue":"ALL"
+},
+"FileId":{
+"type":"string",
+"defaultValue":"dpne0009"
+}
+},
+"variables":{
+"nextExecutionTIme":{
+"type":"String"
+},
+"query":{
+"type":"String"
+},
+"queryDetail":{
+"type":"String"
+},
+"dbName":{
+"type":"String",
+"defaultValue":"[ls-deveda1c81cbd-scp].[dbo]."
+}
+},
+"folder":{
+"name":"0257"
+},
+"annotations":[],
+"lastPublishTime":"2022-10-19T05:17:00Z"
+},
+"type":"Microsoft.Synapse/workspaces/pipelines"
 }
