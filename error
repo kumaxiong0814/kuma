@@ -1,20 +1,3 @@
-WITH ds AS
-(
-  SELECT
-    header.InvoiceNo AS HeaderInvoiceNo,
-    line.InvoiceNo AS LineInvoiceNo
-  FROM
-    dbo.earth_dp_ShipmentRequestInfoHeaderIF header FULL JOIN
-    dbo.earth_dp_ShipmentRequestInfoLineIF line ON header.InvoiceNo = line.InvoiceNo
-  WHERE
-    header.DataLakeModified_DateTime > '@{variables('formattedLastExecutionTime')}' AND
-    line.DataLakeModified_DateTime > '@{variables('formattedLastExecutionTime')}'
-)
-SELECT
-  (SELECT COUNT(ALL LineInvoiceNo) FROM ds) AS LineCount,
-  IIF(
-    (SELECT COUNT(ALL LineInvoiceNo) FROM ds) > 0 AND
-    (SELECT COUNT(*) FROM ds WHERE HeaderInvoiceNo IS NULL OR LineInvoiceNo IS NULL) = 0,
-	  1,
-	  0
-  ) AS IsAvailable
+这个问题怎么解决呢?
+@{pipeline().parameters.SynapseSecretName}
+パイプライン パラメーターは、それが定義するパイプライン内でのみ使用できます。代わりにパイプライン パラメーター値を指定するには、リンク サービスのパラメーターを定義します。
