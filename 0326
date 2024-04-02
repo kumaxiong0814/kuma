@@ -1,1 +1,14 @@
-Invalid object name 'Sequence1'.\r\nInvalid object name 'Sequence2'
+@or(
+    not(
+        equals(
+            variables('lineCount'),
+            activity('ac_tran_queryAvailability').output.rowSets[0].rows[0].LineCount
+        )
+    ),
+    not(
+        equals(
+            variables('isAvailable'),
+            bool(activity('ac_tran_queryAvailability').output.rowSets[0].rows[0].IsAvailable)
+        )
+    )
+)
