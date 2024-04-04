@@ -1,1 +1,94 @@
-"ErrorCode=UserErrorSourceBlobNotExist,'Type=Microsoft.DataTransfer.Common.Shared.HybridDeliveryException,Message=The required Blob is missing. Please contact Blob Storage team if you need further support. ContainerName: https://earthdevsajpehulftp00.blob.core.windows.net/fileif-cl, path: ftp/cldp0002/FCLLO0009.,Source=Microsoft.DataTransfer.ClientLibrary,''Type=Microsoft.WindowsAzure.Storage.StorageException,Message=The remote server returned an error: (404) Not Found.,Source=Microsoft.WindowsAzure.Storage,StorageExtendedMessage=RequestId:8158a7b9-101e-001e-0641-86dba1000000 Time:Thu, 04 Apr 2024 03:38:17 GMT,,''Type=System.Net.WebException,Message=The remote server returned an error: (404) Not Found.,Source=Microsoft.WindowsAzure.Storage,'",
+{
+    "name": "Copy data1",
+    "type": "Copy",
+    "dependsOn": [],
+    "policy": {
+        "timeout": "0.12:00:00",
+        "retry": 0,
+        "retryIntervalInSeconds": 30,
+        "secureOutput": false,
+        "secureInput": false
+    },
+    "userProperties": [],
+    "typeProperties": {
+        "source": {
+            "type": "DelimitedTextSource",
+            "storeSettings": {
+                "type": "AzureBlobStorageReadSettings",
+                "recursive": true,
+                "wildcardFolderPath": {
+                    "value": "@pipeline().parameters.SharedStorageIFFileFolder",
+                    "type": "Expression"
+                },
+                "wildcardFileName": {
+                    "value": "@pipeline().parameters.PreMainFile",
+                    "type": "Expression"
+                },
+                "enablePartitionDiscovery": false
+            },
+            "formatSettings": {
+                "type": "DelimitedTextReadSettings"
+            }
+        },
+        "sink": {
+            "type": "DelimitedTextSink",
+            "storeSettings": {
+                "type": "AzureBlobStorageWriteSettings"
+            },
+            "formatSettings": {
+                "type": "DelimitedTextWriteSettings",
+                "quoteAllText": true,
+                "fileExtension": ".txt"
+            }
+        },
+        "enableStaging": false,
+        "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+                "allowDataTruncation": true,
+                "treatBooleanAsNumber": false
+            }
+        }
+    },
+    "inputs": [
+        {
+            "referenceName": "ds_ablb_shared_CommonFile",
+            "type": "DatasetReference",
+            "parameters": {
+                "Container": {
+                    "value": "@pipeline().parameters.SharedStorageContainer",
+                    "type": "Expression"
+                },
+                "Folder": {
+                    "value": "@pipeline().parameters.SharedStorageIFFileFolder",
+                    "type": "Expression"
+                },
+                "FileName": {
+                    "value": "@pipeline().parameters.PreMainFile",
+                    "type": "Expression"
+                }
+            }
+        }
+    ],
+    "outputs": [
+        {
+            "referenceName": "ds_ablb_shared_CommonFile",
+            "type": "DatasetReference",
+            "parameters": {
+                "Container": {
+                    "value": "@pipeline().parameters.SharedStorageContainer",
+                    "type": "Expression"
+                },
+                "Folder": {
+                    "value": "@pipeline().parameters.SharedStorageContainer",
+                    "type": "Expression"
+                },
+                "FileName": {
+                    "value": "@pipeline().parameters.MainFile",
+                    "type": "Expression"
+                }
+            }
+        }
+    ]
+}
