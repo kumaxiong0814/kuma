@@ -1,5 +1,1 @@
-@if(
-    activity('GetFiles').output.exists,
-    activity('GetFiles').output.childItems,
-    json('[]')
-)
+@replace(pipeline().parameters.MainFile, '_all', '') 
