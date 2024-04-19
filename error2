@@ -1,0 +1,474 @@
+WITH convertionCodeTb AS (
+SELECT value,
+SUBSTRING(value, 0, CHARINDEX( ',' , value )) AS codeCategory,
+SUBSTRING(value, (firstComma+1), (secondComma-(firstComma+1))) AS CodeMeaning,
+SUBSTRING(value, (secondComma+1), (thirdComma-(secondComma+1))) AS codeSource,
+SUBSTRING(value, (thirdComma+1), LEN(value)) AS codeDestination
+FROM (
+SELECT value,
+CHARINDEX( ',' , value ) AS firstComma,
+CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1) AS secondComma,
+CHARINDEX( ',' , value, CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1)+1) AS thirdComma
+FROM STRING_SPLIT(REPLACE(N'ConsolidatedId,consolidated_id.asmile_co._ltd.,B118,2106
+ConsolidatedId,consolidated_id.assistec_co._ltd.,B159,8178
+ConsolidatedId,consolidated_id.chengdu_okukaku_optical_glass_co._ltd.,B054,8572
+ConsolidatedId,consolidated_id.contents_works_inc.,B120,1502
+ConsolidatedId,consolidated_id.ds_chemport(australia)pty_ltd,B296,8588
+ConsolidatedId,consolidated_id.ds_chemport(malaysia)sdn._bhd.,B297,8601
+ConsolidatedId,consolidated_id.efuenu_co._ltd.,B049,8020
+ConsolidatedId,consolidated_id.external_business_partner,,0000
+ConsolidatedId,consolidated_id.fcd,B490,8567
+ConsolidatedId,consolidated_id.ffgs_graphic_supply_co._ltd.,B142,8137
+ConsolidatedId,consolidated_id.ffp,B416,8176
+ConsolidatedId,consolidated_id.ffpb,B491,8568
+ConsolidatedId,consolidated_id.fgsf,B467,8551
+ConsolidatedId,consolidated_id.fksi,B504,8584
+ConsolidatedId,consolidated_id.fotj,B489,8564
+ConsolidatedId,consolidated_id.fpfo,B508,8589
+ConsolidatedId,consolidated_id.fsd,B400,8175
+ConsolidatedId,consolidated_id.fuji_color_hokuriku_co._ltd.,B150,8091
+ConsolidatedId,consolidated_id.fuji_color_land_co._ltd.,B152,8126
+ConsolidatedId,consolidated_id.fuji_film_bi_akita_co._ltd.,B113,2102
+ConsolidatedId,consolidated_id.fuji_film_bi_okinawa_co._ltd.,B114,2112
+ConsolidatedId,consolidated_id.fuji_film_bi_yamanashi_co._ltd.,B355,2113
+ConsolidatedId,consolidated_id.fuji_film_printing_systems_co._ltd.,B068,1010
+ConsolidatedId,consolidated_id.fuji_film_systems_co._ltd.,B005,8132
+ConsolidatedId,consolidated_id.fuji_film_wako_pure_chemical_industries_ltd.,B019,8019
+ConsolidatedId,consolidated_id.fuji_hunt_asian_pacific_holding_pty_ltd,B308,8587
+ConsolidatedId,consolidated_id.fuji_xerox_business_innovation_co._ltd.,B002,1000
+ConsolidatedId,consolidated_id.fuji_xerox_business_innovation_japan_co._ltd.,B353,2060
+ConsolidatedId,consolidated_id.fuji_xerox_business_supply_co._ltd.,B022,8032
+ConsolidatedId,consolidated_id.fuji_xerox_eco-manufacturing_co._ltd.,B109,4121
+ConsolidatedId,consolidated_id.fuji_xerox_taiwan_system_service_corporation,B261,4111
+ConsolidatedId,consolidated_id.fujifilm(china)investment_co._ltd.,B041,8574
+ConsolidatedId,consolidated_id.fujifilm(malaysia)sdn._bhd.,B267,8583
+ConsolidatedId,consolidated_id.fujifilm(shanghai)trading_co._ltd.,B258,8578
+ConsolidatedId,consolidated_id.fujifilm(thailand)ltd.,B268,8585
+ConsolidatedId,consolidated_id.fujifilm_asia_pacific_pte._ltd.,B044,8579
+ConsolidatedId,consolidated_id.fujifilm_australia_pty_ltd,B299,8603
+ConsolidatedId,consolidated_id.fujifilm_belgium_nv,B208,8534
+ConsolidatedId,consolidated_id.fujifilm_bi_business_development(shanghai)corp.,B250,4504
+ConsolidatedId,consolidated_id.fujifilm_bi_business_service(shanghai)corp.,B251,4505
+ConsolidatedId,consolidated_id.fujifilm_bi_ehime_co._ltd.,B354,2114
+ConsolidatedId,consolidated_id.fujifilm_bi_fukui_co._ltd.,B116,2104
+ConsolidatedId,consolidated_id.fujifilm_bi_international_operations_corp.,B103,4701
+ConsolidatedId,consolidated_id.fujifilm_bi_oita_co._ltd.,B112,2110
+ConsolidatedId,consolidated_id.fujifilm_bi_services_seoul_co._ltd,B295,4304
+ConsolidatedId,consolidated_id.fujifilm_business_equipment_shanghai_corp.,B249,4503
+ConsolidatedId,consolidated_id.fujifilm_business_expert_co._ltd.,B003,8162
+ConsolidatedId,consolidated_id.fujifilm_business_innovation(bermuda)limited,B104,4501
+ConsolidatedId,consolidated_id.fujifilm_business_innovation(china)corp.,B206,4502
+ConsolidatedId,consolidated_id.fujifilm_business_innovation(thailand)co._ltd.,B281,4104
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_asia_pacific_pte._ltd.,B110,4101
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_australia_pty_ltd,B289,4201
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_hong_kong_limited,B108,4521
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_korea_co._ltd,B111,4301
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_malaysia_sdn._bhd.,B285,4110
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_new_zealand_limited,B291,4204
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_philippines_corp.,B282,4103
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_singapore_pte._ltd.,B280,4102
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_taiwan_co._ltd.,B276,4106
+ConsolidatedId,consolidated_id.fujifilm_business_innovation_vietnam_co._ltd.,B286,4207
+ConsolidatedId,consolidated_id.fujifilm_canada_inc.,B200,8511
+ConsolidatedId,consolidated_id.fujifilm_cellular_dynamics_inc.,B168,8610
+ConsolidatedId,consolidated_id.fujifilm_corporation,B001,8001
+ConsolidatedId,consolidated_id.fujifilm_csg_limited,B293,4212
+ConsolidatedId,consolidated_id.fujifilm_data_management_solutions_asia_limited,B278,4210
+ConsolidatedId,consolidated_id.fujifilm_data_management_solutions_pty_ltd,B292,4209
+ConsolidatedId,consolidated_id.fujifilm_digital_press_co._ltd.,B143,8180
+ConsolidatedId,consolidated_id.fujifilm_digital_solutions(thailand)co._ltd.,B520,4213
+ConsolidatedId,consolidated_id.fujifilm_digital_solutions_co._ltd.,B519,2091
+ConsolidatedId,consolidated_id.fujifilm_dimatix_inc.,B165,8608
+ConsolidatedId,consolidated_id.fujifilm_do_brasil_ltda.,B176,8524
+ConsolidatedId,consolidated_id.fujifilm_eco-manufacturing(suzhou)corp.,B106,4122
+ConsolidatedId,consolidated_id.fujifilm_electronic_imaging_europe_gmbh,B219,8553
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials(europe)gmbh,B223,8598
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials(europe)nv,B037,8590
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials(europe)s.r.l.,B224,8600
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials(hong_kong)co._ltd.,B060,8592
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials(singapore)pte._ltd.,B061,8593
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials_taiwan_co._ltd.,B059,8566
+ConsolidatedId,consolidated_id.fujifilm_electronic_materials_u.s.a._inc.,B163,8594
+ConsolidatedId,consolidated_id.fujifilm_electronics_materials_co._ltd.,B008,8007
+ConsolidatedId,consolidated_id.fujifilm_engineering_co._ltd.,B016,8183
+ConsolidatedId,consolidated_id.fujifilm_europe_b.v.,B034,8611
+ConsolidatedId,consolidated_id.fujifilm_europe_gmbh,B210,8538
+ConsolidatedId,consolidated_id.fujifilm_france_s.a.s,B226,8525
+ConsolidatedId,consolidated_id.fujifilm_global_graphic_systems_co._ltd.,B023,8035
+ConsolidatedId,consolidated_id.fujifilm_global_procurement_corp.,B259,4524
+ConsolidatedId,consolidated_id.fujifilm_gs_techno_co._ltd.,B144,8144
+ConsolidatedId,consolidated_id.fujifilm_healthcare_co._ltd.,B352,8185
+ConsolidatedId,consolidated_id.fujifilm_healthcare_laboratory_co._ltd.,B024,8160
+ConsolidatedId,consolidated_id.fujifilm_healthcare_systems_co._ltd.,B357,8184
+ConsolidatedId,consolidated_id.fujifilm_holdings_america_corporation,B032,8501
+ConsolidatedId,consolidated_id.fujifilm_holdings_australasia_pty_ltd.,B275,8591
+ConsolidatedId,consolidated_id.fujifilm_holdings_co._ltd.,B000,8000
+ConsolidatedId,consolidated_id.fujifilm_holdings_nz_ltd.,B298,8602
+ConsolidatedId,consolidated_id.fujifilm_hong_kong_co._ltd.,B043,8575
+ConsolidatedId,consolidated_id.fujifilm_hunt_chemicals_u.s.a._inc.,B178,8506
+ConsolidatedId,consolidated_id.fujifilm_imaging_products_&_solutions_b.v.,B234,8560
+ConsolidatedId,consolidated_id.fujifilm_imaging_products_&_solutions_gmbh_&_co.kg,B235,8563
+ConsolidatedId,consolidated_id.fujifilm_imaging_protech_co._ltd.,B145,8156
+ConsolidatedId,consolidated_id.fujifilm_imaging_systems_co._ltd.,B026,8047
+ConsolidatedId,consolidated_id.fujifilm_intellectual_property_information_research_co._ltd.,B004,8174
+ConsolidatedId,consolidated_id.fujifilm_kyushu_co._ltd.,B013,8147
+ConsolidatedId,consolidated_id.fujifilm_leasing(shanghai)corp.,B277,4510
+ConsolidatedId,consolidated_id.fujifilm_leasing(thailand)co._ltd.,B284,4109
+ConsolidatedId,consolidated_id.fujifilm_leasing_australia_ltd,B287,4202
+ConsolidatedId,consolidated_id.fujifilm_leasing_new_zealand_limited,B288,4205
+ConsolidatedId,consolidated_id.fujifilm_logistics_co._ltd.,B027,1910
+ConsolidatedId,consolidated_id.fujifilm_logistics_solution(hong_kong)limited,B156,8609
+ConsolidatedId,consolidated_id.fujifilm_logistics_solution(vietnam)co.ltd,B158,8614
+ConsolidatedId,consolidated_id.fujifilm_manufacturing_co._ltd.,B065,1020
+ConsolidatedId,consolidated_id.fujifilm_manufacturing_europe_b.v.,B207,8530
+ConsolidatedId,consolidated_id.fujifilm_manufacturing_hai_phong_co._ltd.,B279,4208
+ConsolidatedId,consolidated_id.fujifilm_manufacturing_shenzhen_corp.,B105,4522
+ConsolidatedId,consolidated_id.fujifilm_manufacturing_u.s.a._inc.,B161,8505
+ConsolidatedId,consolidated_id.fujifilm_media_crest_co._ltd.,B030,8119
+ConsolidatedId,consolidated_id.fujifilm_media_manufacturing_co._ltd.,B009,8026
+ConsolidatedId,consolidated_id.fujifilm_medical_co._ltd.,B021,8031
+ConsolidatedId,consolidated_id.fujifilm_medical_it_solutions_co._ltd.,B140,8172
+ConsolidatedId,consolidated_id.fujifilm_medical_solutions_co._ltd.,B020,8018
+ConsolidatedId,consolidated_id.fujifilm_medical_systems_u.s.a._inc.,B172,8509
+ConsolidatedId,consolidated_id.fujifilm_middle_east_fze,B238,8613
+ConsolidatedId,consolidated_id.fujifilm_nordic_ab,B232,8526
+ConsolidatedId,consolidated_id.fujifilm_north_america_corporation,B171,8612
+ConsolidatedId,consolidated_id.fujifilm_nz_ltd.,B301,8606
+ConsolidatedId,consolidated_id.fujifilm_opt_materials_co._ltd.,B011,8028
+ConsolidatedId,consolidated_id.fujifilm_optics_co._ltd.,B006,8003
+ConsolidatedId,consolidated_id.fujifilm_photo_manufacturing_co._ltd.,B010,8027
+ConsolidatedId,consolidated_id.fujifilm_photoelectric(shenzhen)co._ltd.,B040,8570
+ConsolidatedId,consolidated_id.fujifilm_procurement_hong_kong_limited,B107,4523
+ConsolidatedId,consolidated_id.fujifilm_recording_media_gmbh,B036,8529
+ConsolidatedId,consolidated_id.fujifilm_recording_media_u.s.a._inc.,B162,8507
+ConsolidatedId,consolidated_id.fujifilm_ripcord_gk,B121,1610
+ConsolidatedId,consolidated_id.fujifilm_service_creative_co._ltd.,B101,2088
+ConsolidatedId,consolidated_id.fujifilm_service_link_co._ltd.,B102,2071
+ConsolidatedId,consolidated_id.fujifilm_shizuoka_co._ltd.,B012,8029
+ConsolidatedId,consolidated_id.fujifilm_software_co._ltd.,B029,8118
+ConsolidatedId,consolidated_id.fujifilm_system_service_co._ltd.,B067,1007
+ConsolidatedId,consolidated_id.fujifilm_techno_products_co._ltd.,B007,8006
+ConsolidatedId,consolidated_id.fujifilm_techno_service_co._ltd.,B028,8116
+ConsolidatedId,consolidated_id.fujifilm_toyama_chemical_co._ltd.,B014,8161
+ConsolidatedId,consolidated_id.fujifilm_uk_ltd.,B227,8539
+ConsolidatedId,consolidated_id.fujifilm_wako_logistics_co._ltd.,B128,8186
+ConsolidatedId,consolidated_id.fujifilm_wako_shibayagi_co._ltd.,B126,8187
+ConsolidatedId,consolidated_id.hibicam_co._ltd.,B153,8124
+ConsolidatedId,consolidated_id.hofk,B496,8573
+ConsolidatedId,consolidated_id.iwate_fuji_color_co._ltd.,B148,8074
+ConsolidatedId,consolidated_id.jtec,B401,8179
+ConsolidatedId,consolidated_id.kyowa_kirin_fujifilm_biologics_co._ltd.,B050,8182
+ConsolidatedId,consolidated_id.mick_co._ltd.,B115,2107
+ConsolidatedId,consolidated_id.n_&_f_techno_service_co._ltd.,B511,8159
+ConsolidatedId,consolidated_id.niigata_fujicolor_co._ltd.,B149,8082
+ConsolidatedId,consolidated_id.ppmx,B031,8157
+ConsolidatedId,consolidated_id.samegawa_kikai_co._ltd.,B058,8013
+ConsolidatedId,consolidated_id.sanin_fujicolor_co._ltd.,B146,8060
+ConsolidatedId,consolidated_id.shanghai_fujifilm_medical_instruments_co._ltd.,B056,8576
+ConsolidatedId,consolidated_id.suzhou_fujifilm_imaging_equipment_co._ltd.,B253,5403
+ConsolidatedId,consolidated_id.suzhou_fujifilm_mol_logistics_co._ltd.,B252,8577
+ConsolidatedId,consolidated_id.tc,B399,8164
+ConsolidatedId,consolidated_id.technol_co._ltd.,B119,2101
+ConsolidatedId,consolidated_id.tomica_co._ltd.,B123,8168
+ConsolidatedId,consolidated_id.us_imaging_co._ltd.,B151,8104
+ConsolidatedId,consolidated_id.wkcm,B403,8084
+ConsolidatedId,consolidated_id.yamagata_xerox_bi_yamagata_co._ltd.,B117,2103
+ConsolidatedId,consolidated_id.yamaguchi_fuji_color_co._ltd.,B147,8068
+earth_dp_AmountDisplayClass,amount_display_classification.no,0,
+earth_dp_AmountDisplayClass,amount_display_classification.yes,1,1
+earth_dp_CEWitnessClassification,ce_witness_classification.no,0,N
+earth_dp_CEWitnessClassification,ce_witness_classification.yes,1,Y
+earth_dp_DTExchange,d/t_exchange.no,0,
+earth_dp_DTExchange,d/t_exchange.yes,1,1
+earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.available,1,N
+earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.unavailable,0,Y
+earth_dp_Emergency,emergency.delivery_date_change,3,3
+earth_dp_Emergency,emergency.emergency_1(urgent),1,1
+earth_dp_Emergency,emergency.emergency_2(today),2,2
+earth_dp_Emergency,emergency.none,0,
+earth_dp_LogisInstrType,logistics_instructions_type.carrying_in_a_custody_machine_instruction,6,6
+earth_dp_LogisInstrType,logistics_instructions_type.carrying_out_the_custody_machine_instruction,5,5
+earth_dp_LogisInstrType,logistics_instructions_type.expected_receipt,11,11
+earth_dp_LogisInstrType,logistics_instructions_type.moving_carry-in_instruction,8,8
+earth_dp_LogisInstrType,logistics_instructions_type.moving_out_instruction,7,7
+earth_dp_LogisInstrType,logistics_instructions_type.none,0,
+earth_dp_LogisInstrType,logistics_instructions_type.procurement_items_scheduled_to_be_accepted,12,12
+earth_dp_LogisInstrType,logistics_instructions_type.recovery(consumables)instruction,4,4
+earth_dp_LogisInstrType,logistics_instructions_type.recovery(machines)instruction,3,3
+earth_dp_LogisInstrType,logistics_instructions_type.return_instruction,2,2
+earth_dp_LogisInstrType,logistics_instructions_type.shipment_instruction,1,1
+earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction,9,9
+earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction(moving_storage_location),10,10
+earth_dp_Odep,odep.no,0,
+earth_dp_Odep,odep.yes,1,1
+earth_dp_ReservationLevel,reservation_level.expected_receipt,2,2
+earth_dp_ReservationLevel,reservation_level.inventory,1,1
+earth_dp_ReservationLevel,reservation_level.none,0,
+earth_dp_ReservationLevel,reservation_level.planned_allowance,3,3
+earth_dp_ReservationLevel,reservation_level.vendor_allocation,4,4
+earth_dp_SetItemsClass,set_items_classification.none,0,
+earth_dp_SetItemsClass,set_items_classification.set_item(child),2,2
+earth_dp_SetItemsClass,set_items_classification.set_item(parent),1,1
+earth_dp_SetItemsClass,set_items_classification.single_item,3,3
+earth_dp_SpecialCollectionFlag,special_collection_flag.no,0,
+earth_dp_SpecialCollectionFlag,special_collection_flag.yes,1,1
+earth_dp_UA5Class,ua5_classification.none,0,
+earth_dp_UA5Class,ua5_classification.ua5_X,1,X
+earth_dp_WaitingForInstructions,waiting_for_instructions.coming,1,2
+earth_dp_WaitingForInstructions,waiting_for_instructions.none,0,1
+earth_dp_WaitingForInstructions,waiting_for_instructions.others,2,3
+earth_dp_WorkCompleted,worked.no,0,N
+earth_dp_WorkCompleted,worked.yes,1,Y
+earth_dp_WreckerClassification,wrecker_classification.no,0,N
+earth_dp_WreckerClassification,wrecker_classification.yes,1,Y',CHAR(13) + CHAR(10),CHAR(10)), CHAR(10))
+) AS X
+)
+
+SELECT DISTINCT
+
+ISNULL(a.ShipmentId,'') AS ShipmentId,
+CONVERT(nvarchar,a.ShipmentIdNumberingClass) AS ShipmentIdNumberingClass,
+CASE WHEN CONVERT(nvarchar,a.ShipmentIdNumberingDate,112) = '19000101' THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.ShipmentIdNumberingDate,112)
+END 
+AS ShipmentIdNumberingDate,
+ISNULL(A4.codeDestination,'') AS RequestingCompanyAccount,
+CONVERT(nvarchar,a.CreateProgramId) AS CreateProgramId,
+CASE WHEN CONVERT(nvarchar,a.ScheduledLogisticsWorkDate,112) = '19000101' THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.ScheduledLogisticsWorkDate,112)
+END 
+AS ScheduledLogisticsWorkDate,
+ISNULL(a.SpecifiedTime,'') AS SpecifiedTime,
+CASE WHEN CONVERT(nvarchar,a.OrderRegistratedDate,112) = '19000101' THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.OrderRegistratedDate,112)
+END 
+AS OrderRegistratedDate,
+CASE WHEN CONVERT(nvarchar,a.ScheduledShipmentDate,112) = '19000101' THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.ScheduledShipmentDate,112)
+END 
+AS ScheduledShipmentDate,
+CASE WHEN CONVERT(nvarchar,a.ScheduledStockDate,112) = '19000101' THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.ScheduledStockDate,112)
+END 
+AS ScheduledStockDate,
+ISNULL(a.WarehouseOfficeCodeFrom,'') AS WarehouseOfficeCodeFrom,
+ISNULL(a.WarehouseOfficeCodeTo,'') AS WarehouseOfficeCodeTo,
+ISNULL(A13.codeDestination,'') AS SupplierCompanyCode,
+ISNULL(a.CustomerPO,'') AS CustomerPO,
+ISNULL(a.OfficeCode,'') AS OfficeCode,
+ISNULL(a.ContractNumber,'') AS ContractNumber,
+ISNULL(a.IdeographicModelCode,'') AS IdeographicModelCode,
+ISNULL(a.MachineID,'') AS MachineID,
+ISNULL(a.IdeographicModelName,'') AS IdeographicModelName,
+ISNULL(a.LocationCode,'') AS LocationCode,
+ISNULL(a.InstallationCustAccount,'') AS InstallationCustAccount,
+ISNULL(a.InstallationPostalCode,'') AS InstallationPostalCode,
+ISNULL(a.LogisInstrCustomerName,'') AS LogisInstrCustomerName,
+ISNULL(a.InstallationAddress,'') AS InstallationAddress,
+ISNULL(a.InstallationStreetNumberTo,'') AS InstallationStreetNumberTo,
+ISNULL(a.InstallationBuildingName,'') AS InstallationBuildingName,
+ISNULL(a.InstallationFloorNumber,'') AS InstallationFloorNumber,
+ISNULL(a.InstallationCustomerDepartment,'') AS InstallationCustomerDepartment,
+ISNULL(a.InstallationCustomerRepresentative,'') AS InstallationCustomerRepresentative,
+ISNULL(a.InstallationCustomerTEL,'') AS InstallationCustomerTEL,
+'' AS AddressChangeCategory,
+ISNULL(a.SalesResponsible,'') AS SalesResponsible,
+ISNULL(SUBSTRING(a.SalesDepartmentId,5,8),'') AS SalesDepartmentId,
+ISNULL(a.SalesRepresentativeId,'') AS SalesRepresentativeId,
+ISNULL(a.SalesResponsibleId,'') AS SalesResponsibleId,
+CONVERT(nvarchar,a.EntranceNumberOfEntrances) AS EntranceNumberOfEntrances,
+CONVERT(nvarchar,CONVERT(bigint,a.EntranceEntranceDoorWidth)) AS EntranceEntranceDoorWidth,
+ISNULL(A38.codeDestination,'') AS ElevatorUnavailableFlag,
+CONVERT(nvarchar,CONVERT(bigint,a.SizeWidthOfEntrance)) AS SizeWidthOfEntrance,
+CONVERT(nvarchar,CONVERT(bigint,a.ElevatorVertical)) AS ElevatorVertical,
+CONVERT(nvarchar,CONVERT(bigint,a.ElevatorHorizontal)) AS ElevatorHorizontal,
+CONVERT(nvarchar,CONVERT(bigint,a.ElevatorDepth)) AS ElevatorDepth,
+CONVERT(nvarchar,CONVERT(bigint,a.ElevatorAllowableWeight)) AS ElevatorAllowableWeight,
+CONVERT(nvarchar,a.StageShape) AS StageShape,
+CONVERT(nvarchar,CONVERT(bigint,a.StageBanners)) AS StageBanners,
+CONVERT(nvarchar,CONVERT(bigint,a.StageLanding)) AS StageLanding,
+CONVERT(nvarchar,a.StageNumberOfStages) AS StageNumberOfStages,
+ISNULL(a.CarryInOutPrecautions,'') AS CarryInOutPrecautions,
+ISNULL(REPLACE(REPLACE(a.DeliveryConditionInformation1, CHAR(13), ''), CHAR(10), ''),'') AS UniqueInformation1,
+ISNULL(REPLACE(REPLACE(a.DeliveryConditionInformation1, CHAR(13), ''), CHAR(10), ''),'') AS UniqueInformation2,
+ISNULL(REPLACE(REPLACE(a.DeliveryConditionInformation1, CHAR(13), ''), CHAR(10), ''),'') AS DeliveryConditionInformation1,
+'' AS DeliveryConditionInformation2,
+ISNULL(a.DeliveryContactNote1,'') AS DeliveryContactNote1,
+-- 消耗品：注意事項の印刷
+CASE WHEN a.ConsumablesPrintNotes = 0 THEN
+ '1'
+WHEN a.ConsumablesPrintNotes = 1 THEN
+ '2'
+WHEN a.ConsumablesPrintNotes = 2 THEN
+ '3'
+WHEN a.ConsumablesPrintNotes = 3 THEN
+ '4'
+ELSE
+ ''
+END
+AS ConsumablesPrintNotes,
+ISNULL(CONVERT(nvarchar,CONVERT(bigint,RIGHT(a.LogisInstrOrderId,10))),'') AS LogisInstrOrderId,
+CONVERT(nvarchar,a.LogisInstrLineCounts) AS LogisInstrLineCounts,
+CONVERT(nvarchar,a.LogisInstrRequestNoInt) AS LogisInstrRequestNoInt,
+ISNULL(A58.codeDestination,'') AS CEWitnessClassification,
+ISNULL(A59.codeDestination,'') AS WreckerClassification,
+CONVERT(nvarchar,a.Collection) AS [Collection],
+CASE WHEN a.LogisInstrType = 5 OR a.LogisInstrType = 6 OR a.LogisInstrType = 7 OR a.LogisInstrType = 8 OR a.LogisInstrType = 9 OR a.LogisInstrType = 10 OR a.LogisInstrType = 11 THEN
+ ''
+ELSE 
+ CASE WHEN a.ShippingPriority = '250' THEN
+  ''
+ ELSE
+  CONVERT(nvarchar,a.ShippingPriority)
+ END
+END AS ShippingPriority,
+-- 指定伝票フラグ
+CASE WHEN a.DesignatedVoucher = 0 THEN
+ 'N'
+WHEN a.DesignatedVoucher = 1 THEN
+ 'Y'
+ELSE
+ ''
+END AS DesignatedVoucher,
+CASE WHEN CONVERT(nvarchar,a.NextVisitDate,112) = '19000101' THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.NextVisitDate,112)
+END 
+AS NextVisitDate,
+ISNULL(a.LogisticsInstructionClassification,'') AS LogisticsInstructionClassification,
+-- E/U直納区分
+CASE WHEN a.EUDirectDeliveryClassification = 0 THEN
+ 'N'
+WHEN a.EUDirectDeliveryClassification = 1 THEN
+ 'Y'
+ELSE
+ ''
+END AS 
+EUDirectDeliveryClassification,
+ISNULL(a.CarNo,'') AS CarNo,
+CONVERT(nvarchar,a.HeaderId) AS HeaderId,
+CONVERT(nvarchar,a.ConsignmentClassCode) AS ConsignmentClassCode,
+ISNULL(a.DeliveryScheduleGroup,'') AS DeliveryScheduleGroup,
+ISNULL(a.DeliveryCourseCycle,'') AS DeliveryCourseCycle,
+ISNULL(a.DeliveryGroup,'') AS DeliveryGroup,
+ISNULL(a.ConsignmentTypeCode,'') AS ConsignmentTypeCode,
+CASE WHEN a.CorrectionClass = '250' THEN
+ ''
+ELSE
+  CONVERT(nvarchar,a.CorrectionClass)
+END
+AS CorrectionClass,
+ISNULL(a.DeliveryId,'') AS DeliveryId,
+ISNULL(a.SalesCompanyName,'') AS SalesCompanyName,
+ISNULL(a.SalesCompanyTel,'') AS SalesCompanyTel,
+ISNULL(a.DealerName,'') AS DealerName,
+ISNULL(a.SalesResponsibleName,'') AS SalesResponsibleName,
+ISNULL(A79.codeDestination,'') AS Odep,
+ISNULL(a.PurchaseRepresentative,'') AS PurchaseRepresentative,
+ISNULL(a.AutoReplenishmentNumber,'') AS AutoReplenishmentNumber,
+ISNULL(A82.codeDestination,'') AS WorkCompleted,
+ISNULL(a.ProvisionalVoucherNo,'') AS ProvisionalVoucherNo,
+ISNULL(a.InvoiceNo,'') AS InvoiceNo,
+ISNULL(RIGHT(a.LinkingSalesId,10),'') AS LinkingSalesId,
+CASE WHEN a.LogisInstrType = 5 OR a.LogisInstrType = 6 OR a.LogisInstrType = 7 OR a.LogisInstrType = 8 THEN
+ ''
+ELSE 
+ CONVERT(nvarchar,a.MeterConfirmationFlag)
+END AS
+MeterConfirmationFlag,
+CASE WHEN a.LogisInstrType = 3 OR a.LogisInstrType = 4 OR a.LogisInstrType = 5 OR a.LogisInstrType = 6 OR a.LogisInstrType = 7 OR a.LogisInstrType = 8 THEN
+ ''
+ELSE 
+ CONVERT(nvarchar,a.DocumentCollectionFlag)
+END AS
+DocumentCollectionFlag,
+ISNULL(a.PackingInstruction,'') AS PackingInstruction,
+ISNULL(REPLACE(a.TransferType,'XXINV_MOVE_TRANSTYPE_',''),'') AS TransferType,
+ISNULL(a.LogisInstrOrderType,'') AS LogisInstrOrderType,
+ISNULL(a.TransferOrderComment,'') AS TransferOrderComment,
+ISNULL(RIGHT(a.TransferOrderId,10),'') AS TransferOrderId,
+CONVERT(nvarchar,CONVERT(bigint,a.ForecastCV)) AS ForecastCV,
+ISNULL(a.PuchaseOrderNumber,'') AS PuchaseOrderNumber,
+CONVERT(nvarchar,CONVERT(bigint,a.RevisionNumber)) AS RevisionNumber,
+-- 実績セット区分
+CASE WHEN a.ActualSettingClass = 0 THEN
+ ''
+WHEN a.ActualSettingClass = 1 THEN
+ '1'
+WHEN a.ActualSettingClass = 2 THEN
+ '2'
+WHEN a.ActualSettingClass = 3 THEN
+ '3'
+WHEN a.ActualSettingClass = 4 THEN
+ '4'
+ELSE
+ ''
+END AS ActualSettingClass,
+ISNULL(a.OpportunityCode,'') AS OpportunityCode,
+'' AS CompanyNamePrintCategory,
+CONVERT(nvarchar,CONVERT(bigint,a.LogisInstrTotalAmout)) AS LogisInstrTotalAmout,
+A100.codeDestination AS AmountDisplayClass,
+'00000000000' AS ConsumptionTax,
+ISNULL(A102.codeDestination,'') AS LogisInstrType,
+
+CASE WHEN CONVERT(nvarchar,a.BookingDateTime,112) = '19000101' THEN
+ ''
+ELSE
+ FORMAT(DATEADD(HOUR,9,a.BookingDateTime), 'yyyyMMddHHmmss')
+END 
+AS BookingDateTime,
+ISNULL(A104.codeDestination,'') AS DeliveryFeePayCompany,
+ISNULL(SUBSTRING(a.DeliveryFeePayDepartmentId,5,8),'') AS DeliveryFeePayDepartmentId,
+ISNULL(A106.codeDestination,'') AS [Emergency],
+ISNULL(A107.codeDestination,'') AS DTExchange,
+ISNULL(A108.codeDestination,'') AS WaitingForInstructions,
+--XeSD区分
+CASE WHEN a.ReceptionCategory = 0 THEN
+ ''
+ELSE
+ CONVERT(nvarchar,a.ReceptionCategory)
+END AS ReceptionCategory,
+ISNULL(a.DesignatedVoucherNo,'') AS DesignatedVoucherNo,
+ISNULL(a.DeliveryOrderId,'') AS DeliveryOrderId,
+ISNULL(a.EqixRequestId,'') AS EqixRequestId
+
+FROM
+
+[ls-deveda1c81cbd-scp].[dbo].earth_dp_LogisticsInstructions a INNER JOIN 
+[ls-deveda1c81cbd-scp].[dbo].earth_dp_LogisticsInstructionsLine b ON 
+a.ShipmentId = b.ShipmentId
+
+LEFT JOIN convertionCodeTb AS A38 ON A38.codeCategory = 'earth_dp_ElevatorUnavailableFlag' AND a.ElevatorUnavailableFlag =  A38.codeSource
+LEFT JOIN convertionCodeTb AS A58 ON A58.codeCategory = 'earth_dp_CEWitnessClassification' AND a.CEWitnessClassification =  A58.codeSource
+LEFT JOIN convertionCodeTb AS A59 ON A59.codeCategory = 'earth_dp_WreckerClassification' AND a.WreckerClassification =  A59.codeSource
+LEFT JOIN convertionCodeTb AS A79 ON A79.codeCategory = 'earth_dp_Odep' AND a.Odep =  A79.codeSource
+LEFT JOIN convertionCodeTb AS A82 ON A82.codeCategory = 'earth_dp_WorkCompleted' AND a.WorkCompleted =  A82.codeSource
+LEFT JOIN convertionCodeTb AS A100 ON A100.codeCategory = 'earth_dp_AmountDisplayClass' AND a.AmountDisplayClass =  A100.codeSource
+LEFT JOIN convertionCodeTb AS A102 ON A102.codeCategory = 'earth_dp_LogisInstrType' AND a.LogisInstrType =  A102.codeSource
+LEFT JOIN convertionCodeTb AS A106 ON A106.codeCategory = 'earth_dp_Emergency' AND a.Emergency =  A106.codeSource
+LEFT JOIN convertionCodeTb AS A107 ON A107.codeCategory = 'earth_dp_DTExchange' AND a.DTExchange =  A107.codeSource
+LEFT JOIN convertionCodeTb AS A108 ON A108.codeCategory = 'earth_dp_WaitingForInstructions' AND a.WaitingForInstructions =  A108.codeSource
+LEFT JOIN convertionCodeTb AS A4 ON A4.codeCategory = 'ConsolidatedId' AND a.RequestingCompanyAccount =  A4.codeSource
+LEFT JOIN convertionCodeTb AS A13 ON A13.codeCategory = 'ConsolidatedId' AND a.SupplierCompanyCode =  A13.codeSource
+LEFT JOIN convertionCodeTb AS A104 ON A104.codeCategory = 'ConsolidatedId' AND a.DeliveryFeePayCompany =  A104.codeSource
+
+WHERE 
+--夜間バッチ(OvernightBatch)
+a.LogisticsInstructionCooperationClass = '2'
+
+--AND (AzureDB.前回出力日付 IS NULL
+--OR 物流指図明細(earth_dp_LogisticsInstructionsLine).変更日時(modifiedDateTime) > AzureDB.前回出力日付)
+AND b.modifiedDateTime > '2022-04-17 07:18:39'
+AND b.modifiedDateTime <= '2024-04-17 07:29:33'
+
