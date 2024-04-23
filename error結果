@@ -1,1 +1,1 @@
-Error converting data type nvarchar to bigint.
+ISNULL(CONVERT(nvarchar,CONVERT(bigint,RIGHT(a.LogisInstrOrderId,10))),'') AS LogisInstrOrderId
