@@ -1,1 +1,2 @@
-ISNULL(CONVERT(nvarchar,CONVERT(bigint,RIGHT(a.LogisInstrOrderId,10))),'') AS LogisInstrOrderId
+Statement ID: {278D3C02-BE88-4D42-8D54-F96ED2001CA4} | Query hash: 0x528ED3C9A8EA08BB | Distributed request ID: {C9E19A3C-F35A-4258-9408-AE94FE5BCC21}. Total size of data scanned is 1 megabytes, total size of data moved is 1 megabytes, total size of data written is 0 megabytes.
+(4 個のレコードが影響を受けました)
