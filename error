@@ -1,312 +1,80 @@
-WITH convertionCodeTb AS (
-SELECT value,
-SUBSTRING(value, 0, CHARINDEX( ',' , value )) AS codeCategory,
-SUBSTRING(value, (firstComma+1), (secondComma-(firstComma+1))) AS CodeMeaning,
-SUBSTRING(value, (secondComma+1), (thirdComma-(secondComma+1))) AS codeSource,
-SUBSTRING(value, (thirdComma+1), LEN(value)) AS codeDestination
-FROM (
-SELECT value,
-CHARINDEX( ',' , value ) AS firstComma,
-CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1) AS secondComma,
-CHARINDEX( ',' , value, CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1)+1) AS thirdComma
-FROM STRING_SPLIT(REPLACE(N'earth_dp_AmountDisplayClass,amount_display_classification.no,0,
-earth_dp_AmountDisplayClass,amount_display_classification.yes,1,1
-earth_dp_CEWitnessClassification,ce_witness_classification.no,0,N
-earth_dp_CEWitnessClassification,ce_witness_classification.yes,1,Y
-earth_dp_DTExchange,d/t_exchange.no,0,
-earth_dp_DTExchange,d/t_exchange.yes,1,1
-earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.available,1,N
-earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.unavailable,0,Y
-earth_dp_Emergency,emergency.delivery_date_change,3,3
-earth_dp_Emergency,emergency.emergency_1(urgent),1,1
-earth_dp_Emergency,emergency.emergency_2(today),2,2
-earth_dp_Emergency,emergency.none,0,
-earth_dp_LogisInstrType,logistics_instructions_type.carrying_in_a_custody_machine_instruction,6,6
-earth_dp_LogisInstrType,logistics_instructions_type.carrying_out_the_custody_machine_instruction,5,5
-earth_dp_LogisInstrType,logistics_instructions_type.expected_receipt,11,11
-earth_dp_LogisInstrType,logistics_instructions_type.moving_carry-in_instruction,8,8
-earth_dp_LogisInstrType,logistics_instructions_type.moving_out_instruction,7,7
-earth_dp_LogisInstrType,logistics_instructions_type.none,0,
-earth_dp_LogisInstrType,logistics_instructions_type.procurement_items_scheduled_to_be_accepted,12,12
-earth_dp_LogisInstrType,logistics_instructions_type.recovery(consumables)instruction,4,4
-earth_dp_LogisInstrType,logistics_instructions_type.recovery(machines)instruction,3,3
-earth_dp_LogisInstrType,logistics_instructions_type.return_instruction,2,2
-earth_dp_LogisInstrType,logistics_instructions_type.shipment_instruction,1,1
-earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction,9,9
-earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction(moving_storage_location),10,10
-earth_dp_Odep,odep.no,0,
-earth_dp_Odep,odep.yes,1,1
-earth_dp_ReservationLevel,reservation_level.expected_receipt,2,2
-earth_dp_ReservationLevel,reservation_level.inventory,1,1
-earth_dp_ReservationLevel,reservation_level.none,0,
-earth_dp_ReservationLevel,reservation_level.planned_allowance,3,3
-earth_dp_ReservationLevel,reservation_level.vendor_allocation,4,4
-earth_dp_SetItemsClass,set_items_classification.none,0,
-earth_dp_SetItemsClass,set_items_classification.set_item(child),2,2
-earth_dp_SetItemsClass,set_items_classification.set_item(parent),1,1
-earth_dp_SetItemsClass,set_items_classification.single_item,3,3
-earth_dp_SpecialCollectionFlag,special_collection_flag.no,0,
-earth_dp_SpecialCollectionFlag,special_collection_flag.yes,1,1
-earth_dp_UA5Class,ua5_classification.none,0,
-earth_dp_UA5Class,ua5_classification.ua5_X,1,X
-earth_dp_WaitingForInstructions,waiting_for_instructions.coming,1,2
-earth_dp_WaitingForInstructions,waiting_for_instructions.none,0,1
-earth_dp_WaitingForInstructions,waiting_for_instructions.others,2,3
-earth_dp_WorkCompleted,worked.no,0,N
-earth_dp_WorkCompleted,worked.yes,1,Y
-earth_dp_WreckerClassification,wrecker_classification.no,0,N
-earth_dp_WreckerClassification,wrecker_classification.yes,1,Y
-earth_ls_CorporateCode,company_code.fujifilm_business_innovation_co._ltd.,B002,1000
-earth_ls_CorporateCode,company_code.fujifilm_business_innovation_japan_co._ltd.,B353,2003
-earth_ls_CorporateCode,company_code.fujifilm_printing_systems_co._ltd.,B068,1010
-earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B102,2071',CHAR(13) + CHAR(10),CHAR(10)), CHAR(10))
-) AS X
-)
+-- 创建临时表
+CREATE TABLE #TempTable (
+    OriginalValue NVARCHAR(MAX)
+);
 
-SELECT DISTINCT
+-- 向表中插入一些原始字符串数据
+INSERT INTO #TempTable (OriginalValue)
+VALUES 
+(N'earth_ls_CorporateCode,company_code.fuji_film_printing_systems_co._ltd.,B068,1010'),
+(N'earth_ls_CorporateCode,company_code.fuji_xerox_business_innovation_co._ltd.,B002,1000'),
+(N'earth_ls_CorporateCode,company_code.fuji_xerox_business_innovation_japan_co._ltd.,B353,2003'),
+(N'ConsolidatedId,consolidated_id.fuji_xerox_business_supply_co._ltd.,B022,8032'),
+(N'ConsolidatedId,consolidated_id.fuji_xerox_eco-manufacturing_co._ltd.,B109,4121'),
+(N'ConsolidatedId,consolidated_id.fuji_xerox_taiwan_system_service_corporation,B261,4111'),
+(N'ConsolidatedId,consolidated_id.fujifilm(china)investment_co._ltd.,B041,8574'),
+(N'ConsolidatedId,consolidated_id.fujifilm(malaysia)sdn._bhd.,B267,8583'),
+(N'ConsolidatedId,consolidated_id.fujifilm(shanghai)trading_co._ltd.,B258,8578'),
+(N'ConsolidatedId,consolidated_id.fujifilm(thailand)ltd.,B268,8585'),
+(N'ConsolidatedId,consolidated_id.fujifilm_asia_pacific_pte._ltd.,B044,8579'),
+(N'earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B102,2071'),
+(N'earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B146,8060'),
+(N'earth_dp_AmountDisplayClass,amount_display_classification.no,0'),
+(N'earth_dp_AmountDisplayClass,amount_display_classification.yes,1,1'),
+(N'earth_dp_CEWitnessClassification,ce_witness_classification.no,0,N'),
+(N'earth_dp_CEWitnessClassification,ce_witness_classification.yes,1,Y'),
+(N'earth_dp_DTExchange,d/t_exchange.no,0'),
+(N'earth_dp_DTExchange,d/t_exchange.yes,1,1'),
+(N'earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.available,1,N'),
+(N'earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.unavailable,0,Y'),
+(N'earth_dp_Emergency,emergency.delivery_date_change,3,3'),
+(N'earth_dp_Emergency,emergency.emergency_1(urgent),1,1'),
+(N'earth_dp_Emergency,emergency.emergency_2(today),2,2'),
+(N'earth_dp_Emergency,emergency.none,0'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.carrying_in_a_custody_machine_instruction,6,6'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.carrying_out_the_custody_machine_instruction,5,5'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.expected_receipt,11,11'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.moving_carry-in_instruction,8,8'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.moving_out_instruction,7,7'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.none,0'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.procurement_items_scheduled_to_be_accepted,12,12'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.recovery(consumables)instruction,4,4'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.recovery(machines)instruction,3,3'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.return_instruction,2,2'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.shipment_instruction,1,1'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction,9,9'),
+(N'earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction(moving_storage_location),10,10'),
+(N'earth_dp_Odep,odep.no,0'),
+(N'earth_dp_Odep,odep.yes,1,1'),
+(N'earth_dp_ReservationLevel,reservation_level.expected_receipt,2,2'),
+(N'earth_dp_ReservationLevel,reservation_level.inventory,1,1'),
+(N'earth_dp_ReservationLevel,reservation_level.none,0'),
+(N'earth_dp_ReservationLevel,reservation_level.planned_allowance,3,3'),
+(N'earth_dp_ReservationLevel,reservation_level.vendor_allocation,4,4'),
+(N'earth_dp_SetItemsClass,set_items_classification.none,0'),
+(N'earth_dp_SetItemsClass,set_items_classification.set_item(child),2,2'),
+(N'earth_dp_SetItemsClass,set_items_classification.set_item(parent),1,1'),
+(N'earth_dp_SetItemsClass,set_items_classification.single_item,3,3'),
+(N'earth_dp_SpecialCollectionFlag,special_collection_flag.no,0'),
+(N'earth_dp_SpecialCollectionFlag,special_collection_flag.yes,1,1'),
+(N'earth_dp_UA5Class,ua5_classification.none,0'),
+(N'earth_dp_UA5Class,ua5_classification.ua5_X,1,X'),
+(N'earth_dp_WaitingForInstructions,waiting_for_instructions.coming,1,2'),
+(N'earth_dp_WaitingForInstructions,waiting_for_instructions.none,0,1'),
+(N'earth_dp_WaitingForInstructions,waiting_for_instructions.others,2,3'),
+(N'earth_dp_WorkCompleted,worked.no,0,N'),
+(N'earth_dp_WorkCompleted,worked.yes,1,Y'),
+(N'earth_dp_WreckerClassification,wrecker_classification.no,0,N'),
+(N'earth_dp_WreckerClassification,wrecker_classification.yes,1,Y');
 
-ISNULL(a.ShipmentId,'') AS ShipmentId,
-CONVERT(nvarchar,a.ShipmentIdNumberingClass) AS ShipmentIdNumberingClass,
-CASE WHEN CONVERT(nvarchar,a.ShipmentIdNumberingDate,112) = '19000101' THEN
- ''
-ELSE
- CONVERT(nvarchar,a.ShipmentIdNumberingDate,112)
-END 
-AS ShipmentIdNumberingDate,
-ISNULL(A4.codeDestination,'') AS RequestingCompanyAccount,
-CONVERT(nvarchar,a.CreateProgramId) AS CreateProgramId,
-CASE WHEN CONVERT(nvarchar,a.ScheduledLogisticsWorkDate,112) = '19000101' THEN
- ''
-ELSE
- CONVERT(nvarchar,a.ScheduledLogisticsWorkDate,112)
-END 
-AS ScheduledLogisticsWorkDate,
-ISNULL(a.SpecifiedTime,'') AS SpecifiedTime,
-CASE WHEN CONVERT(nvarchar,a.OrderRegistratedDate,112) = '19000101' THEN
- ''
-ELSE
- CONVERT(nvarchar,a.OrderRegistratedDate,112)
-END 
-AS OrderRegistratedDate,
-CASE WHEN CONVERT(nvarchar,a.ScheduledShipmentDate,112) = '19000101' THEN
- ''
-ELSE
- CONVERT(nvarchar,a.ScheduledShipmentDate,112)
-END 
-AS ScheduledShipmentDate,
-CASE WHEN CONVERT(nvarchar,a.ScheduledStockDate,112) = '19000101' THEN
- ''
-ELSE
- CONVERT(nvarchar,a.ScheduledStockDate,112)
-END 
-AS ScheduledStockDate,
-ISNULL(a.WarehouseOfficeCodeFrom,'') AS WarehouseOfficeCodeFrom,
-ISNULL(a.WarehouseOfficeCodeTo,'') AS WarehouseOfficeCodeTo,
-ISNULL(A13.codeDestination,'') AS SupplierCompanyCode,
-ISNULL(a.CustomerPO,'') AS CustomerPO,
-ISNULL(a.OfficeCode,'') AS OfficeCode,
-ISNULL(a.ContractNumber,'') AS ContractNumber,
-ISNULL(a.IdeographicModelCode,'') AS IdeographicModelCode,
-ISNULL(a.MachineID,'') AS MachineID,
-ISNULL(a.IdeographicModelName,'') AS IdeographicModelName,
-ISNULL(a.LocationCode,'') AS LocationCode,
-ISNULL(a.InstallationCustAccount,'') AS InstallationCustAccount,
-ISNULL(a.InstallationPostalCode,'') AS InstallationPostalCode,
-ISNULL(a.LogisInstrCustomerName,'') AS LogisInstrCustomerName,
-ISNULL(a.InstallationAddress,'') AS InstallationAddress,
-ISNULL(a.InstallationStreetNumberTo,'') AS InstallationStreetNumberTo,
-ISNULL(a.InstallationBuildingName,'') AS InstallationBuildingName,
-ISNULL(a.InstallationFloorNumber,'') AS InstallationFloorNumber,
-ISNULL(a.InstallationCustomerDepartment,'') AS InstallationCustomerDepartment,
-ISNULL(a.InstallationCustomerRepresentative,'') AS InstallationCustomerRepresentative,
-ISNULL(a.InstallationCustomerTEL,'') AS InstallationCustomerTEL,
-'' AS AddressChangeCategory,
-ISNULL(a.SalesResponsible,'') AS SalesResponsible,
-ISNULL(SUBSTRING(a.SalesDepartmentId,5,8),'') AS SalesDepartmentId,
-ISNULL(a.SalesRepresentativeId,'') AS SalesRepresentativeId,
-ISNULL(a.SalesResponsibleId,'') AS SalesResponsibleId,
-CONVERT(nvarchar,a.EntranceNumberOfEntrances) AS EntranceNumberOfEntrances,
-CONVERT(nvarchar,CONVERT(bigint,a.EntranceEntranceDoorWidth)) AS EntranceEntranceDoorWidth,
-ISNULL(A38.codeDestination,'') AS ElevatorUnavailableFlag,
-CONVERT(nvarchar,CONVERT(bigint,a.SizeWidthOfEntrance)) AS SizeWidthOfEntrance,
-CONVERT(nvarchar,CONVERT(bigint,a.ElevatorVertical)) AS ElevatorVertical,
-CONVERT(nvarchar,CONVERT(bigint,a.ElevatorHorizontal)) AS ElevatorHorizontal,
-CONVERT(nvarchar,CONVERT(bigint,a.ElevatorDepth)) AS ElevatorDepth,
-CONVERT(nvarchar,CONVERT(bigint,a.ElevatorAllowableWeight)) AS ElevatorAllowableWeight,
-CONVERT(nvarchar,a.StageShape) AS StageShape,
-CONVERT(nvarchar,CONVERT(bigint,a.StageBanners)) AS StageBanners,
-CONVERT(nvarchar,CONVERT(bigint,a.StageLanding)) AS StageLanding,
-CONVERT(nvarchar,a.StageNumberOfStages) AS StageNumberOfStages,
-ISNULL(a.CarryInOutPrecautions,'') AS CarryInOutPrecautions,
-ISNULL(REPLACE(REPLACE(a.DeliveryConditionInformation1, CHAR(13), ''), CHAR(10), ''),'') AS UniqueInformation1,
-ISNULL(REPLACE(REPLACE(a.DeliveryConditionInformation1, CHAR(13), ''), CHAR(10), ''),'') AS UniqueInformation2,
-ISNULL(REPLACE(REPLACE(a.DeliveryConditionInformation1, CHAR(13), ''), CHAR(10), ''),'') AS DeliveryConditionInformation1,
-'' AS DeliveryConditionInformation2,
-ISNULL(a.DeliveryContactNote1,'') AS DeliveryContactNote1,
--- 消耗品：注意事項の印刷
-CASE WHEN a.ConsumablesPrintNotes = 0 THEN
- '1'
-WHEN a.ConsumablesPrintNotes = 1 THEN
- '2'
-WHEN a.ConsumablesPrintNotes = 2 THEN
- '3'
-WHEN a.ConsumablesPrintNotes = 3 THEN
- '4'
-ELSE
- ''
-END
-AS ConsumablesPrintNotes,
-ISNULL(CONVERT(nvarchar,CONVERT(bigint,RIGHT(a.LogisInstrOrderId,10))),'') AS LogisInstrOrderId,
-CONVERT(nvarchar,a.LogisInstrLineCounts) AS LogisInstrLineCounts,
-CONVERT(nvarchar,a.LogisInstrRequestNoInt) AS LogisInstrRequestNoInt,
-ISNULL(A58.codeDestination,'') AS CEWitnessClassification,
-ISNULL(A59.codeDestination,'') AS WreckerClassification,
-CONVERT(nvarchar,a.Collection) AS [Collection],
-CASE WHEN a.LogisInstrType = 5 OR a.LogisInstrType = 6 OR a.LogisInstrType = 7 OR a.LogisInstrType = 8 OR a.LogisInstrType = 9 OR a.LogisInstrType = 10 OR a.LogisInstrType = 11 THEN
- ''
-ELSE 
- CASE WHEN a.ShippingPriority = '250' THEN
-  ''
- ELSE
-  CONVERT(nvarchar,a.ShippingPriority)
- END
-END AS ShippingPriority,
--- 指定伝票フラグ
-CASE WHEN a.DesignatedVoucher = 0 THEN
- 'N'
-WHEN a.DesignatedVoucher = 1 THEN
- 'Y'
-ELSE
- ''
-END AS DesignatedVoucher,
-CASE WHEN CONVERT(nvarchar,a.NextVisitDate,112) = '19000101' THEN
- ''
-ELSE
- CONVERT(nvarchar,a.NextVisitDate,112)
-END 
-AS NextVisitDate,
-ISNULL(a.LogisticsInstructionClassification,'') AS LogisticsInstructionClassification,
--- E/U直納区分
-CASE WHEN a.EUDirectDeliveryClassification = 0 THEN
- 'N'
-WHEN a.EUDirectDeliveryClassification = 1 THEN
- 'Y'
-ELSE
- ''
-END AS 
-EUDirectDeliveryClassification,
-ISNULL(a.CarNo,'') AS CarNo,
-CONVERT(nvarchar,a.HeaderId) AS HeaderId,
-CONVERT(nvarchar,a.ConsignmentClassCode) AS ConsignmentClassCode,
-ISNULL(a.DeliveryScheduleGroup,'') AS DeliveryScheduleGroup,
-ISNULL(a.DeliveryCourseCycle,'') AS DeliveryCourseCycle,
-ISNULL(a.DeliveryGroup,'') AS DeliveryGroup,
-ISNULL(a.ConsignmentTypeCode,'') AS ConsignmentTypeCode,
-CASE WHEN a.CorrectionClass = '250' THEN
- ''
-ELSE
-  CONVERT(nvarchar,a.CorrectionClass)
-END
-AS CorrectionClass,
-ISNULL(a.DeliveryId,'') AS DeliveryId,
-ISNULL(a.SalesCompanyName,'') AS SalesCompanyName,
-ISNULL(a.SalesCompanyTel,'') AS SalesCompanyTel,
-ISNULL(a.DealerName,'') AS DealerName,
-ISNULL(a.SalesResponsibleName,'') AS SalesResponsibleName,
-ISNULL(A79.codeDestination,'') AS Odep,
-ISNULL(a.PurchaseRepresentative,'') AS PurchaseRepresentative,
-ISNULL(a.AutoReplenishmentNumber,'') AS AutoReplenishmentNumber,
-ISNULL(A82.codeDestination,'') AS WorkCompleted,
-ISNULL(a.ProvisionalVoucherNo,'') AS ProvisionalVoucherNo,
-ISNULL(a.InvoiceNo,'') AS InvoiceNo,
-ISNULL(RIGHT(a.LinkingSalesId,10),'') AS LinkingSalesId,
-CASE WHEN a.LogisInstrType = 5 OR a.LogisInstrType = 6 OR a.LogisInstrType = 7 OR a.LogisInstrType = 8 THEN
- ''
-ELSE 
- CONVERT(nvarchar,a.MeterConfirmationFlag)
-END AS
-MeterConfirmationFlag,
-CASE WHEN a.LogisInstrType = 3 OR a.LogisInstrType = 4 OR a.LogisInstrType = 5 OR a.LogisInstrType = 6 OR a.LogisInstrType = 7 OR a.LogisInstrType = 8 THEN
- ''
-ELSE 
- CONVERT(nvarchar,a.DocumentCollectionFlag)
-END AS
-DocumentCollectionFlag,
-ISNULL(a.PackingInstruction,'') AS PackingInstruction,
-ISNULL(REPLACE(a.TransferType,'XXINV_MOVE_TRANSTYPE_',''),'') AS TransferType,
-ISNULL(a.LogisInstrOrderType,'') AS LogisInstrOrderType,
-ISNULL(a.TransferOrderComment,'') AS TransferOrderComment,
-ISNULL(RIGHT(a.TransferOrderId,10),'') AS TransferOrderId,
-CONVERT(nvarchar,CONVERT(bigint,a.ForecastCV)) AS ForecastCV,
-ISNULL(a.PuchaseOrderNumber,'') AS PuchaseOrderNumber,
-CONVERT(nvarchar,CONVERT(bigint,a.RevisionNumber)) AS RevisionNumber,
--- 実績セット区分
-CASE WHEN a.ActualSettingClass = 0 THEN
- ''
-WHEN a.ActualSettingClass = 1 THEN
- '1'
-WHEN a.ActualSettingClass = 2 THEN
- '2'
-WHEN a.ActualSettingClass = 3 THEN
- '3'
-WHEN a.ActualSettingClass = 4 THEN
- '4'
-ELSE
- ''
-END AS ActualSettingClass,
-ISNULL(a.OpportunityCode,'') AS OpportunityCode,
-'' AS CompanyNamePrintCategory,
-CONVERT(nvarchar,CONVERT(bigint,a.LogisInstrTotalAmout)) AS LogisInstrTotalAmout,
-A100.codeDestination AS AmountDisplayClass,
-'00000000000' AS ConsumptionTax,
-ISNULL(A102.codeDestination,'') AS LogisInstrType,
+-- 使用 REPLACE 函数将字符串中的一部分内容替换为不同长度的新值
+UPDATE #TempTable
+SET OriginalValue = REPLACE(OriginalValue, 
+                            'earth_ls_CorporateCode,company_code.fuji_film_printing_systems_co._ltd.,B068,1010', 
+                            'NewValue');
 
-CASE WHEN CONVERT(nvarchar,a.BookingDateTime,112) = '19000101' THEN
- ''
-ELSE
- FORMAT(DATEADD(HOUR,9,a.BookingDateTime), 'yyyyMMddHHmmss')
-END 
-AS BookingDateTime,
-ISNULL(A104.codeDestination,'') AS DeliveryFeePayCompany,
-ISNULL(SUBSTRING(a.DeliveryFeePayDepartmentId,5,8),'') AS DeliveryFeePayDepartmentId,
-ISNULL(A106.codeDestination,'') AS [Emergency],
-ISNULL(A107.codeDestination,'') AS DTExchange,
-ISNULL(A108.codeDestination,'') AS WaitingForInstructions,
---XeSD区分
-CASE WHEN a.ReceptionCategory = 0 THEN
- ''
-ELSE
- CONVERT(nvarchar,a.ReceptionCategory)
-END AS ReceptionCategory,
-ISNULL(a.DesignatedVoucherNo,'') AS DesignatedVoucherNo,
-ISNULL(a.DeliveryOrderId,'') AS DeliveryOrderId,
-ISNULL(a.EqixRequestId,'') AS EqixRequestId
+-- 查看表中数据行的长度变化情况
+EXEC sp_spaceused '#TempTable';
 
-FROM
-
-[ls-deveda1c81cbd-scp].[dbo].earth_dp_LogisticsInstructions a INNER JOIN 
-[ls-deveda1c81cbd-scp].[dbo].earth_dp_LogisticsInstructionsLine b ON 
-a.ShipmentId = b.ShipmentId
-
-LEFT JOIN convertionCodeTb AS A38 ON A38.codeCategory = 'earth_dp_ElevatorUnavailableFlag' AND a.ElevatorUnavailableFlag =  A38.codeSource
-LEFT JOIN convertionCodeTb AS A58 ON A58.codeCategory = 'earth_dp_CEWitnessClassification' AND a.CEWitnessClassification =  A58.codeSource
-LEFT JOIN convertionCodeTb AS A59 ON A59.codeCategory = 'earth_dp_WreckerClassification' AND a.WreckerClassification =  A59.codeSource
-LEFT JOIN convertionCodeTb AS A79 ON A79.codeCategory = 'earth_dp_Odep' AND a.Odep =  A79.codeSource
-LEFT JOIN convertionCodeTb AS A82 ON A82.codeCategory = 'earth_dp_WorkCompleted' AND a.WorkCompleted =  A82.codeSource
-LEFT JOIN convertionCodeTb AS A100 ON A100.codeCategory = 'earth_dp_AmountDisplayClass' AND a.AmountDisplayClass =  A100.codeSource
-LEFT JOIN convertionCodeTb AS A102 ON A102.codeCategory = 'earth_dp_LogisInstrType' AND a.LogisInstrType =  A102.codeSource
-LEFT JOIN convertionCodeTb AS A106 ON A106.codeCategory = 'earth_dp_Emergency' AND a.Emergency =  A106.codeSource
-LEFT JOIN convertionCodeTb AS A107 ON A107.codeCategory = 'earth_dp_DTExchange' AND a.DTExchange =  A107.codeSource
-LEFT JOIN convertionCodeTb AS A108 ON A108.codeCategory = 'earth_dp_WaitingForInstructions' AND a.WaitingForInstructions =  A108.codeSource
-LEFT JOIN convertionCodeTb AS A4 ON A4.codeCategory = 'earth_ls_CorporateCode' AND a.RequestingCompanyAccount =  A4.codeSource
-LEFT JOIN convertionCodeTb AS A13 ON A13.codeCategory = 'earth_ls_CorporateCode' AND a.SupplierCompanyCode =  A13.codeSource
-LEFT JOIN convertionCodeTb AS A104 ON A104.codeCategory = 'earth_ls_CorporateCode' AND a.DeliveryFeePayCompany =  A104.codeSource
-
-WHERE 
---夜間バッチ(OvernightBatch)
-a.LogisticsInstructionCooperationClass = '2'
-
---AND (AzureDB.前回出力日付 IS NULL
---OR 物流指図明細(earth_dp_LogisticsInstructionsLine).変更日時(modifiedDateTime) > AzureDB.前回出力日付)
-AND b.modifiedDateTime > '2022-04-17 07:39:41'
-AND b.modifiedDateTime <= '2024-04-17 07:46:18'
+-- 清理临时表
+DROP TABLE #TempTable;
