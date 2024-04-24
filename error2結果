@@ -1,1 +1,78 @@
-incorrect token RIGHT expecting expression
+CREATE TABLE YourNewTable (
+    codeCategory NVARCHAR(MAX),
+    CodeMeaning NVARCHAR(MAX),
+    codeSource NVARCHAR(MAX),
+    codeDestination NVARCHAR(MAX)
+);
+
+INSERT INTO YourNewTable (codeCategory, CodeMeaning, codeSource, codeDestination)
+SELECT SUBSTRING(value, 0, CHARINDEX( ',' , value )) AS codeCategory,
+       SUBSTRING(value, (firstComma+1), (secondComma-(firstComma+1))) AS CodeMeaning,
+       SUBSTRING(value, (secondComma+1), (thirdComma-(secondComma+1))) AS codeSource,
+       SUBSTRING(value, (thirdComma+1), LEN(value)) AS codeDestination
+FROM (
+    SELECT value,
+           CHARINDEX( ',' , value ) AS firstComma,
+           CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1) AS secondComma,
+           CHARINDEX( ',' , value, CHARINDEX( ',' , value, CHARINDEX( ',' , value )+1)+1) AS thirdComma
+    FROM STRING_SPLIT(REPLACE(N'earth_ls_CorporateCode,company_code.fuji_film_printing_systems_co._ltd.,B068,1010
+    earth_ls_CorporateCode,company_code.fuji_xerox_business_innovation_co._ltd.,B002,1000
+    earth_ls_CorporateCode,company_code.fuji_xerox_business_innovation_japan_co._ltd.,B353,2003
+    ConsolidatedId,consolidated_id.fuji_xerox_business_supply_co._ltd.,B022,8032
+    ConsolidatedId,consolidated_id.fuji_xerox_eco-manufacturing_co._ltd.,B109,4121
+    ConsolidatedId,consolidated_id.fuji_xerox_taiwan_system_service_corporation,B261,4111
+    ConsolidatedId,consolidated_id.fujifilm(china)investment_co._ltd.,B041,8574
+    ConsolidatedId,consolidated_id.fujifilm(malaysia)sdn._bhd.,B267,8583
+    ConsolidatedId,consolidated_id.fujifilm(shanghai)trading_co._ltd.,B258,8578
+    ConsolidatedId,consolidated_id.fujifilm(thailand)ltd.,B268,8585
+    ConsolidatedId,consolidated_id.fujifilm_asia_pacific_pte._ltd.,B044,8579
+    earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B102,2071
+    earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B146,8060
+    earth_dp_AmountDisplayClass,amount_display_classification.no,0,
+    earth_dp_AmountDisplayClass,amount_display_classification.yes,1,1
+    earth_dp_CEWitnessClassification,ce_witness_classification.no,0,N
+    earth_dp_CEWitnessClassification,ce_witness_classification.yes,1,Y
+    earth_dp_DTExchange,d/t_exchange.no,0,
+    earth_dp_DTExchange,d/t_exchange.yes,1,1
+    earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.available,1,N
+    earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.unavailable,0,Y
+    earth_dp_Emergency,emergency.delivery_date_change,3,3
+    earth_dp_Emergency,emergency.emergency_1(urgent),1,1
+    earth_dp_Emergency,emergency.emergency_2(today),2,2
+    earth_dp_Emergency,emergency.none,0,
+    earth_dp_LogisInstrType,logistics_instructions_type.carrying_in_a_custody_machine_instruction,6,6
+    earth_dp_LogisInstrType,logistics_instructions_type.carrying_out_the_custody_machine_instruction,5,5
+    earth_dp_LogisInstrType,logistics_instructions_type.expected_receipt,11,11
+    earth_dp_LogisInstrType,logistics_instructions_type.moving_carry-in_instruction,8,8
+    earth_dp_LogisInstrType,logistics_instructions_type.moving_out_instruction,7,7
+    earth_dp_LogisInstrType,logistics_instructions_type.none,0,
+    earth_dp_LogisInstrType,logistics_instructions_type.procurement_items_scheduled_to_be_accepted,12,12
+    earth_dp_LogisInstrType,logistics_instructions_type.recovery(consumables)instruction,4,4
+    earth_dp_LogisInstrType,logistics_instructions_type.recovery(machines)instruction,3,3
+    earth_dp_LogisInstrType,logistics_instructions_type.return_instruction,2,2
+    earth_dp_LogisInstrType,logistics_instructions_type.shipment_instruction,1,1
+    earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction,9,9
+    earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction(moving_storage_location),10,10
+    earth_dp_Odep,odep.no,0,
+    earth_dp_Odep,odep.yes,1,1
+    earth_dp_ReservationLevel,reservation_level.expected_receipt,2,2
+    earth_dp_ReservationLevel,reservation_level.inventory,1,1
+    earth_dp_ReservationLevel,reservation_level.none,0,
+    earth_dp_ReservationLevel,reservation_level.planned_allowance,3,3
+    earth_dp_ReservationLevel,reservation_level.vendor_allocation,4,4
+    earth_dp_SetItemsClass,set_items_classification.none,0,
+    earth_dp_SetItemsClass,set_items_classification.set_item(child),2,2
+    earth_dp_SetItemsClass,set_items_classification.set_item(parent),1,1
+    earth_dp_SetItemsClass,set_items_classification.single_item,3,3
+    earth_dp_SpecialCollectionFlag,special_collection_flag.no,0,
+    earth_dp_SpecialCollectionFlag,special_collection_flag.yes,1,1
+    earth_dp_UA5Class,ua5_classification.none,0,
+    earth_dp_UA5Class,ua5_classification.ua5_X,1,X
+    earth_dp_WaitingForInstructions,waiting_for_instructions.coming,1,2
+    earth_dp_WaitingForInstructions,waiting_for_instructions.none,0,1
+    earth_dp_WaitingForInstructions,waiting_for_instructions.others,2,3
+    earth_dp_WorkCompleted,worked.no,0,N
+    earth_dp_WorkCompleted,worked.yes,1,Y
+    earth_dp_WreckerClassification,wrecker_classification.no,0,N
+    earth_dp_WreckerClassification,wrecker_classification.yes,1,Y',CHAR(13) + CHAR(10),CHAR(10)), CHAR(10))
+) AS X;
