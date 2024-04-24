@@ -1,4 +1,7 @@
-EXPLAIN SELECT DISTINCT
+SET SHOWPLAN_ALL ON;
+GO
+
+SELECT DISTINCT
   ISNULL(A4.codeDestination,'') AS RequestingCompanyAccount,
   ISNULL(A13.codeDestination,'') AS SupplierCompanyCode,
   ISNULL(A38.codeDestination,'') AS ElevatorUnavailableFlag,
@@ -34,3 +37,6 @@ WHERE
   a.LogisticsInstructionCooperationClass = '2'
   AND b.modifiedDateTime > '2022-04-17 07:39:41'
   AND b.modifiedDateTime <= '2024-04-17 07:46:18';
+  
+SET SHOWPLAN_ALL OFF;
+GO
