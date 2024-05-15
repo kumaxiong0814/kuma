@@ -1,80 +1,13 @@
--- 创建临时表
-CREATE TABLE #TempTable (
-    OriginalValue NVARCHAR(MAX)
-);
-
--- 向表中插入一些原始字符串数据
-INSERT INTO #TempTable (OriginalValue)
-VALUES 
-(N'earth_ls_CorporateCode,company_code.fuji_film_printing_systems_co._ltd.,B068,1010'),
-(N'earth_ls_CorporateCode,company_code.fuji_xerox_business_innovation_co._ltd.,B002,1000'),
-(N'earth_ls_CorporateCode,company_code.fuji_xerox_business_innovation_japan_co._ltd.,B353,2003'),
-(N'ConsolidatedId,consolidated_id.fuji_xerox_business_supply_co._ltd.,B022,8032'),
-(N'ConsolidatedId,consolidated_id.fuji_xerox_eco-manufacturing_co._ltd.,B109,4121'),
-(N'ConsolidatedId,consolidated_id.fuji_xerox_taiwan_system_service_corporation,B261,4111'),
-(N'ConsolidatedId,consolidated_id.fujifilm(china)investment_co._ltd.,B041,8574'),
-(N'ConsolidatedId,consolidated_id.fujifilm(malaysia)sdn._bhd.,B267,8583'),
-(N'ConsolidatedId,consolidated_id.fujifilm(shanghai)trading_co._ltd.,B258,8578'),
-(N'ConsolidatedId,consolidated_id.fujifilm(thailand)ltd.,B268,8585'),
-(N'ConsolidatedId,consolidated_id.fujifilm_asia_pacific_pte._ltd.,B044,8579'),
-(N'earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B102,2071'),
-(N'earth_ls_CorporateCode,company_code.fujifilm_service_link_co._ltd.,B146,8060'),
-(N'earth_dp_AmountDisplayClass,amount_display_classification.no,0'),
-(N'earth_dp_AmountDisplayClass,amount_display_classification.yes,1,1'),
-(N'earth_dp_CEWitnessClassification,ce_witness_classification.no,0,N'),
-(N'earth_dp_CEWitnessClassification,ce_witness_classification.yes,1,Y'),
-(N'earth_dp_DTExchange,d/t_exchange.no,0'),
-(N'earth_dp_DTExchange,d/t_exchange.yes,1,1'),
-(N'earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.available,1,N'),
-(N'earth_dp_ElevatorUnavailableFlag,elevator_unavailable_flag.unavailable,0,Y'),
-(N'earth_dp_Emergency,emergency.delivery_date_change,3,3'),
-(N'earth_dp_Emergency,emergency.emergency_1(urgent),1,1'),
-(N'earth_dp_Emergency,emergency.emergency_2(today),2,2'),
-(N'earth_dp_Emergency,emergency.none,0'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.carrying_in_a_custody_machine_instruction,6,6'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.carrying_out_the_custody_machine_instruction,5,5'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.expected_receipt,11,11'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.moving_carry-in_instruction,8,8'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.moving_out_instruction,7,7'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.none,0'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.procurement_items_scheduled_to_be_accepted,12,12'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.recovery(consumables)instruction,4,4'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.recovery(machines)instruction,3,3'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.return_instruction,2,2'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.shipment_instruction,1,1'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction,9,9'),
-(N'earth_dp_LogisInstrType,logistics_instructions_type.transfer_instruction(moving_storage_location),10,10'),
-(N'earth_dp_Odep,odep.no,0'),
-(N'earth_dp_Odep,odep.yes,1,1'),
-(N'earth_dp_ReservationLevel,reservation_level.expected_receipt,2,2'),
-(N'earth_dp_ReservationLevel,reservation_level.inventory,1,1'),
-(N'earth_dp_ReservationLevel,reservation_level.none,0'),
-(N'earth_dp_ReservationLevel,reservation_level.planned_allowance,3,3'),
-(N'earth_dp_ReservationLevel,reservation_level.vendor_allocation,4,4'),
-(N'earth_dp_SetItemsClass,set_items_classification.none,0'),
-(N'earth_dp_SetItemsClass,set_items_classification.set_item(child),2,2'),
-(N'earth_dp_SetItemsClass,set_items_classification.set_item(parent),1,1'),
-(N'earth_dp_SetItemsClass,set_items_classification.single_item,3,3'),
-(N'earth_dp_SpecialCollectionFlag,special_collection_flag.no,0'),
-(N'earth_dp_SpecialCollectionFlag,special_collection_flag.yes,1,1'),
-(N'earth_dp_UA5Class,ua5_classification.none,0'),
-(N'earth_dp_UA5Class,ua5_classification.ua5_X,1,X'),
-(N'earth_dp_WaitingForInstructions,waiting_for_instructions.coming,1,2'),
-(N'earth_dp_WaitingForInstructions,waiting_for_instructions.none,0,1'),
-(N'earth_dp_WaitingForInstructions,waiting_for_instructions.others,2,3'),
-(N'earth_dp_WorkCompleted,worked.no,0,N'),
-(N'earth_dp_WorkCompleted,worked.yes,1,Y'),
-(N'earth_dp_WreckerClassification,wrecker_classification.no,0,N'),
-(N'earth_dp_WreckerClassification,wrecker_classification.yes,1,Y');
-
--- 使用 REPLACE 函数将字符串中的一部分内容替换为不同长度的新值
-UPDATE #TempTable
-SET OriginalValue = REPLACE(OriginalValue, 
-                            'earth_ls_CorporateCode,company_code.fuji_film_printing_systems_co._ltd.,B068,1010', 
-                            'NewValue');
-
--- 查看表中数据行的长度变化情况
-EXEC sp_spaceused '#TempTable';
-
--- 清理临时表
-DROP TABLE #TempTable;
+RegularUrgentType的值是0，1，2
+295
+CASE RegularUrgentType
+  WHEN '1' THEN '1'
+  ELSE '0'
+END
+ 
+313
+CASE WHEN (ISNULL(RegularUrgentType, '') = '') OR (RegularUrgentType = '2')
+    THEN '0'
+  ELSE 
+    RegularUrgentType
+END AS RegularUrgentType
