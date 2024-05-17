@@ -1,13 +1,1 @@
-RegularUrgentType的值是0，1，2
-295
-CASE RegularUrgentType
-  WHEN '1' THEN '1'
-  ELSE '0'
-END
- 
-313
-CASE WHEN (ISNULL(RegularUrgentType, '') = '') OR (RegularUrgentType = '2')
-    THEN '0'
-  ELSE 
-    RegularUrgentType
-END AS RegularUrgentType
+An error has occurred. Please contact system administrator. System.AggregateException: One or more errors occurred. (DMF Error.DMF data job [aca9f3c7-b39f-4568-b9c8-b25789d71aa3]:activityId=[7cc4a603-2147-46a8-bcec-91476d8a79df]:dmfstatus=ProcessedWithErrors:batchjobstatus=Executing:Zip file name=[eit/importpackage/0117/398e9be3-d6d9-4eb0-b8a3-423b34172600.zip]) ---> System.Net.Http.HttpRequestException: DMF Error.DMF data job [aca9f3c7-b39f-4568-b9c8-b25789d71aa3]:activityId=[7cc4a603-2147-46a8-bcec-91476d8a79df]:dmfstatus=ProcessedWithErrors:batchjobstatus=Executing:Zip file name=[eit/importpackage/0117/398e9be3-d6d9-4eb0-b8a3-423b34172600.zip] at earth.CommonFunctions.AzureFunction.FO.DmfManager.import(HttpContent content, String activityId, String company, ILogger log, String zipFileName, Boolean businessErrorFlag) in D:\a\1\s\AzureServices\AzureFuction\CommonFunctions\CommonService\FO\DMFManager.cs:line 696 at earth.CommonFunctions.AzureFunction.FO.DmfManager.ImportFromStorage(String filePath, String activityId, String company, String container, String fileDir, ILogger log, Boolean businessErrorFlag) in D:\a\1\s\AzureServices\AzureFuction\CommonFunctions\CommonService\FO\DMFManager.cs:line 136 at earth.CommonFunctions.AzureFunction.FunctionBase.BatchImport(String filePath, String companycode, String container, String activityName, ILogger log, String businessErrorFlag) in D:\a\1\s\AzureServices\AzureFuction\CommonFunctions\CommonService\FunctionBase.cs:line 507 --- End of inner exception stack trace --- at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions) at System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken) at LegacySystem.DemandPlanning.FO.In.Batch.LS_BT_00117.LS_BT_00117_BusinessLogic.BussinessLogic(Object[] inputList) in D:\a\1\s\AzureServices\AzureFuction\LegacySystem\DemandPlanning\FO\In\Batch\LegacySystem.DemandPlanning.FO.In.Batch.LS_BT_00117\LS_BT_00117_BusinessLogic.cs:line 14 at earth.CommonFunctions.AzureFunction.FunctionBase.Run(Object[] inputList) in D:\a\1\s\AzureServices\AzureFuction\CommonFunctions\CommonService\FunctionBase.cs:line 127
