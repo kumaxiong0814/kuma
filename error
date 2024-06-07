@@ -1,5 +1,23 @@
-@if(
-    activity('FindConvFile').output.exists,
-    activity('FindConvFile').output.childItems,
-    json('[]')
-)
+{
+    "name": "FilterConvFile",
+    "type": "Filter",
+    "dependsOn": [
+        {
+            "activity": "FindConvFile",
+            "dependencyConditions": [
+                "Succeeded"
+            ]
+        }
+    ],
+    "userProperties": [],
+    "typeProperties": {
+        "items": {
+            "value": "@if(\n    activity('FindConvFile').output.exists,\n    activity('FindConvFile').output.childItems,\n    json('[]')\n)",
+            "type": "Expression"
+        },
+        "condition": {
+            "value": "@equals(item().type, 'File')",
+            "type": "Expression"
+        }
+    }
+}
