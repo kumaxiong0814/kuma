@@ -1,0 +1,98 @@
+CREATE PROCEDURE dbo.ls_GetYominame
+(
+    @InputKey NVARCHAR(1000),
+    @InputItem NVARCHAR(1000),
+    @HeadExcludings NVARCHAR(1000),
+    @BodyExcludings NVARCHAR(1000),
+    @TailExcludings NVARCHAR(1000),
+    @Key NVARCHAR(1000) OUTPUT,
+    @Item NVARCHAR(1000) OUTPUT
+)
+AS
+BEGIN
+    SET @Key = @InputKey;
+    SET @Item = @InputItem;
+
+    IF @Item IS NULL OR @Item = N'' BEGIN
+        RETURN; 
+    END
+
+    -- 文字列先頭のスペースを削除する
+    WHILE CHARINDEX(N' ', @Item) = 1 BEGIN
+        SET @Item = RIGHT(@Item, LEN(@Item) - 1);
+    END
+
+    -- 先頭
+    DECLARE @StartsWith NVARCHAR(1000);
+
+    ;WITH Headings AS
+    (
+        SELECT value, ROW_NUMBER() OVER(ORDER BY LEN(value) DESC) AS RowNum
+        FROM STRING_SPLIT(@HeadExcludings, N'|')
+        WHERE value <> N'' AND CHARINDEX(value, @Item) = 1
+    )
+    SELECT TOP 1 @StartsWith = value FROM Headings WHERE RowNum = 1;
+
+    IF @StartsWith IS NOT NULL BEGIN
+        SET @Item = RIGHT(@Item, LEN(@Item) - LEN(@StartsWith));
+    END
+
+
+    DECLARE @TempTable TABLE(value NVARCHAR(1000) NOT NULL, RowNum INT NOT NULL);
+    DECLARE @MaxRowNum INT;
+    DECLARE @RowNum INT;
+    DECLARE @Including NVARCHAR(1000);
+
+    -- ボディー
+    ;WITH Includings AS
+    (
+        SELECT value, ROW_NUMBER() OVER(ORDER BY LEN(value) DESC) AS RowNum
+        FROM STRING_SPLIT(@BodyExcludings, N'|')
+        WHERE value <> N'' AND CHARINDEX(value, @Item) > 0
+    )
+    INSERT INTO @TempTable (value, RowNum)
+        SELECT value, RowNum FROM Includings;
+
+    SELECT @MaxRowNum = MAX(RowNum) FROM @TempTable;
+
+    IF @MaxRowNum IS NOT NULL BEGIN
+        SET @RowNum = 1;
+
+        WHILE @RowNum <= @MaxRowNum BEGIN
+            SELECT @Including = value FROM @TempTable WHERE RowNum = @RowNum;
+            SET @Item = REPLACE(@Item, @Including, N'');
+
+            SET @RowNum = @RowNum + 1;
+        END
+    END
+
+    -- 末尾
+    DELETE FROM @TempTable;
+
+    ;WITH Includings AS
+    (
+        SELECT value, ROW_NUMBER() OVER(ORDER BY LEN(value) DESC) AS RowNum
+        FROM STRING_SPLIT(@TailExcludings, N'|')
+        WHERE value <> N'' AND CHARINDEX(value, @Item) > 0
+    )
+    INSERT INTO @TempTable (value, RowNum)
+        SELECT value, RowNum FROM Includings;
+
+    SELECT @MaxRowNum = MAX(RowNum) FROM @TempTable;
+
+    IF @MaxRowNum IS NOT NULL BEGIN
+        SET @RowNum = 1;
+
+        WHILE @RowNum <= @MaxRowNum BEGIN
+            SELECT @Including = value FROM @TempTable WHERE RowNum = @RowNum;
+            SET @Item = REPLACE(@Item, @Including, N'');
+
+            SET @RowNum = @RowNum + 1;
+        END
+    END
+
+    -- 文字列先頭のスペースを削除する
+    WHILE CHARINDEX(N' ', @Item) = 1 BEGIN
+        SET @Item = RIGHT(@Item, LEN(@Item) - 1);
+    END
+END 
