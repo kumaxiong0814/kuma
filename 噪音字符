@@ -109,3 +109,19 @@ BEGIN
         SET @Item = RIGHT(@Item, LEN(@Item) - 1);
     END
 END 
+
+-- 使用存储过程
+DECLARE @key NVARCHAR(1000);
+DECLARE @Item NVARCHAR(1000);
+
+EXEC dbo.ls_GetYominame
+@InputKey = N'example Key',
+@InputItem = N'  1',
+@HeadExcludings = N'example|head',
+@BodyExcludings = N'body',
+@TailExcludings = N'tail',
+@Key = @Key OUTPUT,
+@Item = @Item OUTPUT;
+
+SELECT @Key AS K,
+@Item AS Item;
