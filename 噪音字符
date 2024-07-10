@@ -1,3 +1,16 @@
+-- 检索数据库系统全部的存储过程
+SELECT p.name AS ProcedureName,
+SCHEMA_NAME(p.schema_id) AS
+SchemaName,
+m.definition AS ProcedureDefinition 
+FROM
+sys.procedures AS p
+JOIN sys.sql_modules AS m 
+ON p.object_id = m.object_id
+WHERE p.name = 'ls_GetYominame'
+ORDER BY Schemaname,ProcedureName;
+
+-- 新建存储过程
 CREATE PROCEDURE dbo.ls_GetYominame
 (
     @InputKey NVARCHAR(1000),
