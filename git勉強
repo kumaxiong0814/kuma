@@ -1,0 +1,47 @@
+①克隆本地文件夹
+git clone https://dev.azure.com/earthPJ/Earth%20Program%20-%20Core%20Template/_git/fb-ls-synapse
+git clone --filter=blob:none https://earthPJ@dev.azure.com/earthPJ/Earth%20Program%20-%20Core%20Template/_git/fb-earth
+②切换branch分支
+git checkout feature_0102_0130
+③创建一个json文件在本地
+$ echo "this is a test file from kuma0305" > pl_test0305.json
+④查看本地创建成功了
+ll pl_te*
+⑤把创建的json文件加入到缓冲区
+git add pl_test0305.json
+➅把缓存区更新到工作区，工作区再更新到index区
+ git commit -m "ADD PL_TEST0305.JSON"
+ git push -u origin feature_0102_0130
+⑦删除创建的json文件也分成三步，删除本地缓冲区，本地工作区，以及网络index区
+ git rm pl_test0305.json
+ git commit -m "remove file pl_test0305.json"
+ git push -u origin feature_0102_0130
+
+-------------------------------------------------------------------------------- 
+2024/4/16
+如何删除自己创建的分支 
+ ①先更新本地与远程同步
+  git fetch
+ ②删除本地分支  
+ git branch -D bugfix/0206_NoIFFileSuccess/Yu20240808 
+ git branch -D feature/0206-PhysicalInventoryId/Yu20240627 
+ 
+ ③删除远程分支
+ git push -d origin bugfix/0206_NoIFFileSuccess/Yu20240808
+ 
+ git push -d origin bugfix/0135_OnlyIFFileSuccess/Yu20240705
+ bugfix/0135_OnlyIFFileSuccess/Yu20240705
+ feature/0206-PhysicalInventoryId/Yu20240627
+ 
+ -------------------------------------------------------------------------------
+ bugFix/0174-OhiIdGroup/Yu20240401 删除不了？？？
+ feature/0174/yu0315 也是删除不了？
+ 
+ 感觉是合并过主分支的分支是可以使用命令删除的
+ 
+ 2024/07/11
+ 
+ git push origin bugfix/0254_CSVFile/Yu20240711
+
+
+2024/08/07 看清楚是哪个账号创建的分支，因为没有删除其他人创建分支的权力。其实里面外面的话，是2个不同的账号。
