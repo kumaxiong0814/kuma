@@ -1,1 +1,14 @@
-await DmfManager.ImportFromStorage(filePath, activityId, companycode, container, "", log, Convert.ToBoolean(businessErrorFlag));
+ The result status is: 
+StatusCode: 200, ReasonPhrase: 'OK', Version: 1.1, Content: System.Net.Http.HttpConnectionResponseContent, Headers:
+{
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Server-Timing: total;dur=216.6808
+  Content-Security-Policy: frame-ancestors 'self' https://earth-stg-jpe-ls-integration.crm7.dynamics.com/
+  ms-dyn-aid: 43f364c0-dbe1-0006-7439-2344e1dbda01
+  Request-Context: appId=cid-v1:47532108-1d6f-4e03-9925-5a529abc43fe
+  Date: Thu, 08 Aug 2024 01:23:57 GMT
+  Content-Length: 38
+  Content-Type: application/json; charset=utf-8
+}
