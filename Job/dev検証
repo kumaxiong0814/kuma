@@ -1,1 +1,14 @@
 export JOB_ID=JLGIF7332D;export YMDHMS=`date '+%Y%m%d%H%M%S'`;/storage/common/JobCall.sh -c DurableFunction -r earth-dev-rg-cm-shr -n earth-dev-func-jpe-cm-batch-itall -t AppCommonFOBatch_HttpStart -p '{"url":"https://earth-it-000689511179d8b36e6fdevaos.cloudax.dynamics.com/","batchName":"FDD-DP-IF-04017_Daily_NORMAL_Automatic replenishment schedule data (From SPIN)","batchClassName":"earth_ls_0163Controller","batchContractClassName":"earth_ls_0163Contract","batchServiceClassname":"earth_ls_0163Service","batchServiceMethodName":"processOperation","dataAreaId":"B002","batchGroup":"","parmExecutionType":"1","parmReleasePercentage":"18:30　： 33,19:00　： 50,19:30　：100"}' -k earth-dev-kv-jpe-cm-com -s earth-dev-jobdefault-secret > /logs/batch/LO/$JOB_ID.$YMDHMS.$$
+1，设置环境变量JOB_ID
+将环境代码变量JOB_ID设置为JLGIF7332D
+2，生成当前时间戳并存储再YMDHMS环境变量中
+3，执行一个脚本JobCall.sh
+运行位于/storage/common/JobCall.sh的脚本，传递以下参数
+-c DurableFunction 运行模式或功能名称
+-r earth-dev-rg-cm-shr 资源组名称
+-n earth-dev-func-jpe-cm-batch-itall 函数名称
+-t AppCommonFOBatch_HttpStart 任务类型或者启动触发器
+-p JSON格式的参数，这里包括URL，批处理名称，类名等一系列参数
+-k earth-dev-kv-jpe-cm-com 密钥库名称
+-s earth-dev-jobdefault-secret 密钥名称
+4，将执行日志输出到文件
