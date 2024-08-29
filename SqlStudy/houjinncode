@@ -1,0 +1,4 @@
+select 													
+dataAreaId as AreaId													
+ FROM [dbo].[EARTH_DP_LOGISTICSINSTRUCTIONSSP]													
+ where @activity('ac_ctrl_GetKeyFromDB').output.firstRow.myConditions	
