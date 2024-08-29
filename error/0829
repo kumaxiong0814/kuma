@@ -1,11 +1,38 @@
-An error has occurred. Please contact system administrator. System.InvalidOperationException: Operation is not valid due to the current state of the object. at earth.CommonFunctions.AzureFunction.Operations.LegacySystemOperations.CallFileArchive(Dictionary`2 paramData, Boolean isSharedStorege, ILogger log) in D:\a\1\s\AzureServices\AzureFuction\CommonFunctions\CommonService\Operations\LegacySystemOperations.cs:line 645 at Fujifilm.Earth.Common.Ls.DurableFunction.InBoundEndProcessFunctionHelper_BusinessLogic.BussinessLogic(Object[] inputList) in D:\a\1\s\AzureServices\AzureFuction\LegacySystem\Common\LegacySystem.Common.Batch.CommonAppBatch\LegacySystem.Common.Batch.CommonAppBatch\InBoundEndProcessFunctionHelper_BusinessLogic.cs:line 29 at earth.CommonFunctions.AzureFunction.FunctionBase.Run(Object[] inputList) in D:\a\1\s\AzureServices\AzureFuction\CommonFunctions\CommonService\FunctionBase.cs:line 127
-
-LegacySystemOperations.cs:line 645
- HttpResponseMessage response = client.SendAsync(httpRequestMessage).Result;
- if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Accepted)
+ public void CallFileArchive(Dictionary<string, string> paramData, bool isSharedStorege, ILogger log)
  {
-     throw new InvalidOperationException();
+     string generationNumber = paramData["generationNumber"];
+     if (string.IsNullOrWhiteSpace(generationNumber))
+     {
+         // パラメータが未指定の場合、既定値設定
+         generationNumber = GenerationNumber;
+     }
+     paramData["generationNumber"] = generationNumber;
 
-InBoundEndProcessFunctionHelper_BusinessLogic.cs:line 29
-bool existsIfFile = paramitem.Value<bool>("existsiffile");
-bool endFileCreationFlag = paramitem.Value<bool>("endfilecreationflag");
+     string addDateFlag = paramData["addDateFlag"];
+     if (string.IsNullOrWhiteSpace(addDateFlag))
+     {
+         // パラメータが未指定の場合、既定値設定
+         addDateFlag = AddDateFlag;
+     }
+     paramData["addDateFlag"] = addDateFlag;
+
+     if (!isSharedStorege)
+     {
+         paramData.Add("storageAccoutName", Environment.GetEnvironmentVariable("StorageAccount"));
+     }
+
+     //Call先のAzureFunctionがDuarbleFunctionでないのでCallHttpTrigerメソッドを利用しない
+     using (HttpClient client = new HttpClient())
+     {
+         var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, FileArchiveUrl);
+
+         httpRequestMessage.Content = new StringContent(JsonConvert.SerializeObject(paramData), Encoding.UTF8, "application/json");
+
+         //
+         HttpResponseMessage response = client.SendAsync(httpRequestMessage).Result;
+         if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Accepted)
+         {
+             throw new InvalidOperationException();
+         }
+     }
+ }
