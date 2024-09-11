@@ -1,0 +1,12 @@
+取得項目
+グローバル アドレス帳(DirPartyTable).名前(Name)
+グローバルアドレス帳(DirPartyTable).場所(PrimaryAddressLocation)
+
+データソース
+仕入先(VendTable)
+グローバルアドレス帳(DirPartyTable)
+
+結合条件
+仕入先(VendTable).グローバルアドレス帳(Party) = グローバルアドレス帳(DirPartyTable).レコードID(RecId)
+抽出条件
+仕入先(VendTable).仕入先ID(VendAccountNum) =検収情報IF(earth_dp_AcceptInfoIF).仕入先コード(SupplierCode)
