@@ -1,83 +1,83 @@
-2024-09-10T17:20:00.924 5237 (JobCall.sh:494:params_check) ++++++++++++++++++Parameters++++++++++++++++++
-2024-09-10T17:20:00.926 5237 (JobCall.sh:495:params_check) azure component category[-c]:SynapsePipeline
-2024-09-10T17:20:00.928 5237 (JobCall.sh:496:params_check) resource group name[-r]:earth-stg-rg-ls-st2
-2024-09-10T17:20:00.930 5237 (JobCall.sh:497:params_check) azure component name, development endpoint of Synapse Pipeline[-n]:https://earth-ls-stg-synw-st2.dev.azuresynapse.net
-2024-09-10T17:20:00.932 5237 (JobCall.sh:498:params_check) method of function, pipeline of adf, trigger of logic apps(manual,request)[-t]:pl_0334
-2024-09-10T17:20:00.934 5237 (JobCall.sh:499:params_check) request parameters[-p]:{}
-2024-09-10T17:20:00.937 5237 (JobCall.sh:500:params_check) subscription id[-i]:
-2024-09-10T17:20:00.940 5237 (JobCall.sh:501:params_check) keyvault name[-k]:
-2024-09-10T17:20:00.941 5237 (JobCall.sh:502:params_check) secret name[-s]:
-2024-09-10T17:20:00.943 5237 (JobCall.sh:503:params_check) debug mode[-x]:
-2024-09-10T17:20:00.945 5237 (JobCall.sh:504:params_check) ++++++++++++++++++Parameters++++++++++++++++++
-2024-09-10T17:20:00.948 5237 (JobCall.sh:531:main) Processing start.
-2024-09-10T17:20:01.301 5237 (JobCall.sh:122:get_access_token) curl return code: 0
-2024-09-10T17:20:01.303 5237 (JobCall.sh:123:get_access_token) response: {"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2Rldi5henVyZXN5bmFwc2UubmV0LyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzkyNTkyYTEwLThiYzItNDVlYS04ODBlLWY2MmJhMTZkNDZlZC8iLCJpYXQiOjE3MjU5NTQ3MjUsIm5iZiI6MTcyNTk1NDcyNSwiZXhwIjoxNzI2MDQxNDI1LCJhaW8iOiJFMmRnWU9ENlVkUG1YbU54ZWZyL2VaT243T1ZTQkFBPSIsImFwcGlkIjoiNWYzMmVlMWUtZTQyMy00MWI3LWIyMmItNDgxYzIyMzY2YzU5IiwiYXBwaWRhY3IiOiIyIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvOTI1OTJhMTAtOGJjMi00NWVhLTg4MGUtZjYyYmExNmQ0NmVkLyIsImlkdHlwIjoiYXBwIiwib2lkIjoiMTJkZDc3MzItMzI3My00ZjY3LTk2NjQtOGMyNWRhYmIwMjcwIiwicmgiOiIwLkFCSUFFQ3Baa3NLTDZrV0lEdllyb1cxRzdYNWN3QnJTRWdWR3Y1MVVuWEJCeHJNU0FBQS4iLCJzdWIiOiIxMmRkNzczMi0zMjczLTRmNjctOTY2NC04YzI1ZGFiYjAyNzAiLCJ0aWQiOiI5MjU5MmExMC04YmMyLTQ1ZWEtODgwZS1mNjJiYTE2ZDQ2ZWQiLCJ1dGkiOiJjSzJUWUxCcmFVdUZzQ2lQY0hKYUFBIiwidmVyIjoiMS4wIiwieG1zX2lkcmVsIjoiMTAgNyIsInhtc19taXJpZCI6Ii9zdWJzY3JpcHRpb25zL2M4Mzg2NmNhLTY4ZGUtNDEwYi04MjU3LWVjMGJkNWVmMDc3OC9yZXNvdXJjZWdyb3Vwcy9lYXJ0aC1zdGctcmctY20tc2hyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvZWFydGhzdGd2bWpwMW1nMiJ9.OQj_1RYffHF4fFocGXMc0kMBOWGUPLwxyGvQpPzbK92ekfHLdvM6AFm3kuwm4JGDhotXZtLniDjQSqc1ZpkmKRKUGkBvO92qZiWvfmft5xWwXD-yWmM7lJl2wnY1hXbpl5b3Clr8QVhsuxK3y2PX7zZDQPORQl0pYsTofKZCC89vkVchnoXxZBP8vRsZpbfqOxVpIb6Vt7MUN61V0mHZrUBCbnt9QUFxy8UFbsOYiAej1DvBf2Nqb8hpCA2rjcRp3nXYgYs9r1v3KCQYHd1QnneVp1oidwobIWLVTN5m1kB4eVjc-X64mezs6a0fUc4COOAtSMuXmyMKUE4oXc-OVg","client_id":"5f32ee1e-e423-41b7-b22b-481c22366c59","expires_in":"85024","expires_on":"1726041425","ext_expires_in":"86399","not_before":"1725954725","resource":"https://dev.azuresynapse.net/","token_type":"Bearer"}
-2024-09-10T17:20:01.329 5237 (JobCall.sh:202:create_exe_url) exeurl: https://earth-ls-stg-synw-st2.dev.azuresynapse.net/pipelines/pl_0334/createRun?api-version=2020-12-01
-2024-09-10T17:20:01.852 5237 (JobCall.sh:287:exe) curl return code: 0
-2024-09-10T17:20:01.854 5237 (JobCall.sh:288:exe) response: HTTP/2 202 
+2024-09-11T17:20:00.337 2610512 (JobCall.sh:494:params_check) ++++++++++++++++++Parameters++++++++++++++++++
+2024-09-11T17:20:00.339 2610512 (JobCall.sh:495:params_check) azure component category[-c]:SynapsePipeline
+2024-09-11T17:20:00.340 2610512 (JobCall.sh:496:params_check) resource group name[-r]:earth-stg-rg-ls-st2
+2024-09-11T17:20:00.342 2610512 (JobCall.sh:497:params_check) azure component name, development endpoint of Synapse Pipeline[-n]:https://earth-ls-stg-synw-st2.dev.azuresynapse.net
+2024-09-11T17:20:00.345 2610512 (JobCall.sh:498:params_check) method of function, pipeline of adf, trigger of logic apps(manual,request)[-t]:pl_0334
+2024-09-11T17:20:00.348 2610512 (JobCall.sh:499:params_check) request parameters[-p]:{}
+2024-09-11T17:20:00.349 2610512 (JobCall.sh:500:params_check) subscription id[-i]:
+2024-09-11T17:20:00.351 2610512 (JobCall.sh:501:params_check) keyvault name[-k]:
+2024-09-11T17:20:00.353 2610512 (JobCall.sh:502:params_check) secret name[-s]:
+2024-09-11T17:20:00.355 2610512 (JobCall.sh:503:params_check) debug mode[-x]:
+2024-09-11T17:20:00.358 2610512 (JobCall.sh:504:params_check) ++++++++++++++++++Parameters++++++++++++++++++
+2024-09-11T17:20:00.361 2610512 (JobCall.sh:531:main) Processing start.
+2024-09-11T17:20:00.529 2610512 (JobCall.sh:122:get_access_token) curl return code: 0
+2024-09-11T17:20:00.530 2610512 (JobCall.sh:123:get_access_token) response: {"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2Rldi5henVyZXN5bmFwc2UubmV0LyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzkyNTkyYTEwLThiYzItNDVlYS04ODBlLWY2MmJhMTZkNDZlZC8iLCJpYXQiOjE3MjYwNDAxNTksIm5iZiI6MTcyNjA0MDE1OSwiZXhwIjoxNzI2MTI2ODU5LCJhaW8iOiJFMmRnWUtpb09CSCs2aDlYb2tMNko5YWQ4eU1QQWdBPSIsImFwcGlkIjoiNWYzMmVlMWUtZTQyMy00MWI3LWIyMmItNDgxYzIyMzY2YzU5IiwiYXBwaWRhY3IiOiIyIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvOTI1OTJhMTAtOGJjMi00NWVhLTg4MGUtZjYyYmExNmQ0NmVkLyIsImlkdHlwIjoiYXBwIiwib2lkIjoiMTJkZDc3MzItMzI3My00ZjY3LTk2NjQtOGMyNWRhYmIwMjcwIiwicmgiOiIwLkFCSUFFQ3Baa3NLTDZrV0lEdllyb1cxRzdYNWN3QnJTRWdWR3Y1MVVuWEJCeHJNU0FBQS4iLCJzdWIiOiIxMmRkNzczMi0zMjczLTRmNjctOTY2NC04YzI1ZGFiYjAyNzAiLCJ0aWQiOiI5MjU5MmExMC04YmMyLTQ1ZWEtODgwZS1mNjJiYTE2ZDQ2ZWQiLCJ1dGkiOiJFbXg3N2c1ZkcwdW5hLTVPZjVnbkFBIiwidmVyIjoiMS4wIiwieG1zX2lkcmVsIjoiMjggNyIsInhtc19taXJpZCI6Ii9zdWJzY3JpcHRpb25zL2M4Mzg2NmNhLTY4ZGUtNDEwYi04MjU3LWVjMGJkNWVmMDc3OC9yZXNvdXJjZWdyb3Vwcy9lYXJ0aC1zdGctcmctY20tc2hyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvZWFydGhzdGd2bWpwMW1nMiJ9.BUQ1OCQHbUdFqTdQO9_5XXc6dGEXIMsHKhXn92AO9WyhW0SE_dHMyQzpA-y6Lotg2OEOjtyxfzKdat8Gscp6pvn_H6588YXC-HP3pJeDUFYsk60BQMy5hylYfivpBYGxEANQDj9Q1yS7od0NiRIA04h13oJZv_DbsYd5n5gn4BGNLYyB1dn_DAvVhZLnZNhKBShKkolEZahn7RDOpLiCRCVQeadTWG24zncyIaQ3n84D1uKKMhBxZBoS90ofLeU9pkzw__vPQB3-2HIJbrcamWSOtm56ujeWo7paHHF3IAp29PCPhBQb3gpuZ0PU59ypy9IADV2Dsp5_Q6IA32_LVg","client_id":"5f32ee1e-e423-41b7-b22b-481c22366c59","expires_in":"84059","expires_on":"1726126859","ext_expires_in":"86399","not_before":"1726040159","resource":"https://dev.azuresynapse.net/","token_type":"Bearer"}
+2024-09-11T17:20:00.557 2610512 (JobCall.sh:202:create_exe_url) exeurl: https://earth-ls-stg-synw-st2.dev.azuresynapse.net/pipelines/pl_0334/createRun?api-version=2020-12-01
+2024-09-11T17:20:01.598 2610512 (JobCall.sh:287:exe) curl return code: 0
+2024-09-11T17:20:01.599 2610512 (JobCall.sh:288:exe) response: HTTP/2 202 
 content-length: 53
 content-type: application/json; charset=utf-8
 server: Kestrel Microsoft-HTTPAPI/2.0
 strict-transport-security: max-age=31536000; includeSubDomains
-x-ms-correlation-request-id: 582a530b-8456-4ace-9945-ffdef9ad20e1
-x-ms-request-id: f1d2fac4-7a48-4b44-a02c-b90fb9006552
-date: Tue, 10 Sep 2024 08:20:00 GMT
+x-ms-correlation-request-id: 7a27a8ff-940d-4fe1-ad9c-2dee3e626d9e
+x-ms-request-id: 03b0e6ee-cf1c-4ff0-bf83-2bbfa0f51275
+date: Wed, 11 Sep 2024 08:20:01 GMT
 
 {
-  "runId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c"
+  "runId": "20cc3493-8c99-41ec-9ee2-6f7431f4df84"
 }
-2024-09-10T17:20:01.946 5237 (JobCall.sh:293:exe) runid: c73d30cc-d701-4839-a0e2-d00c84a59c1c
-2024-09-10T17:20:01.950 5237 (JobCall.sh:294:exe) statusurl: https://earth-ls-stg-synw-st2.dev.azuresynapse.net/pipelineruns/c73d30cc-d701-4839-a0e2-d00c84a59c1c?api-version=2020-12-01
-2024-09-10T17:20:02.137 5237 (JobCall.sh:346:get_com_status) curl return code: 0
-2024-09-10T17:20:02.142 5237 (JobCall.sh:347:get_com_status) response: HTTP/2 200 
-content-length: 781
+2024-09-11T17:20:01.624 2610512 (JobCall.sh:293:exe) runid: 20cc3493-8c99-41ec-9ee2-6f7431f4df84
+2024-09-11T17:20:01.626 2610512 (JobCall.sh:294:exe) statusurl: https://earth-ls-stg-synw-st2.dev.azuresynapse.net/pipelineruns/20cc3493-8c99-41ec-9ee2-6f7431f4df84?api-version=2020-12-01
+2024-09-11T17:20:01.752 2610512 (JobCall.sh:346:get_com_status) curl return code: 0
+2024-09-11T17:20:01.753 2610512 (JobCall.sh:347:get_com_status) response: HTTP/2 200 
+content-length: 780
 content-type: application/json; charset=utf-8
 server: Kestrel Microsoft-HTTPAPI/2.0
 strict-transport-security: max-age=31536000; includeSubDomains
-x-ms-correlation-request-id: 6590a175-963a-46c1-bf0c-e51cb8d5f60f
-x-ms-request-id: 2d1a03b9-860e-4652-bd8b-c3d177a7a611
-date: Tue, 10 Sep 2024 08:20:02 GMT
+x-ms-correlation-request-id: 6a311dc6-79bd-4210-a2cc-8a7702db5abc
+x-ms-request-id: ba303d0b-a7a7-4ecb-9d39-24226d6a7972
+date: Wed, 11 Sep 2024 08:20:01 GMT
 
 {
-  "id": "/SUBSCRIPTIONS/C83866CA-68DE-410B-8257-EC0BD5EF0778/RESOURCEGROUPS/EARTH-STG-RG-LS-ST2/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/EARTH-LS-STG-SYNW-ST2/pipelineruns/c73d30cc-d701-4839-a0e2-d00c84a59c1c",
-  "runId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "id": "/SUBSCRIPTIONS/C83866CA-68DE-410B-8257-EC0BD5EF0778/RESOURCEGROUPS/EARTH-STG-RG-LS-ST2/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/EARTH-LS-STG-SYNW-ST2/pipelineruns/20cc3493-8c99-41ec-9ee2-6f7431f4df84",
+  "runId": "20cc3493-8c99-41ec-9ee2-6f7431f4df84",
   "debugRunId": null,
-  "runGroupId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "runGroupId": "20cc3493-8c99-41ec-9ee2-6f7431f4df84",
   "pipelineName": "pl_0334",
   "parameters": {},
   "invokedBy": {
-    "id": "8953905ef1d6456d96267d2792bb2eb7",
+    "id": "c4d132b4ad1341d0b9453c8369bd289f",
     "name": "Manual",
     "invokedByType": "Manual"
   },
-  "runStart": "2024-09-10T08:20:01.4943954Z",
+  "runStart": "2024-09-11T08:20:01.331716Z",
   "runEnd": null,
   "durationInMs": null,
   "status": "Queued",
   "message": null,
   "pipelineReturnValue": null,
-  "lastUpdated": "2024-09-10T08:20:01.5432805Z",
+  "lastUpdated": "2024-09-11T08:20:01.3841523Z",
   "annotations": [],
   "runDimension": {},
   "isLatest": true
 }
-2024-09-10T17:20:02.191 5237 (JobCall.sh:371:check_com_status) runstatus: Queued
-2024-09-10T17:20:02.220 5237 (JobCall.sh:409:check_com_status) Waiting for execution of SynapsePipeline, 1th time: status=Queued
-2024-09-10T17:20:32.402 5237 (JobCall.sh:346:get_com_status) curl return code: 0
-2024-09-10T17:20:32.403 5237 (JobCall.sh:347:get_com_status) response: HTTP/2 200 
-content-length: 3433
+2024-09-11T17:20:01.778 2610512 (JobCall.sh:371:check_com_status) runstatus: Queued
+2024-09-11T17:20:01.782 2610512 (JobCall.sh:409:check_com_status) Waiting for execution of SynapsePipeline, 1th time: status=Queued
+2024-09-11T17:20:31.960 2610512 (JobCall.sh:346:get_com_status) curl return code: 0
+2024-09-11T17:20:31.962 2610512 (JobCall.sh:347:get_com_status) response: HTTP/2 200 
+content-length: 3432
 content-type: application/json; charset=utf-8
 server: Kestrel Microsoft-HTTPAPI/2.0
 strict-transport-security: max-age=31536000; includeSubDomains
-x-ms-correlation-request-id: fd4e9552-3cd1-4399-bdb7-511861e4b8e1
-x-ms-request-id: 4eb15b5b-bc1e-4225-be92-3d1106eae076
-date: Tue, 10 Sep 2024 08:20:32 GMT
+x-ms-correlation-request-id: d51c732a-f4c0-4a12-b899-701d3dd996c9
+x-ms-request-id: 13a4c552-030f-47f5-81f1-ffe9f124af01
+date: Wed, 11 Sep 2024 08:20:30 GMT
 
 {
-  "id": "/SUBSCRIPTIONS/C83866CA-68DE-410B-8257-EC0BD5EF0778/RESOURCEGROUPS/EARTH-STG-RG-LS-ST2/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/EARTH-LS-STG-SYNW-ST2/pipelineruns/c73d30cc-d701-4839-a0e2-d00c84a59c1c",
-  "runId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "id": "/SUBSCRIPTIONS/C83866CA-68DE-410B-8257-EC0BD5EF0778/RESOURCEGROUPS/EARTH-STG-RG-LS-ST2/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/EARTH-LS-STG-SYNW-ST2/pipelineruns/20cc3493-8c99-41ec-9ee2-6f7431f4df84",
+  "runId": "20cc3493-8c99-41ec-9ee2-6f7431f4df84",
   "debugRunId": null,
-  "runGroupId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "runGroupId": "20cc3493-8c99-41ec-9ee2-6f7431f4df84",
   "pipelineName": "pl_0334",
   "parameters": {
     "AzureFunctionUrl": "https://earth-stg-func-jpe-ls-dp-fo-in-batch-st2.azurewebsites.net",
@@ -130,20 +130,20 @@ date: Tue, 10 Sep 2024 08:20:32 GMT
     "specialendfilecountpositioninfo": "17,8"
   },
   "invokedBy": {
-    "id": "8953905ef1d6456d96267d2792bb2eb7",
+    "id": "c4d132b4ad1341d0b9453c8369bd289f",
     "name": "Manual",
     "invokedByType": "Manual"
   },
-  "runStart": "2024-09-10T08:20:01.4943954Z",
-  "runEnd": "2024-09-10T08:20:28.5122707Z",
-  "durationInMs": 27017,
+  "runStart": "2024-09-11T08:20:01.331716Z",
+  "runEnd": "2024-09-11T08:20:28.7747614Z",
+  "durationInMs": 27443,
   "status": "Failed",
   "message": "Operation on target ac_ctrl_FileExistsFailed failed: The IF files or End notification file does not exist.",
   "pipelineReturnValue": {},
-  "lastUpdated": "2024-09-10T08:20:28.5139545Z",
+  "lastUpdated": "2024-09-11T08:20:28.7762889Z",
   "annotations": [],
   "runDimension": {},
   "isLatest": true
 }
-2024-09-10T17:20:32.428 5237 (JobCall.sh:371:check_com_status) runstatus: Failed
-2024-09-10T17:20:32.431 5237 (JobCall.sh:65:throw) The process ended abnormally.
+2024-09-11T17:20:31.986 2610512 (JobCall.sh:371:check_com_status) runstatus: Failed
+2024-09-11T17:20:31.989 2610512 (JobCall.sh:65:throw) The process ended abnormally.
