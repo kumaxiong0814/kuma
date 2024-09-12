@@ -1,0 +1,149 @@
+2024-09-10T17:20:00.924 5237 (JobCall.sh:494:params_check) ++++++++++++++++++Parameters++++++++++++++++++
+2024-09-10T17:20:00.926 5237 (JobCall.sh:495:params_check) azure component category[-c]:SynapsePipeline
+2024-09-10T17:20:00.928 5237 (JobCall.sh:496:params_check) resource group name[-r]:earth-stg-rg-ls-st2
+2024-09-10T17:20:00.930 5237 (JobCall.sh:497:params_check) azure component name, development endpoint of Synapse Pipeline[-n]:https://earth-ls-stg-synw-st2.dev.azuresynapse.net
+2024-09-10T17:20:00.932 5237 (JobCall.sh:498:params_check) method of function, pipeline of adf, trigger of logic apps(manual,request)[-t]:pl_0334
+2024-09-10T17:20:00.934 5237 (JobCall.sh:499:params_check) request parameters[-p]:{}
+2024-09-10T17:20:00.937 5237 (JobCall.sh:500:params_check) subscription id[-i]:
+2024-09-10T17:20:00.940 5237 (JobCall.sh:501:params_check) keyvault name[-k]:
+2024-09-10T17:20:00.941 5237 (JobCall.sh:502:params_check) secret name[-s]:
+2024-09-10T17:20:00.943 5237 (JobCall.sh:503:params_check) debug mode[-x]:
+2024-09-10T17:20:00.945 5237 (JobCall.sh:504:params_check) ++++++++++++++++++Parameters++++++++++++++++++
+2024-09-10T17:20:00.948 5237 (JobCall.sh:531:main) Processing start.
+2024-09-10T17:20:01.301 5237 (JobCall.sh:122:get_access_token) curl return code: 0
+2024-09-10T17:20:01.303 5237 (JobCall.sh:123:get_access_token) response: {"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL2Rldi5henVyZXN5bmFwc2UubmV0LyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzkyNTkyYTEwLThiYzItNDVlYS04ODBlLWY2MmJhMTZkNDZlZC8iLCJpYXQiOjE3MjU5NTQ3MjUsIm5iZiI6MTcyNTk1NDcyNSwiZXhwIjoxNzI2MDQxNDI1LCJhaW8iOiJFMmRnWU9ENlVkUG1YbU54ZWZyL2VaT243T1ZTQkFBPSIsImFwcGlkIjoiNWYzMmVlMWUtZTQyMy00MWI3LWIyMmItNDgxYzIyMzY2YzU5IiwiYXBwaWRhY3IiOiIyIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvOTI1OTJhMTAtOGJjMi00NWVhLTg4MGUtZjYyYmExNmQ0NmVkLyIsImlkdHlwIjoiYXBwIiwib2lkIjoiMTJkZDc3MzItMzI3My00ZjY3LTk2NjQtOGMyNWRhYmIwMjcwIiwicmgiOiIwLkFCSUFFQ3Baa3NLTDZrV0lEdllyb1cxRzdYNWN3QnJTRWdWR3Y1MVVuWEJCeHJNU0FBQS4iLCJzdWIiOiIxMmRkNzczMi0zMjczLTRmNjctOTY2NC04YzI1ZGFiYjAyNzAiLCJ0aWQiOiI5MjU5MmExMC04YmMyLTQ1ZWEtODgwZS1mNjJiYTE2ZDQ2ZWQiLCJ1dGkiOiJjSzJUWUxCcmFVdUZzQ2lQY0hKYUFBIiwidmVyIjoiMS4wIiwieG1zX2lkcmVsIjoiMTAgNyIsInhtc19taXJpZCI6Ii9zdWJzY3JpcHRpb25zL2M4Mzg2NmNhLTY4ZGUtNDEwYi04MjU3LWVjMGJkNWVmMDc3OC9yZXNvdXJjZWdyb3Vwcy9lYXJ0aC1zdGctcmctY20tc2hyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS92aXJ0dWFsTWFjaGluZXMvZWFydGhzdGd2bWpwMW1nMiJ9.OQj_1RYffHF4fFocGXMc0kMBOWGUPLwxyGvQpPzbK92ekfHLdvM6AFm3kuwm4JGDhotXZtLniDjQSqc1ZpkmKRKUGkBvO92qZiWvfmft5xWwXD-yWmM7lJl2wnY1hXbpl5b3Clr8QVhsuxK3y2PX7zZDQPORQl0pYsTofKZCC89vkVchnoXxZBP8vRsZpbfqOxVpIb6Vt7MUN61V0mHZrUBCbnt9QUFxy8UFbsOYiAej1DvBf2Nqb8hpCA2rjcRp3nXYgYs9r1v3KCQYHd1QnneVp1oidwobIWLVTN5m1kB4eVjc-X64mezs6a0fUc4COOAtSMuXmyMKUE4oXc-OVg","client_id":"5f32ee1e-e423-41b7-b22b-481c22366c59","expires_in":"85024","expires_on":"1726041425","ext_expires_in":"86399","not_before":"1725954725","resource":"https://dev.azuresynapse.net/","token_type":"Bearer"}
+2024-09-10T17:20:01.329 5237 (JobCall.sh:202:create_exe_url) exeurl: https://earth-ls-stg-synw-st2.dev.azuresynapse.net/pipelines/pl_0334/createRun?api-version=2020-12-01
+2024-09-10T17:20:01.852 5237 (JobCall.sh:287:exe) curl return code: 0
+2024-09-10T17:20:01.854 5237 (JobCall.sh:288:exe) response: HTTP/2 202 
+content-length: 53
+content-type: application/json; charset=utf-8
+server: Kestrel Microsoft-HTTPAPI/2.0
+strict-transport-security: max-age=31536000; includeSubDomains
+x-ms-correlation-request-id: 582a530b-8456-4ace-9945-ffdef9ad20e1
+x-ms-request-id: f1d2fac4-7a48-4b44-a02c-b90fb9006552
+date: Tue, 10 Sep 2024 08:20:00 GMT
+
+{
+  "runId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c"
+}
+2024-09-10T17:20:01.946 5237 (JobCall.sh:293:exe) runid: c73d30cc-d701-4839-a0e2-d00c84a59c1c
+2024-09-10T17:20:01.950 5237 (JobCall.sh:294:exe) statusurl: https://earth-ls-stg-synw-st2.dev.azuresynapse.net/pipelineruns/c73d30cc-d701-4839-a0e2-d00c84a59c1c?api-version=2020-12-01
+2024-09-10T17:20:02.137 5237 (JobCall.sh:346:get_com_status) curl return code: 0
+2024-09-10T17:20:02.142 5237 (JobCall.sh:347:get_com_status) response: HTTP/2 200 
+content-length: 781
+content-type: application/json; charset=utf-8
+server: Kestrel Microsoft-HTTPAPI/2.0
+strict-transport-security: max-age=31536000; includeSubDomains
+x-ms-correlation-request-id: 6590a175-963a-46c1-bf0c-e51cb8d5f60f
+x-ms-request-id: 2d1a03b9-860e-4652-bd8b-c3d177a7a611
+date: Tue, 10 Sep 2024 08:20:02 GMT
+
+{
+  "id": "/SUBSCRIPTIONS/C83866CA-68DE-410B-8257-EC0BD5EF0778/RESOURCEGROUPS/EARTH-STG-RG-LS-ST2/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/EARTH-LS-STG-SYNW-ST2/pipelineruns/c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "runId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "debugRunId": null,
+  "runGroupId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "pipelineName": "pl_0334",
+  "parameters": {},
+  "invokedBy": {
+    "id": "8953905ef1d6456d96267d2792bb2eb7",
+    "name": "Manual",
+    "invokedByType": "Manual"
+  },
+  "runStart": "2024-09-10T08:20:01.4943954Z",
+  "runEnd": null,
+  "durationInMs": null,
+  "status": "Queued",
+  "message": null,
+  "pipelineReturnValue": null,
+  "lastUpdated": "2024-09-10T08:20:01.5432805Z",
+  "annotations": [],
+  "runDimension": {},
+  "isLatest": true
+}
+2024-09-10T17:20:02.191 5237 (JobCall.sh:371:check_com_status) runstatus: Queued
+2024-09-10T17:20:02.220 5237 (JobCall.sh:409:check_com_status) Waiting for execution of SynapsePipeline, 1th time: status=Queued
+2024-09-10T17:20:32.402 5237 (JobCall.sh:346:get_com_status) curl return code: 0
+2024-09-10T17:20:32.403 5237 (JobCall.sh:347:get_com_status) response: HTTP/2 200 
+content-length: 3433
+content-type: application/json; charset=utf-8
+server: Kestrel Microsoft-HTTPAPI/2.0
+strict-transport-security: max-age=31536000; includeSubDomains
+x-ms-correlation-request-id: fd4e9552-3cd1-4399-bdb7-511861e4b8e1
+x-ms-request-id: 4eb15b5b-bc1e-4225-be92-3d1106eae076
+date: Tue, 10 Sep 2024 08:20:32 GMT
+
+{
+  "id": "/SUBSCRIPTIONS/C83866CA-68DE-410B-8257-EC0BD5EF0778/RESOURCEGROUPS/EARTH-STG-RG-LS-ST2/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/EARTH-LS-STG-SYNW-ST2/pipelineruns/c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "runId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "debugRunId": null,
+  "runGroupId": "c73d30cc-d701-4839-a0e2-d00c84a59c1c",
+  "pipelineName": "pl_0334",
+  "parameters": {
+    "AzureFunctionUrl": "https://earth-stg-func-jpe-ls-dp-fo-in-batch-st2.azurewebsites.net",
+    "SecretName": "earth-stg-lsfunckeygeneral-st2-secret",
+    "FunctionId": "LS_IF_0334",
+    "RegionCode": "ls",
+    "Container": "externalif-jm",
+    "MainFileFolder": "st2/azure/0334/copy",
+    "MergeFileName": "FJMPD0001",
+    "PropertyFolder": "st2/conf/0334",
+    "PropertyFile": "FJMPD0001_Definition.csv",
+    "ResultFolder": "st2/azure/0334/conv",
+    "ResultFile": "Merit accept dataInfo IF.csv",
+    "EndFileFolder": "st2/azure/0334/endfile",
+    "SharedStorageContainer": "fileif-jm",
+    "SharedStorageIFFileFolder": "ftp/jmdp0003",
+    "SharedStorageArchiveFolder": "backup/data/jmdp0003",
+    "ZeroFileLinkageFlag": "True",
+    "ZeroFileCreateFlag": "False",
+    "BackupDays": "14",
+    "SrcDirName": "st2/manifest_packageheader/0334",
+    "ReturnChar": "LF",
+    "Encoding": "EUC-JP",
+    "FirstRowAsHeader": "False",
+    "ColumnDelimiter": "|",
+    "QuoteCharacter": "\"",
+    "ExcludeLinesc": "0",
+    "SynapseSecretName": "earth-stg-lsasynloginlsexternaliffoexternalifstgstcycle2-secret",
+    "TableName": "earth_dp_MeritAcceptDataInfoIf",
+    "ExternalIFComUrl": "https://earth-stg-func-jpe-ls-general-st2.azurewebsites.net",
+    "ExternalIFComFunctionSecretName": "earth-stg-lsfunckeygeneral-st2-secret",
+    "HandleFileFunctionUrl": "https://earth-stg-func-jpe-ls-handlefile-st2.azurewebsites.net",
+    "HandleFileFunctionSecretName": "earth-stg-lsfunckeyhandlefile-st2-secret",
+    "ConvertCodeFunctionUrl": "https://earth-stg-func-jpe-cm-general-st2.azurewebsites.net",
+    "ConvertCodeFunctionSecretName": "earth-stg-cmfunckeygeneralst2-secret",
+    "ConvertCodeFunctionParam": "",
+    "D365InboundAzureFunctionUrl": "https://earth-stg-func-jpe-ls-dp-fo-in-batch-st2.azurewebsites.net",
+    "D365InboundAzureFunctionName": "LS_BT_00334_FunctionHttp",
+    "D365InboundAzureFunctionSecretName": "earth-stg-lsfunckeygeneral-st2-secret",
+    "DmfFileFolder": "st2/d365/0334",
+    "DmfJobName": "import_MeritAcceptDataInfoIF",
+    "CompanyCode": "B002",
+    "RowDelimiter": "",
+    "AzureFunctionNameStart": "InBoundStartProcessForShortTimeCycleFunctionHttp/InBoundStartProcessForShortTimeCycleFunctionHttp",
+    "AzureFunctionNameEnd": "InBoundEndProcessForShortTimeCycleFunctionHttp/DoInBoundEndProcessForShortTimeCycleFunctionAction",
+    "DataFileExtension": ".dat",
+    "endfileextension": "fen",
+    "Encoding0": "UTF-8",
+    "ColumnDelimiterDMF": ",",
+    "specialendfilecountpositioninfo": "17,8"
+  },
+  "invokedBy": {
+    "id": "8953905ef1d6456d96267d2792bb2eb7",
+    "name": "Manual",
+    "invokedByType": "Manual"
+  },
+  "runStart": "2024-09-10T08:20:01.4943954Z",
+  "runEnd": "2024-09-10T08:20:28.5122707Z",
+  "durationInMs": 27017,
+  "status": "Failed",
+  "message": "Operation on target ac_ctrl_FileExistsFailed failed: The IF files or End notification file does not exist.",
+  "pipelineReturnValue": {},
+  "lastUpdated": "2024-09-10T08:20:28.5139545Z",
+  "annotations": [],
+  "runDimension": {},
+  "isLatest": true
+}
+2024-09-10T17:20:32.428 5237 (JobCall.sh:371:check_com_status) runstatus: Failed
+2024-09-10T17:20:32.431 5237 (JobCall.sh:65:throw) The process ended abnormally.
