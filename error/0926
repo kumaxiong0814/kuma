@@ -1,0 +1,394 @@
+2024-09-25T08:39:03.221 3040481 (JobCall.sh:494:params_check) ++++++++++++++++++Parameters++++++++++++++++++
+2024-09-25T08:39:03.222 3040481 (JobCall.sh:495:params_check) azure component category-c:LogicApps
+2024-09-25T08:39:03.224 3040481 (JobCall.sh:496:params_check) resource group name-r:earth-stg-rg-cm-shr
+2024-09-25T08:39:03.225 3040481 (JobCall.sh:497:params_check) azure component name. development endpoint of Synapse Pipeline-n:earth-stg-logic-jpe-cm-hulft-ftp-command-v2
+2024-09-25T08:39:03.227 3040481 (JobCall.sh:498:params_check) method of function, pipeline of adf, trigger of logic apps(manual,request)-t:manual
+2024-09-25T08:39:03.228 3040481 (JobCall.sh:499:params_check) request parameters-p:{runbookInfo:{runbookName:runb_ftp-send_v2,runbookParameterObject:{\FileId\:\dpcl0008\}}}
+2024-09-25T08:39:03.230 3040481 (JobCall.sh:500:params_check) subscription id-i:c83866ca-68de-410b-8257-ec0bd5ef0778
+2024-09-25T08:39:03.231 3040481 (JobCall.sh:501:params_check) keyvault name-k:
+2024-09-25T08:39:03.233 3040481 (JobCall.sh:502:params_check) secret name-s:
+2024-09-25T08:39:03.234 3040481 (JobCall.sh:503:params_check) debug mode-x:
+2024-09-25T08:39:03.235 3040481 (JobCall.sh:504:params_check) ++++++++++++++++++Parameters++++++++++++++++++
+2024-09-25T08:39:03.237 3040481 (JobCall.sh:531:main) Processing start.
+2024-09-25T08:39:03.722 3040481 (JobCall.sh:122:get_access_token) curl return code: 0
+2024-09-25T08:39:03.724 3040481 (JobCall.sh:123:get_access_token) response: {access_token:eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyIsImtpZCI6Ikg5bmo1QU9Tc3dNcGhnMVNGeDdqYVYtbEI5dyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tLyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzkyNTkyYTEwLThiYzItNDVlYS04ODBlLWY2MmJhMTZkNDZlZC8iLCJpYXQiOjE3MjcyMTg0NzgsIm5iZiI6MTcyNzIxODQ3OCwiZXhwIjoxNzI3MzA1MTc4LCJhaW8iOiJFMmRnWUdpY1Zad1dtV0NpbG1xemZYdkZUSTc5QUE9PSIsImFwcGlkIjoiNWYzMmVlMWUtZTQyMy00MWI3LWIyMmItNDgxYzIyMzY2YzU5IiwiYXBwaWRhY3IiOiIyIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvOTI1OTJhMTAtOGJjMi00NWVhLTg4MGUtZjYyYmExNmQ0NmVkLyIsImlkdHlwIjoiYXBwIiwib2lkIjoiMTJkZDc3MzItMzI3My00ZjY3LTk2NjQtOGMyNWRhYmIwMjcwIiwicmgiOiIwLkFCSUFFQ3Baa3NLTDZrV0lEdllyb1cxRzdVWklmM2tBdXRkUHVrUGF3ZmoyTUJNU0FBQS4iLCJzdWIiOiIxMmRkNzczMi0zMjczLTRmNjctOTY2NC04YzI1ZGFiYjAyNzAiLCJ0aWQiOiI5MjU5MmExMC04YmMyLTQ1ZWEtODgwZS1mNjJiYTE2ZDQ2ZWQiLCJ1dGkiOiJWY3dOQjQ3dXlVaXZxaVpMZ1MwVEFBIiwidmVyIjoiMS4wIiwieG1zX2lkcmVsIjoiMiA3IiwieG1zX21pcmlkIjoiL3N1YnNjcmlwdGlvbnMvYzgzODY2Y2EtNjhkZS00MTBiLTgyNTctZWMwYmQ1ZWYwNzc4L3Jlc291cmNlZ3JvdXBzL2VhcnRoLXN0Zy1yZy1jbS1zaHIvcHJvdmlkZXJzL01pY3Jvc29mdC5Db21wdXRlL3ZpcnR1YWxNYWNoaW5lcy9lYXJ0aHN0Z3ZtanAxbWcyIiwieG1zX3RjZHQiOjE0MjQ3MDk2NDZ9.eq9WCB3OSVcCBQ0Svevh0-ybw3ae6ixHMpFqCHNaSdRrZa5urh7kI-nZw6UAzIX45sVLjSKl2EJ_GH7fec8qXMqUVZZgGDJeqwG96gBsvjmnL8AbpaP31pez-2RlGKvjVxERBU0tz7qMA_lWBIn2sWEwDi3r2H5fL1WUJW1mi4odZgbbMfrq9GtRuHHrlGGcKgFK2rc6jE5ig1VaeIzXDbU-V7JcxPskvBRQ-03R2rIbCZTIjuaxIs_xi3F_AGreBwW4RajW0417a7MfRz4Mg94HJ4rtHtVrG9LcWlFx9s2js6D17-1GjgU9MmfgH-tOtEkajxMcoMGkj4f5rY6Bmw,client_id:5f32ee1e-e423-41b7-b22b-481c22366c59,expires_in:84035,expires_on:1727305178,ext_expires_in:86399,not_before:1727218478,resource:https://management.azure.com/,token_type:Bearer}
+2024-09-25T08:39:03.749 3040481 (JobCall.sh:215:create_exe_url) preexeurl: https://management.azure.com/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/triggers/manual/listCallbackUrl?api-version=2016-10-01
+2024-09-25T08:39:03.884 3040481 (JobCall.sh:221:create_exe_url) curl return code: 0
+2024-09-25T08:39:03.885 3040481 (JobCall.sh:222:create_exe_url) response: HTTP/2 200
+cache-control: no-cache
+pragma: no-cache
+content-length: 582
+content-type: application/json; charset=utf-8
+expires: -1
+vary: Accept-Encoding
+set-cookie: ARRAffinity=03653a5ff26f7e0adf0cd33338b896ea4ee4856ba3918ba0940d9b1fda36f29c;Path=/;HttpOnly;Secure;Domain=management.japaneast.logic.azure.com
+set-cookie: ARRAffinitySameSite=03653a5ff26f7e0adf0cd33338b896ea4ee4856ba3918ba0940d9b1fda36f29c;Path=/;HttpOnly;SameSite=None;Secure;Domain=management.japaneast.logic.azure.com
+strict-transport-security: max-age=31536000; includeSubDomains
+x-ms-request-id: japaneast:57881ce7-f88d-4179-9d98-eaeaffbf4d2f
+x-ms-ratelimit-remaining-subscription-writes: 199
+x-ms-ratelimit-remaining-subscription-global-writes: 2999
+x-ms-correlation-request-id: 6776ffda-fdb2-48ab-bfd6-c9b77f49cc84
+x-ms-routing-request-id: JAPANWEST:20240924T233903Z:6776ffda-fdb2-48ab-bfd6-c9b77f49cc84
+x-content-type-options: nosniff
+x-cache: CONFIG_NOCACHE
+x-msedge-ref: Ref A: 48F955E1FE7D46428D10C396C2CBFAA6 Ref B: TYO201100113009 Ref C: 2024-09-24T23:39:03Z
+date: Tue, 24 Sep 2024 23:39:03 GMT
+
+{value:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/triggers/manual/paths/invoke?api-version=2016-10-01&se=2024-09-25T08
+3A39
+3A03.0000000Z&sp=
+2Ftriggers
+2Fmanual
+2Frun&sv=1.0&sig=E7qz5EM1ohijmqHMs48wmun4ZBFICuGC687PgKSNI0g,method:POST,basePath:https://prod-02.japaneast.logic.azure.com/workflows/4200a44e895847708b217a8d74c295ad/triggers/manual/paths/invoke,queries:{api-version:2016-10-01,se:2024-09-25T08:39:03.0000000Z,sp:/triggers/manual/run,sv:1.0,sig:E7qz5EM1ohijmqHMs48wmun4ZBFICuGC687PgKSNI0g}}
+2024-09-25T08:39:03.909 3040481 (JobCall.sh:226:create_exe_url) exeurl: https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/triggers/manual/paths/invoke?api-version=2016-10-01&se=2024-09-25T08
+3A39
+3A03.0000000Z&sp=
+2Ftriggers
+2Fmanual
+2Frun&sv=1.0&sig=E7qz5EM1ohijmqHMs48wmun4ZBFICuGC687PgKSNI0g
+2024-09-25T08:39:04.044 3040481 (JobCall.sh:302:exe) curl return code: 0
+2024-09-25T08:39:04.046 3040481 (JobCall.sh:303:exe) response: HTTP/1.1 202 Accepted
+Content-Length: 1902
+Content-Type: application/json; charset=utf-8
+Date: Tue, 24 Sep 2024 23:39:03 GMT
+Cache-Control: no-cache
+Expires: -1
+Location: https://prod-02.japaneast.logic.azure.com/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/operations/46978bbe-d490-43d4-a50d-dfdc00b3cfe1?api-version=2016-10-01&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Foperations
+2F46978bbe-d490-43d4-a50d-dfdc00b3cfe1
+2Fread&sv=1.0&sig=TLPA4WYwI7thescTwGPI3Jj02ueHHHThhThWV4lnZfA
+Pragma: no-cache
+Retry-After: 10
+Set-Cookie: ARRAffinity=f5590b5fc5ddc907852bca51af5ce38a05e4326a28cf5ad695273889f35aef77;Path=/;HttpOnly;Secure;Domain=prod-02.japaneast.logic.azure.com
+Set-Cookie: ARRAffinitySameSite=f5590b5fc5ddc907852bca51af5ce38a05e4326a28cf5ad695273889f35aef77;Path=/;HttpOnly;SameSite=None;Secure;Domain=prod-02.japaneast.logic.azure.com
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+x-ms-workflow-run-id: 08584743857415024704672316698CU06
+x-ms-correlation-id: 46978bbe-d490-43d4-a50d-dfdc00b3cfe1
+x-ms-client-tracking-id: 08584743857415024704672316698CU06
+x-ms-trigger-history-name: 08584743857415024704672316698CU06
+x-ms-execution-location: japaneast
+x-ms-workflow-system-id: /locations/japaneast/scaleunits/prod-02/workflows/4200a44e895847708b217a8d74c295ad
+x-ms-workflow-id: 4200a44e895847708b217a8d74c295ad
+x-ms-workflow-version: 08584792231624107714
+x-ms-workflow-name: earth-stg-logic-jpe-cm-hulft-ftp-command-v2
+x-ms-tracking-id: 46978bbe-d490-43d4-a50d-dfdc00b3cfe1
+x-ms-ratelimit-burst-remaining-workflow-writes: 4498
+x-ms-ratelimit-remaining-workflow-download-contentsize: 322121728
+x-ms-ratelimit-remaining-workflow-upload-contentsize: 322121521
+x-ms-ratelimit-time-remaining-directapirequests: 29999830
+x-ms-request-id: japaneast:46978bbe-d490-43d4-a50d-dfdc00b3cfe1
+
+{properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/workflows/4200a44e895847708b217a8d74c295ad/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:39:04.069 3040481 (JobCall.sh:307:exe) runid: 08584743857415024704672316698CU06
+2024-09-25T08:39:04.070 3040481 (JobCall.sh:315:exe) statusurl: https://management.azure.com/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06?api-version=2016-10-01
+2024-09-25T08:39:04.196 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:39:04.198 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:39:04.222 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:39:04.226 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 1th time: status=Running
+2024-09-25T08:39:34.334 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:39:34.336 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:39:34.361 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:39:34.364 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 2th time: status=Running
+2024-09-25T08:40:04.457 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:40:04.458 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:40:04.485 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:40:04.488 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 3th time: status=Running
+2024-09-25T08:40:34.585 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:40:34.587 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:40:34.611 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:40:34.615 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 4th time: status=Running
+2024-09-25T08:41:04.726 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:41:04.727 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:41:04.760 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:41:04.764 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 5th time: status=Running
+2024-09-25T08:41:34.884 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:41:34.886 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:41:34.911 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:41:34.914 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 6th time: status=Running
+2024-09-25T08:42:05.022 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:42:05.024 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:42:05.050 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:42:05.053 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 7th time: status=Running
+2024-09-25T08:42:35.154 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:42:35.156 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:42:35.182 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:42:35.185 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 8th time: status=Running
+2024-09-25T08:43:05.264 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:43:05.266 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:43:05.295 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:43:05.299 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 9th time: status=Running
+2024-09-25T08:43:35.386 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:43:35.388 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:43:35.413 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:43:35.417 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 10th time: status=Running
+2024-09-25T08:44:05.511 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:44:05.513 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:44:05.539 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:44:05.542 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 11th time: status=Running
+2024-09-25T08:44:35.657 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:44:35.659 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:44:35.695 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:44:35.698 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 12th time: status=Running
+2024-09-25T08:45:05.808 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:45:05.810 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:45:05.842 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:45:05.846 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 13th time: status=Running
+2024-09-25T08:45:35.997 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:45:35.999 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:45:36.025 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:45:36.028 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 14th time: status=Running
+2024-09-25T08:46:06.119 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:46:06.121 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,status:Running,correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{startTime:2024-09-24T23:39:03.9725192Z,correlation:{},status:Waiting}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:46:06.146 3040481 (JobCall.sh:371:check_com_status) runstatus: Running
+2024-09-25T08:46:06.149 3040481 (JobCall.sh:409:check_com_status) Waiting for execution of LogicApps, 15th time: status=Running
+2024-09-25T08:46:36.247 3040481 (JobCall.sh:353:get_com_status) curl return code: 0
+2024-09-25T08:46:36.248 3040481 (JobCall.sh:354:get_com_status) response: {properties:{waitEndTime:2024-09-24T23:39:03.977243Z,startTime:2024-09-24T23:39:03.977243Z,endTime:2024-09-24T23:46:19.9570146Z,status:Failed,code:Terminated,error:{code:500,message:{\n \message\: \Runbookの実行でエラーが発生しました。Runbookの実行履歴を確認ください。\\n}},correlation:{clientTrackingId:08584743857415024704672316698CU06},workflow:{id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/versions/08584792231624107714,name:08584792231624107714,type:Microsoft.Logic/workflows/versions},trigger:{name:manual,inputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerInputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerInputs
+2Fread&sv=1.0&sig=8tii2-no4iuDcvrl2g6OzZKSjfRVXPj5zHfT6ULX1r0,contentVersion:bsKqJXdKPdbNI318GV3+1w==,contentSize:208,contentHash:{algorithm:md5,value:bsKqJXdKPdbNI318GV3+1w==}},outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/TriggerOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FTriggerOutputs
+2Fread&sv=1.0&sig=iuoA92VUTinzOeOv0mH_hRAn2jvFYocYyxJduiTYO-U,contentVersion:2tCI1/M253t7uBWJ5em6EQ==,contentSize:1349,contentHash:{algorithm:md5,value:2tCI1/M253t7uBWJ5em6EQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:39:03.9725192Z,originHistoryName:08584743857415024704672316698CU06,correlation:{clientTrackingId:08584743857415024704672316698CU06},status:Succeeded},outputs:{},response:{name:Response_9,outputsLink:{uri:https://prod-02.japaneast.logic.azure.com:443/workflows/4200a44e895847708b217a8d74c295ad/runs/08584743857415024704672316698CU06/contents/ResponseOutputs?api-version=2016-10-01&se=2024-09-25T03
+3A00
+3A00.0000000Z&sp=
+2Fruns
+2F08584743857415024704672316698CU06
+2Fcontents
+2FResponseOutputs
+2Fread&sv=1.0&sig=6uvJR4dkrhIgOKYEjHWzeiepfp73sxALNnj32T6aFqs,contentVersion:5Ok8HvNbebf1JhJLF/H2eQ==,contentSize:140,contentHash:{algorithm:md5,value:5Ok8HvNbebf1JhJLF/H2eQ==}},startTime:2024-09-24T23:39:03.9725192Z,endTime:2024-09-24T23:46:19.9127478Z,correlation:{clientTrackingId:08584743857415024704672316698CU06},code:InternalServerError,status:Succeeded}},id:/subscriptions/c83866ca-68de-410b-8257-ec0bd5ef0778/resourceGroups/earth-stg-rg-cm-shr/providers/Microsoft.Logic/workflows/earth-stg-logic-jpe-cm-hulft-ftp-command-v2/runs/08584743857415024704672316698CU06,name:08584743857415024704672316698CU06,type:Microsoft.Logic/workflows/runs}
+2024-09-25T08:46:36.273 3040481 (JobCall.sh:371:check_com_status) runstatus: Failed
+2024-09-25T08:46:36.277 3040481 (JobCall.sh:65:throw) The process ended abnormally.
