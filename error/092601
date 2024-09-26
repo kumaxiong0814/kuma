@@ -1,0 +1,52 @@
+2024/9/25 午後5:44:36 - Output: I000201 パラメータ FileID: dpcl0008
+2024/9/25 午後5:44:40 - Output: I000206 一時フォルダ：/interface/service/tmp/c452198a-c196-488f-b628-7769e10f0d9d
+2024/9/25 午後5:44:41 - Output: I000223 対象ファイル： fileif-cl/ftp/dpcl0008/FLOCL0004 to /LO-IN/FLOCL0004/LO-OUT//_FILE
+2024/9/25 午後5:44:42 - Output: I000224 Copy from https://earthstgsajpehulftp00.blob.core.windows.net/fileif-cl/ftp/dpcl0008?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2099-12-31T23:59:59Z&st=2022-10-21T01:47:14Z&spr=https&sig=LO0weMwEoBcw%2FyM4Z%2Bu8a%2BJVr8C1RCq02X6NdhELw2o%3D to /interface/service/tmp/c452198a-c196-488f-b628-7769e10f0d9d, include:FLOCL0004
+2024/9/25 午後5:44:44 - Output: I000225 ----- AZCOPYログ 開始 -----
+2024/9/25 午後5:44:47 - Output: INFO: Scanning...
+2024/9/25 午後5:44:49 - Output: INFO: azcopy 10.19.0: A newer version 10.26.0 is available to download
+2024/9/25 午後5:44:51 - Output: INFO: Any empty folders will not be processed, because source and/or destination doesn't have full folder support
+2024/9/25 午後5:44:53 - Output: Job 6defad36-7f7e-6547-546b-71389d928b31 has started
+2024/9/25 午後5:44:55 - Output: Log file is located at: /home/hweautomation/run/sandboxes/17dedefa-a9b4-45c4-8c7c-7db65f3de404/.azcopy/6defad36-7f7e-6547-546b-71389d928b31.log
+2024/9/25 午後5:44:57 - Output: 100.0 %, 1 Done, 0 Failed, 0 Pending, 0 Skipped, 1 Total,
+2024/9/25 午後5:45:00 - Output: Job 6defad36-7f7e-6547-546b-71389d928b31 summary
+2024/9/25 午後5:45:01 - Output: Elapsed Time (Minutes): 0.04
+2024/9/25 午後5:45:03 - Output: Number of File Transfers: 1
+2024/9/25 午後5:45:05 - Output: Number of Folder Property Transfers: 0
+2024/9/25 午後5:45:07 - Output: Number of Symlink Transfers: 0
+2024/9/25 午後5:45:09 - Output: Total Number of Transfers: 1
+2024/9/25 午後5:45:11 - Output: Number of File Transfers Completed: 1
+2024/9/25 午後5:45:13 - Output: Number of Folder Transfers Completed: 0
+2024/9/25 午後5:45:15 - Output: Number of File Transfers Failed: 0
+2024/9/25 午後5:45:16 - Output: Number of Folder Transfers Failed: 0
+2024/9/25 午後5:45:18 - Output: Number of File Transfers Skipped: 0
+2024/9/25 午後5:45:19 - Output: Number of Folder Transfers Skipped: 0
+2024/9/25 午後5:45:22 - Output: TotalBytesTransferred: 0
+2024/9/25 午後5:45:25 - Output: Final Job Status: Completed
+2024/9/25 午後5:45:27 - Output: I000227 ----- AZCOPYログ 終了 -----
+2024/9/25 午後5:45:29 - Output: I000231 ----- FTPログ 開始 -----
+2024/9/25 午後5:45:31 - Output: spawn lftp -u LO_user,VTsNA4tr 192.168.236.141
+2024/9/25 午後5:45:33 - Output: 
+2024/9/25 午後5:45:35 - Output: open `192.168.236.141' [ホストアドレスを解決しています...]
+2024/9/25 午後5:45:37 - Output: 
+2024/9/25 午後5:45:41 - Output: lftp LO_user@192.168.236.141:~> debug -t 10
+2024/9/25 午後5:45:43 - Output: lftp LO_user@192.168.236.141:~> set log:enabled yes
+2024/9/25 午後5:45:44 - Output: lftp LO_user@192.168.236.141:~> <e/tmp/c452198a-c196-488f-b628-7769e10f0d9d/dpcl0008
+2024/9/25 午後5:45:45 - Output: lcd 成功、ローカルの cwd=/interface/service/tmp/c452198a-c196-488f-b628-7769e10f0d9d/dpcl0008
+2024/9/25 午後5:45:47 - Output: lftp LO_user@192.168.236.141:~> ls | head -n 1
+2024/9/25 午後5:45:48 - Output: 2024-09-25 08:44:12 ---- dns cache hit
+2024/9/25 午後5:45:51 - Output: 2024-09-25 08:44:12 ---- attempt number 1 (max_retries=1000)
+2024/9/25 午後5:45:53 - Output: 2024-09-25 08:44:12 ---- 192.168.236.141 (192.168.236.141) ポート 21 に接続中
+2024/9/25 午後5:45:54 - Output: `ls' (現在 0 バイト) [FEAT negotiation...]
+2024/9/25 午後5:45:56 - Output: 
+2024/9/25 午後5:45:57 - Output: 2024-09-25 08:44:26 <--- 220 FBPS-CollaboK FTP server (Version 5.60) ready.
+2024/9/25 午後5:46:00 - Output: 2024-09-25 08:44:26 ---> FEAT
+2024/9/25 午後5:46:02 - Output: 2024-09-25 08:44:26 <--- 500 'FEAT': command not understood.
+2024/9/25 午後5:46:03 - Output: 2024-09-25 08:44:26 ---> AUTH TLS
+2024/9/25 午後5:46:05 - Output: 2024-09-25 08:44:26 <--- 500 'AUTH TLS': command not understood.
+2024/9/25 午後5:46:07 - Output: 2024-09-25 08:44:26 ---> USER LO_user
+2024/9/25 午後5:46:08 - Output: 2024-09-25 08:44:27 <--- 331 Password required for LO_user.
+2024/9/25 午後5:46:08 - Output: 2024-09-25 08:44:27 ---> PASS VTsNA4tr
+2024/9/25 午後5:46:10 - Output: 500 Timeout.
+2024/9/25 午後5:46:11 - Output: E030242 FTPエラーコードが含まれています。500Timeout.
+2024/9/25 午後5:46:13 - Output: I000243 ===== 処理終了 =====
