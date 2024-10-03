@@ -1,0 +1,1 @@
+[0010(基本/処理/スクリプト呼び出し)]の処理に失敗しました。原因:[com.appresso.ds.script.runtime.ScriptCallFailedException: EXIT_STATUS[-10101]:com.appresso.ds.script.runtime.ComponentFailedException: [setErrMsg(基本/処理/変数代入)]の処理に失敗しました。原因:[com.appresso.ds.vp.mapper.fastconverter.GlobalCustomLogicException: Gclロジック - 呼び出し元の入力ハンドラ数と呼び出し先の入力ハンドラ数が一致しません。 呼び出し元:[4] 呼び出し先:[2]]]
