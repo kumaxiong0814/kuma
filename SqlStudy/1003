@@ -1,3 +1,6 @@
 事業所正式名换取引先（earth_md_corporation）这个表取，条件是
  取引先.取引先コード = 事業所.事業所コード
  earth_md_corporation.earth_md_corporationname = account.accountnumbe
+
+
+ 取引先earth_md_corporation和取引先名の呼称earth_md_Corporation是两张表
