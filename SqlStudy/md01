@@ -1,0 +1,91 @@
+SELECT
+ L1.cdm_companycode                                   AS 会社,
+ t1.earth_md_CorporationCode                          AS 顧客コード,
+ t1.accountnumber                                     AS 事業所コード,
+ SUBSTRING(t1.earth_md_enterprisecodemain,1,6)        AS 主管企業コード,
+ SUBSTRING(t1.earth_md_enterprisecodesemimain,1,6)    AS 準主管企業コード,
+ SUBSTRING(t1.name,1,60)                              AS 事業所正式名,
+ SUBSTRING(t1.yominame,1,50)                          AS カナ事業所名,
+ SUBSTRING(t1.name,1,60)                              AS 検索用事業所名,
+ SUBSTRING(t1.name,1,20)                              AS 事業所名,
+ L2.earth_cc_locationcode                             AS 所在地コード,
+ SUBSTRING(t1.address1_postalcode,1,7)                AS 郵便番号,
+ SUBSTRING(t1.address1_city,1,26)                     AS 市区群町村丁目名,
+ SUBSTRING(t1.address1_line1,1,20)                    AS 番地・号,
+ SUBSTRING(t1.address1_line2,1,17)                    AS ビル名,
+ SUBSTRING(t1.address1_line3,1,4)                     AS ビル階数,
+ SUBSTRING(t1.telephone1,1,12)                        AS 電話番号,
+ SUBSTRING(t1.fax,1,17)                               AS FAX電話番号,
+ t1.earth_md_MaintenanceClassification                AS 整備区分,
+ t1.earth_md_MaintainedCode                           AS 整備済コード,
+ FORMAT(t1.earth_md_MaintenanceDate,'yyyy/MM/dd HH:mm:ss')  AS 整備日,
+ t3.earth_ac_integratedauthenticationid               AS 整備者,
+ t1.earth_md_OfficeChargeClassification               AS 事業所担当区分,
+ t1.earth_md_OfficeFormClassification                 AS 事業所形態区分,
+ t2.earth_md_industry                                 AS 業種コード,
+ t1.msdyn_onholdstatus                                AS 保留状態,
+ t1.earth_md_onholdstatusreason                       AS 保留状態の理由,
+ t1.defaultpricelevelid                               AS 製品価格表,
+ t1.earth_md_LeaseClassification                      AS リース区分,
+ t1.earth_md_DealerOfficeClassification               AS 特約店事業所区分,
+ null                                                 AS 委託区分1,
+ null                                                 AS 委託区分2,       
+ null                                                 AS 委託区分3,       
+ L3.earth_md_corporationcode                          AS 支払先チャネル1, 
+ L4.earth_md_corporationcode                          AS 支払先チャネル2, 
+ L5.earth_md_corporationcode                          AS 支払先チャネル3, 
+ t1.earth_md_TaxClassificationA                       AS 内税区分A,
+ t1.earth_md_TaxClassificationB                       AS 内税区分B,
+ t1.earth_md_TaxClassificationC                       AS 内税区分C,
+ t1.earth_md_copyfeetaxapplicationclassification      AS コピー料金内税適用区分,
+ t2.earth_md_numberofemployees                        AS 従業員数,
+ t1.yominame                                          AS お客様通称,
+ t1.earth_md_numberofentrancestairs                   AS 玄関口階段数,
+ t1.earth_md_entrancedoorwidth                        AS 入口ドア幅,
+ t1.earth_md_elevatornone                             AS エレベータ有無,
+ t1.earth_md_elevatorentrancemeasure                  AS エレベータ入口,
+ t1.earth_md_elevatorwidthmeasure                     AS エレベータ横幅,
+ t1.earth_md_elevatordepthmeasure                     AS エレベータ奥行,
+ t1.earth_md_elevatorallowableweight                  AS エレベータ許容重量,
+ t1.earth_md_stairwidthmeasure                        AS 階段横幅,
+ t1.earth_md_stairlandingmeasure                      AS 階段踊場,
+ t1.earth_md_numberofstairs                           AS 階段段数,
+ t4.earth_ac_integratedauthenticationid               AS 作成者,
+ FORMAT(DATEADD(hour,9,t1.createdon),'yyyy/MM/dd HH:mm:ss')  AS 作成日,
+ t5.earth_ac_integratedauthenticationid               AS 最終更新者,
+ FORMAT(DATEADD(hour,9,t1.modifiedon),'yyyy/MM/dd HH:mm:ss')  AS 最終更新日
+FROM
+ account  AS t1
+ INNER JOIN  earth_md_Corporation AS t2
+       ON (t1.earth_md_CorporationCode    = t2.earth_md_corporationcode)
+ LEFT OUTER JOIN cdm_company AS L1
+       ON (t1.msdyn_company               = L1.cdm_companyid)
+ LEFT OUTER JOIN earth_cc_locationmaster AS L2
+       ON (t1.earth_md_locationcode     = L2.earth_cc_locationmasterid)
+ LEFT OUTER JOIN earth_md_corporation AS L3
+       ON (t1.earth_md_payeechannel1     = L3.earth_md_corporationid)
+ LEFT OUTER JOIN earth_md_corporation AS L4
+       ON (t1.earth_md_payeechannel2     = L4.earth_md_corporationid)
+ LEFT OUTER JOIN earth_md_corporation AS L5
+       ON (t1.earth_md_payeechannel3     = L5.earth_md_corporationid)
+ LEFT OUTER JOIN systemuser AS t3
+       ON (t1.earth_md_maintenanceperson  = t3.systemuserid)
+ LEFT OUTER JOIN systemuser AS t4
+       ON (t1.createdby                   = t4.systemuserid)
+ LEFT OUTER JOIN systemuser AS t5
+       ON (t1.ModifiedBy                  = t5.systemuserid)
+WHERE
+ t1.earth_md_datatype = '100110000'
+AND
+  t1.modifiedon > '20230201';
+
+ t1
+ account 事業所.accountnumber 事業所コード
+ t2
+ earth_md_Corporation 取引先名の呼称.earth_md_corporationcode 取引先コード
+ L1 
+ cdm_company 法人
+ L2
+ earth_cc_locationmaster 所在地マスタ.
+ systemuser ユーザー
+ L3,L4,L5 earth_md_corporation 取引先コード 
