@@ -1,0 +1,2339 @@
+10/03 08:26:06.689|EXEC_START  |
+10/03 08:26:06.759|SCRIPT_START|SCRIPT=test/driver, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+10/03 08:26:06.759|START       |NAME=TESTmain 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:06.759|END         |
+10/03 08:26:06.764|START       |NAME=main 
+10/03 08:26:06.764|SCRIPT_START|SCRIPT=main, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=7
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceExecConditionId, VALUE=md0101
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceId, VALUE=md01
+10/03 08:26:06.764|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:06.764|END         |
+10/03 08:26:06.764|START       |NAME=0010 
+10/03 08:26:06.764|SCRIPT_START|SCRIPT=mapping/0010_getBusinessDate, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=dateAddNumber, VALUE=0
+10/03 08:26:06.764|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:06.764|END         |
+10/03 08:26:06.764|TRY_START   |NAME=try_catch
+10/03 08:26:06.764|START       |NAME=getBusinessDate 
+10/03 08:26:06.764|SCRIPT_START|SCRIPT=sub/getBusinessDate, PROJECT=Z_TEST01_earth_cm_util_Common, REPOSITORY=/share/projects/earth_cm_util_Common, VERSION=1
+--/-- --:--:--.---|VARIABLE    |NAME=dateAddNumber, VALUE=0
+10/03 08:26:06.764|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:06.764|END         |
+10/03 08:26:06.764|START       |NAME=mapping 
+10/03 08:26:06.764|END         |
+10/03 08:26:06.764|START       |NAME=getBusinessDate [sqlazure_adapter/execute_procedure_query]
+--/-- --:--:--.---|INFO        |[1]件のデータが更新されました。
+10/03 08:26:06.980|END         |
+10/03 08:26:06.980|START       |NAME=setBusinessDate 
+--/-- --:--:--.---|VARIABLE    |NAME=businessDateAsDateTime, VALUE=1727913600000
+--/-- --:--:--.---|INFO        |businessDateAsDateTime(Date) 入力=[2024-10-03T00:00:00.000+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=businessDateAsString, VALUE=20241003
+--/-- --:--:--.---|INFO        |businessDateAsString(String) 入力=[20241003]
+--/-- --:--:--.---|VARIABLE    |NAME=isNullBusinessDate, VALUE=false
+--/-- --:--:--.---|INFO        |isNullBusinessDate(boolean) 入力=[false]
+10/03 08:26:06.980|END         |
+10/03 08:26:06.980|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=isNotGetBusinessDate, RESULT=false
+10/03 08:26:06.980|BRANCH_END  |
+10/03 08:26:06.980|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:06.980|END         |
+10/03 08:26:06.980|START       |NAME=setDate 
+--/-- --:--:--.---|VARIABLE    |NAME=businessDateAsDateTime, VALUE=2024-10-03T00:00:00.000+0000
+--/-- --:--:--.---|INFO        |businessDateAsDateTime(String) 入力=[2024-10-03T00:00:00.000+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=businessDateAsString, VALUE=20241003
+--/-- --:--:--.---|INFO        |businessDateAsString(String) 入力=[20241003]
+10/03 08:26:06.980|END         |
+10/03 08:26:06.980|TRY_END     |
+10/03 08:26:06.980|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:06.980|END         |
+10/03 08:26:06.980|START       |NAME=0000 
+10/03 08:26:06.980|SCRIPT_START|SCRIPT=mapping/0000_variableScript , PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=3
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=businessDateAsString, VALUE=20241003
+--/-- --:--:--.---|VARIABLE    |NAME=Parameter, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceExecConditionId, VALUE=md0101
+10/03 08:26:06.980|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=Parameter, VALUE=パラメータ値.csv
+--/-- --:--:--.---|INFO        |Parameter(String) 入力=[パラメータ値.csv]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:06.980|END         |
+10/03 08:26:06.980|TRY_START   |NAME=try_catch
+10/03 08:26:06.980|START       |NAME=getParameter [jdbc_adapter/execute_select_query]
+--/-- --:--:--.---|INFO        |[22]件のデータの抽出に成功しました。
+10/03 08:26:07.360|END         |
+10/03 08:26:07.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=condition, RESULT=false
+10/03 08:26:07.360|BRANCH_END  |
+10/03 08:26:07.360|START       |NAME=mapping 
+10/03 08:26:07.360|END         |
+10/03 08:26:07.360|START       |NAME=transpose [transpose_converter/transpose]
+10/03 08:26:07.360|END         |
+10/03 08:26:07.360|START       |NAME=csv_write [csv_adapter/put_data]
+--/-- --:--:--.---|INFO        |[2]行のデータを挿入しました。
+10/03 08:26:07.395|END         |
+10/03 08:26:07.395|START       |NAME=csv_read(1) [csv_adapter/get_data]
+--/-- --:--:--.---|INFO        |[1]行のデータを抽出しました。
+10/03 08:26:07.430|END         |
+10/03 08:26:07.430|START       |NAME=variable 
+--/-- --:--:--.---|VARIABLE    |NAME=IfFileId, VALUE=ifgpmd01
+--/-- --:--:--.---|INFO        |IfFileId(String) 入力=[ifgpmd01]
+--/-- --:--:--.---|VARIABLE    |NAME=DataType, VALUE=100110000
+--/-- --:--:--.---|INFO        |DataType(String) 入力=[100110000]
+--/-- --:--:--.---|VARIABLE    |NAME=IfFileName_ef, VALUE=FCMAW0001
+--/-- --:--:--.---|INFO        |IfFileName_ef(String) 入力=[FCMAW0001]
+--/-- --:--:--.---|VARIABLE    |NAME=EndFileName_ef, VALUE=FCMAW0001.fen
+--/-- --:--:--.---|INFO        |EndFileName_ef(String) 入力=[FCMAW0001.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=BlobPath_ef, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|INFO        |BlobPath_ef(String) 入力=[/ftp/mdef0001]
+--/-- --:--:--.---|VARIABLE    |NAME=ContainerName_ef, VALUE=fileif-ef
+--/-- --:--:--.---|INFO        |ContainerName_ef(String) 入力=[fileif-ef]
+--/-- --:--:--.---|VARIABLE    |NAME=IfFileName_upc, VALUE=FCMKQ0002
+--/-- --:--:--.---|INFO        |IfFileName_upc(String) 入力=[FCMKQ0002]
+--/-- --:--:--.---|VARIABLE    |NAME=EndFileName_upc, VALUE=FCMKQ0002.fen
+--/-- --:--:--.---|INFO        |EndFileName_upc(String) 入力=[FCMKQ0002.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=BlobPath_upc, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|INFO        |BlobPath_upc(String) 入力=[/ftp/mdupc002]
+--/-- --:--:--.---|VARIABLE    |NAME=ContainerName_upc, VALUE=fileif-upc
+--/-- --:--:--.---|INFO        |ContainerName_upc(String) 入力=[fileif-upc]
+--/-- --:--:--.---|VARIABLE    |NAME=IfFileName_ms, VALUE=FCMMS0002
+--/-- --:--:--.---|INFO        |IfFileName_ms(String) 入力=[FCMMS0002]
+--/-- --:--:--.---|VARIABLE    |NAME=EndFileName_ms, VALUE=FCMMS0002.fen
+--/-- --:--:--.---|INFO        |EndFileName_ms(String) 入力=[FCMMS0002.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=BlobPath_ms, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|INFO        |BlobPath_ms(String) 入力=[/ftp/mdms0002]
+--/-- --:--:--.---|VARIABLE    |NAME=ContainerName_ms, VALUE=fileif-ms
+--/-- --:--:--.---|INFO        |ContainerName_ms(String) 入力=[fileif-ms]
+--/-- --:--:--.---|VARIABLE    |NAME=IfFileName_st, VALUE=FCMDH0001
+--/-- --:--:--.---|INFO        |IfFileName_st(String) 入力=[FCMDH0001]
+--/-- --:--:--.---|VARIABLE    |NAME=EndFileName_st, VALUE=FCMDH0001.fen
+--/-- --:--:--.---|INFO        |EndFileName_st(String) 入力=[FCMDH0001.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=BlobPath_st, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|INFO        |BlobPath_st(String) 入力=[/ftp/mdst0001]
+--/-- --:--:--.---|VARIABLE    |NAME=ContainerName_st, VALUE=fileif-st
+--/-- --:--:--.---|INFO        |ContainerName_st(String) 入力=[fileif-st]
+--/-- --:--:--.---|VARIABLE    |NAME=EndBlobPath_ms, VALUE=/backup/data/mdst0001
+--/-- --:--:--.---|INFO        |EndBlobPath_ms(String) 入力=[/backup/data/mdst0001]
+--/-- --:--:--.---|VARIABLE    |NAME=EndBlobPath_st, VALUE=/backup/data/mdupc002
+--/-- --:--:--.---|INFO        |EndBlobPath_st(String) 入力=[/backup/data/mdupc002]
+--/-- --:--:--.---|VARIABLE    |NAME=EndBlobPath_upc, VALUE=/backup/data/mdms0002
+--/-- --:--:--.---|INFO        |EndBlobPath_upc(String) 入力=[/backup/data/mdms0002]
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(String) 入力=[14]
+10/03 08:26:07.430|END         |
+10/03 08:26:07.430|TRY_END     |
+10/03 08:26:07.430|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:07.430|END         |
+10/03 08:26:07.430|START       |NAME=0011 
+10/03 08:26:07.430|SCRIPT_START|SCRIPT=mapping/0011_exctTimeMgmtSel, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=1
+--/-- --:--:--.---|VARIABLE    |NAME=companyCode, VALUE=B002
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=ifgpmd01
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceId, VALUE=md01
+10/03 08:26:07.430|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:07.430|END         |
+10/03 08:26:07.430|TRY_START   |NAME=try_catch
+10/03 08:26:07.430|START       |NAME=exctTimeMgmtSel 
+10/03 08:26:07.430|SCRIPT_START|SCRIPT=sub/exctTimeMgmtSel, PROJECT=Z_TEST01_earth_cm_util_Common, REPOSITORY=/share/projects/earth_cm_util_Common, VERSION=12
+--/-- --:--:--.---|VARIABLE    |NAME=companyCode, VALUE=B002
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceId, VALUE=md01
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=ifgpmd01
+10/03 08:26:07.430|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=companyCode, VALUE=B002
+--/-- --:--:--.---|INFO        |companyCode(String) 入力=[B002]
+10/03 08:26:07.430|END         |
+10/03 08:26:07.430|START       |NAME=setSchema 
+10/03 08:26:07.430|END         |
+10/03 08:26:07.430|START       |NAME=getDate [sqlazure_adapter/execute_select_query]
+--/-- --:--:--.---|INFO        |[1]件のデータの抽出に成功しました。
+10/03 08:26:07.559|END         |
+10/03 08:26:07.559|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=condition, RESULT=false
+10/03 08:26:07.559|START       |NAME=setDate 
+--/-- --:--:--.---|VARIABLE    |NAME=preSystemExctDateAsDateTime, VALUE=1723075218120
+--/-- --:--:--.---|INFO        |preSystemExctDateAsDateTime(Date) 入力=[2024-08-08T00:00:18.120+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=preBusinessExctDateAsDateTime, VALUE=1723075218120
+--/-- --:--:--.---|INFO        |preBusinessExctDateAsDateTime(Date) 入力=[2024-08-08T00:00:18.120+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=preSystemExctDateAsString, VALUE=20240808000018120
+--/-- --:--:--.---|INFO        |preSystemExctDateAsString(String) 入力=[20240808000018120]
+--/-- --:--:--.---|VARIABLE    |NAME=preBusinessExctDateAsString, VALUE=20240808000018120
+--/-- --:--:--.---|INFO        |preBusinessExctDateAsString(String) 入力=[20240808000018120]
+10/03 08:26:07.559|END         |
+10/03 08:26:07.559|BRANCH_END  |
+10/03 08:26:07.559|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:07.559|END         |
+10/03 08:26:07.559|START       |NAME=setDate 
+--/-- --:--:--.---|VARIABLE    |NAME=preSystemExctDateAsString, VALUE=20240808000018120
+--/-- --:--:--.---|INFO        |preSystemExctDateAsString(String) 入力=[20240808000018120]
+--/-- --:--:--.---|VARIABLE    |NAME=preSystemExctDateAsDateTime, VALUE=1723075218120
+--/-- --:--:--.---|INFO        |preSystemExctDateAsDateTime(Date) 入力=[2024-08-08T00:00:18.120+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=preBusinessExctDateAsDateTime, VALUE=1723075218120
+--/-- --:--:--.---|INFO        |preBusinessExctDateAsDateTime(Date) 入力=[2024-08-08T00:00:18.120+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=preBusinessExctDateAsString, VALUE=20240808000018120
+--/-- --:--:--.---|INFO        |preBusinessExctDateAsString(String) 入力=[20240808000018120]
+10/03 08:26:07.559|END         |
+10/03 08:26:07.559|TRY_END     |
+10/03 08:26:07.559|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:07.559|END         |
+10/03 08:26:07.559|START       |NAME=0100 
+10/03 08:26:07.559|SCRIPT_START|SCRIPT=sub/getSystemDate, PROJECT=Z_TEST01_earth_cm_util_Common, REPOSITORY=/share/projects/earth_cm_util_Common, VERSION=5
+10/03 08:26:07.559|START       |NAME=mapping 
+--/-- --:--:--.---|VARIABLE    |NAME=systemDateUtcAsDateTime, VALUE=1727943967620
+--/-- --:--:--.---|INFO        |systemDateUtcAsDateTime(Date) 入力=[2024-10-03T08:26:07.620+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=systemDateUtcAsString, VALUE=20241003
+--/-- --:--:--.---|INFO        |systemDateUtcAsString(String) 入力=[20241003]
+--/-- --:--:--.---|VARIABLE    |NAME=systemDateJstAsDateTime, VALUE=1727976367833
+--/-- --:--:--.---|INFO        |systemDateJstAsDateTime(Date) 入力=[2024-10-03T17:26:07.833+0000]
+--/-- --:--:--.---|VARIABLE    |NAME=systemDateJstAsString, VALUE=20241003
+--/-- --:--:--.---|INFO        |systemDateJstAsString(String) 入力=[20241003]
+10/03 08:26:07.900|END         |
+10/03 08:26:07.900|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:07.900|END         |
+10/03 08:26:07.900|START       |NAME=1010 
+10/03 08:26:07.905|SCRIPT_START|SCRIPT=mapping/1010_getData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=14
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=businessDateAsString, VALUE=20241003
+--/-- --:--:--.---|VARIABLE    |NAME=fileNameMs, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=fileNameEf, VALUE=FCMAW0001
+--/-- --:--:--.---|VARIABLE    |NAME=preSystemExctDateAsDateTime, VALUE=2024-08-08 00:00:18.12
+--/-- --:--:--.---|VARIABLE    |NAME=datatype, VALUE=100110000
+--/-- --:--:--.---|VARIABLE    |NAME=fileNameUpc, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=fileNameSt, VALUE=FCMDH0001
+10/03 08:26:07.905|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:07.905|END         |
+10/03 08:26:07.905|TRY_START   |NAME=try_catch
+10/03 08:26:07.905|START       |NAME=exec_select [jdbc_adapter/execute_select_query]
+--/-- --:--:--.---|INFO        |[1]件のデータの抽出に成功しました。
+10/03 08:26:08.811|END         |
+10/03 08:26:08.811|START       |NAME=mapping(1) 
+--/-- --:--:--.---|VARIABLE    |NAME=ACCUNT_OMITTED_LETTERS, VALUE=（ガツ）|（ゴウ）|カブ|クリツ|ケンリツ|ゴウシ）|ザイ|シヤ|シリツ|トリツ|フリツ|ユウ|（ガッ）
+--/-- --:--:--.---|INFO        |ACCUNT_OMITTED_LETTERS(String) 入力=[（ガツ）|（ゴウ）|カブ|クリツ|ケンリツ|ゴウシ）|ザイ|シヤ|シリツ|トリツ|フリツ|ユウ|（ガッ）]
+--/-- --:--:--.---|VARIABLE    |NAME=ACCUNT_OMITTED_LETTERS2, VALUE=（ガクホウ）|（ガク）|（カフ）|（カブ）|（ザイ）|（シャ）|（シヤ）|（フク）|（ユウ）|「カブ」|（イ）|（カ）|（カ，|（ガク|（カブ|（ザイ|（シャ|（シヤ|（フク|（メ）|（ユ）|．カ．|．ガク|．ザイ|．シャ|．シヤ|．フク|ガク）|ガク．|カブ）|ザイ）|ザイ．|シャ）|シヤ）|シャ．|シヤ．|フク）|フク．|（イ|（メ|（ユ|．イ|．メ|．ユ|イ）|イ．|カ）|カ．|メ）|メ．|ユ）|ユ．
+--/-- --:--:--.---|INFO        |ACCUNT_OMITTED_LETTERS2(String) 入力=[（ガクホウ）|（ガク）|（カフ）|（カブ）|（ザイ）|（シャ）|（シヤ）|（フク）|（ユウ）|「カブ」|（イ）|（カ）|（カ，|（ガク|（カブ|（ザイ|（シャ|（シヤ|（フク|（メ）|（ユ）|．カ．|．ガク|．ザイ|．シャ|．シヤ|．フク|ガク）|ガク．|カブ）|ザイ）|ザイ．|シャ）|シヤ）|シャ．|シヤ．|フク）|フク．|（イ|（メ|（ユ|．イ|．メ|．ユ|イ）|イ．|カ）|カ．|メ）|メ．|ユ）|ユ．]
+--/-- --:--:--.---|VARIABLE    |NAME=ACCUNT_OMITTED_LETTERS3, VALUE=（|）
+--/-- --:--:--.---|INFO        |ACCUNT_OMITTED_LETTERS3(String) 入力=[（|）]
+10/03 08:26:08.811|END         |
+10/03 08:26:08.811|START       |NAME=getOfficeData [jdbc_adapter/execute_select_query]
+--/-- --:--:--.---|INFO        |[0]件のデータの抽出に成功しました。
+10/03 08:26:23.932|END         |
+10/03 08:26:23.932|START       |NAME=mapping 
+10/03 08:26:23.947|END         |
+10/03 08:26:23.947|START       |NAME=mapping(3) 
+10/03 08:26:23.947|END         |
+10/03 08:26:23.947|START       |NAME=exec_procedure [sqlazure_adapter/execute_procedure_query]
+--/-- --:--:--.---|INFO        |[0]件のデータが更新されました。
+10/03 08:26:23.952|END         |
+10/03 08:26:23.957|START       |NAME=join 
+--/-- --:--:--.---|INFO        |結合処理が終了しました。
+10/03 08:26:23.957|END         |
+10/03 08:26:23.957|START       |NAME=getConsignmentData [jdbc_adapter/execute_select_query]
+--/-- --:--:--.---|INFO        |[0]件のデータの抽出に成功しました。
+10/03 08:26:24.171|END         |
+10/03 08:26:24.171|START       |NAME=join(1) 
+--/-- --:--:--.---|INFO        |結合処理が終了しました。
+10/03 08:26:24.176|END         |
+10/03 08:26:24.176|START       |NAME=mapping(5) 
+10/03 08:26:24.176|END         |
+10/03 08:26:24.176|START       |NAME=cp932_to_sjis [character_converter/cp932_to_sjis]
+--/-- --:--:--.---|INFO        |0個の文字を変換しました。
+10/03 08:26:24.176|END         |
+10/03 08:26:24.176|START       |NAME=FCMKQ0002 [csv_adapter/put_data]
+--/-- --:--:--.---|INFO        |[0]行のデータを挿入しました。
+10/03 08:26:24.211|END         |
+10/03 08:26:24.211|START       |NAME=FCMAW0001 [csv_adapter/put_data]
+--/-- --:--:--.---|INFO        |[0]行のデータを挿入しました。
+10/03 08:26:24.246|END         |
+10/03 08:26:24.246|START       |NAME=FCMMS0002 [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMAW0001]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:24.316|END         |
+10/03 08:26:24.316|START       |NAME=FCMDH0001 [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMAW0001]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:24.381|END         |
+10/03 08:26:24.381|START       |NAME=setCount 
+--/-- --:--:--.---|VARIABLE    |NAME=upcSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |upcSuccessRecordCount(String) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=efSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |efSuccessRecordCount(String) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=msSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |msSuccessRecordCount(String) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=stSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |stSuccessRecordCount(String) 入力=[0]
+10/03 08:26:24.381|END         |
+10/03 08:26:24.381|TRY_END     |
+10/03 08:26:24.381|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.381|END         |
+10/03 08:26:24.381|START       |NAME=1011_ef 
+10/03 08:26:24.381|SCRIPT_START|SCRIPT=mapping/1011_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMAW0001
+10/03 08:26:24.381|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:24.386|END         |
+10/03 08:26:24.386|TRY_START   |NAME=try_catch
+10/03 08:26:24.386|START       |NAME=deleteData 
+10/03 08:26:24.386|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMAW0001
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:24.386|START       |NAME=init 
+10/03 08:26:24.386|END         |
+10/03 08:26:24.386|TRY_START   |NAME=try_catch
+10/03 08:26:24.386|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:24.576|END         |
+10/03 08:26:24.576|TRY_END     |
+10/03 08:26:24.576|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:24.581|END         |
+10/03 08:26:24.581|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:24.586|END         |
+10/03 08:26:24.586|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:24.586|BRANCH_END  |
+10/03 08:26:24.586|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.586|END         |
+10/03 08:26:24.586|TRY_END     |
+10/03 08:26:24.586|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.586|END         |
+10/03 08:26:24.586|START       |NAME=1011_upc 
+10/03 08:26:24.586|SCRIPT_START|SCRIPT=mapping/1011_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMKQ0002
+10/03 08:26:24.586|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:24.586|END         |
+10/03 08:26:24.586|TRY_START   |NAME=try_catch
+10/03 08:26:24.586|START       |NAME=deleteData 
+10/03 08:26:24.586|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:24.586|START       |NAME=init 
+10/03 08:26:24.586|END         |
+10/03 08:26:24.586|TRY_START   |NAME=try_catch
+10/03 08:26:24.586|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:24.626|END         |
+10/03 08:26:24.626|TRY_END     |
+10/03 08:26:24.626|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:24.631|END         |
+10/03 08:26:24.631|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:24.631|END         |
+10/03 08:26:24.631|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:24.631|BRANCH_END  |
+10/03 08:26:24.631|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.631|END         |
+10/03 08:26:24.631|TRY_END     |
+10/03 08:26:24.631|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.631|END         |
+10/03 08:26:24.631|START       |NAME=1011_ms 
+10/03 08:26:24.631|SCRIPT_START|SCRIPT=mapping/1011_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMMS0002
+10/03 08:26:24.631|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:24.631|END         |
+10/03 08:26:24.631|TRY_START   |NAME=try_catch
+10/03 08:26:24.631|START       |NAME=deleteData 
+10/03 08:26:24.631|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:24.631|START       |NAME=init 
+10/03 08:26:24.631|END         |
+10/03 08:26:24.631|TRY_START   |NAME=try_catch
+10/03 08:26:24.631|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:24.671|END         |
+10/03 08:26:24.671|TRY_END     |
+10/03 08:26:24.671|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:24.676|END         |
+10/03 08:26:24.676|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:24.676|END         |
+10/03 08:26:24.676|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:24.676|BRANCH_END  |
+10/03 08:26:24.676|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.676|END         |
+10/03 08:26:24.676|TRY_END     |
+10/03 08:26:24.676|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.676|END         |
+10/03 08:26:24.676|START       |NAME=1011_st 
+10/03 08:26:24.676|SCRIPT_START|SCRIPT=mapping/1011_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMDH0001
+10/03 08:26:24.676|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:24.676|END         |
+10/03 08:26:24.676|TRY_START   |NAME=try_catch
+10/03 08:26:24.676|START       |NAME=deleteData 
+10/03 08:26:24.676|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMDH0001
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:24.676|START       |NAME=init 
+10/03 08:26:24.676|END         |
+10/03 08:26:24.676|TRY_START   |NAME=try_catch
+10/03 08:26:24.676|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:24.721|END         |
+10/03 08:26:24.721|TRY_END     |
+10/03 08:26:24.721|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:24.726|END         |
+10/03 08:26:24.726|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:24.726|END         |
+10/03 08:26:24.726|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:24.726|BRANCH_END  |
+10/03 08:26:24.726|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.726|END         |
+10/03 08:26:24.726|TRY_END     |
+10/03 08:26:24.726|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:24.726|END         |
+10/03 08:26:24.726|START       |NAME=2010_ef 
+10/03 08:26:24.726|SCRIPT_START|SCRIPT=mapping/2010_sendInterfaceFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMAW0001
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/ftp/mdef0001
+10/03 08:26:24.726|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:24.726|END         |
+10/03 08:26:24.726|TRY_START   |NAME=try_catch
+10/03 08:26:24.726|START       |NAME=putFile 
+10/03 08:26:24.726|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMAW0001
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+10/03 08:26:24.726|START       |NAME=init 
+10/03 08:26:24.726|END         |
+10/03 08:26:24.726|TRY_START   |NAME=try_catch
+10/03 08:26:24.726|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:25.471|END         |
+10/03 08:26:25.471|TRY_END     |
+10/03 08:26:25.471|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:25.476|END         |
+10/03 08:26:25.476|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:25.476|END         |
+10/03 08:26:25.476|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:25.476|BRANCH_END  |
+10/03 08:26:25.476|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:25.476|END         |
+10/03 08:26:25.476|TRY_END     |
+10/03 08:26:25.476|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:25.476|END         |
+10/03 08:26:25.476|START       |NAME=2010_upc 
+10/03 08:26:25.476|SCRIPT_START|SCRIPT=mapping/2010_sendInterfaceFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/ftp/mdupc002
+10/03 08:26:25.476|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:25.476|END         |
+10/03 08:26:25.476|TRY_START   |NAME=try_catch
+10/03 08:26:25.476|START       |NAME=putFile 
+10/03 08:26:25.476|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+10/03 08:26:25.476|START       |NAME=init 
+10/03 08:26:25.476|END         |
+10/03 08:26:25.476|TRY_START   |NAME=try_catch
+10/03 08:26:25.476|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:26.307|END         |
+10/03 08:26:26.307|TRY_END     |
+10/03 08:26:26.307|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:26.312|END         |
+10/03 08:26:26.312|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:26.317|END         |
+10/03 08:26:26.317|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:26.317|BRANCH_END  |
+10/03 08:26:26.317|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:26.317|END         |
+10/03 08:26:26.317|TRY_END     |
+10/03 08:26:26.317|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:26.317|END         |
+10/03 08:26:26.317|START       |NAME=2010_ms 
+10/03 08:26:26.317|SCRIPT_START|SCRIPT=mapping/2010_sendInterfaceFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/ftp/mdms0002
+10/03 08:26:26.317|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:26.317|END         |
+10/03 08:26:26.317|TRY_START   |NAME=try_catch
+10/03 08:26:26.317|START       |NAME=putFile 
+10/03 08:26:26.317|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+10/03 08:26:26.317|START       |NAME=init 
+10/03 08:26:26.317|END         |
+10/03 08:26:26.317|TRY_START   |NAME=try_catch
+10/03 08:26:26.317|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:27.067|END         |
+10/03 08:26:27.067|TRY_END     |
+10/03 08:26:27.067|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:27.072|END         |
+10/03 08:26:27.072|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:27.077|END         |
+10/03 08:26:27.077|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:27.077|BRANCH_END  |
+10/03 08:26:27.077|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:27.077|END         |
+10/03 08:26:27.077|TRY_END     |
+10/03 08:26:27.077|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:27.077|END         |
+10/03 08:26:27.077|START       |NAME=2010_st 
+10/03 08:26:27.077|SCRIPT_START|SCRIPT=mapping/2010_sendInterfaceFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMDH0001
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/ftp/mdst0001
+10/03 08:26:27.077|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:27.077|END         |
+10/03 08:26:27.077|TRY_START   |NAME=try_catch
+10/03 08:26:27.077|START       |NAME=putFile 
+10/03 08:26:27.077|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMDH0001
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+10/03 08:26:27.077|START       |NAME=init 
+10/03 08:26:27.077|END         |
+10/03 08:26:27.077|TRY_START   |NAME=try_catch
+10/03 08:26:27.077|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:27.828|END         |
+10/03 08:26:27.828|TRY_END     |
+10/03 08:26:27.828|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:27.833|END         |
+10/03 08:26:27.833|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:27.838|END         |
+10/03 08:26:27.838|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:27.838|BRANCH_END  |
+10/03 08:26:27.838|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:27.838|END         |
+10/03 08:26:27.838|TRY_END     |
+10/03 08:26:27.838|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:27.838|END         |
+10/03 08:26:27.838|START       |NAME=2020_upc 
+10/03 08:26:27.838|SCRIPT_START|SCRIPT=mapping/2020_sendGenMgmtFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=2
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/backup/data/mdms0002
+10/03 08:26:27.838|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+--/-- --:--:--.---|VARIABLE    |NAME=genMgmtFileName, VALUE=FCMKQ0002_20241003082627
+--/-- --:--:--.---|INFO        |genMgmtFileName(String) 入力=[FCMKQ0002_20241003082627]
+--/-- --:--:--.---|VARIABLE    |NAME=matchPattern, VALUE=FCMKQ0002_??????????????
+--/-- --:--:--.---|INFO        |matchPattern(String) 入力=[FCMKQ0002_??????????????]
+10/03 08:26:27.838|END         |
+10/03 08:26:27.838|TRY_START   |NAME=try_catch
+10/03 08:26:27.838|START       |NAME=copyGenMgmtFile [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMKQ0002]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:27.923|END         |
+10/03 08:26:27.923|START       |NAME=putGenMgmtFile 
+10/03 08:26:27.923|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMKQ0002_20241003082627
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdms0002
+10/03 08:26:27.923|START       |NAME=init 
+10/03 08:26:27.923|END         |
+10/03 08:26:27.923|TRY_START   |NAME=try_catch
+10/03 08:26:27.923|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:28.699|END         |
+10/03 08:26:28.699|TRY_END     |
+10/03 08:26:28.699|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:28.699|END         |
+10/03 08:26:28.699|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:28.704|END         |
+10/03 08:26:28.704|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:28.704|BRANCH_END  |
+10/03 08:26:28.704|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:28.704|END         |
+10/03 08:26:28.704|START       |NAME=checkGenMgmtFile 
+10/03 08:26:28.704|SCRIPT_START|SCRIPT=sub/ifFileBkAndGenMgmt, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=33
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMKQ0002_??????????????
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdms0002
+10/03 08:26:28.704|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(int) 入力=[14]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:28.704|END         |
+10/03 08:26:28.704|START       |NAME=listBlobTargetDir [windows_azure_blob_adapter/get]
+--/-- --:--:--.---|INFO        |BLOB取得: [15]件を処理しました。(成功:[15]件、失敗[0]件)
+10/03 08:26:28.734|END         |
+10/03 08:26:28.734|START       |NAME=extractFile 
+10/03 08:26:28.739|END         |
+10/03 08:26:28.739|START       |NAME=sortData 
+10/03 08:26:28.739|END         |
+10/03 08:26:28.739|LOOP_START  |NAME=foreach
+10/03 08:26:28.744|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20241003082627
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20241003082627]
+10/03 08:26:28.744|END         |
+10/03 08:26:28.744|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.744|BRANCH_END  |
+10/03 08:26:28.744|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20241003082013
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20241003082013]
+10/03 08:26:28.744|END         |
+10/03 08:26:28.744|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.744|BRANCH_END  |
+10/03 08:26:28.744|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240926050446
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240926050446]
+10/03 08:26:28.744|END         |
+10/03 08:26:28.744|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.744|BRANCH_END  |
+10/03 08:26:28.744|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240917062611
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240917062611]
+10/03 08:26:28.749|END         |
+10/03 08:26:28.749|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.749|BRANCH_END  |
+10/03 08:26:28.749|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240911024353
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240911024353]
+10/03 08:26:28.749|END         |
+10/03 08:26:28.749|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.749|BRANCH_END  |
+10/03 08:26:28.749|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828082028
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828082028]
+10/03 08:26:28.749|END         |
+10/03 08:26:28.749|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.749|BRANCH_END  |
+10/03 08:26:28.749|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828081649
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828081649]
+10/03 08:26:28.749|END         |
+10/03 08:26:28.749|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.749|BRANCH_END  |
+10/03 08:26:28.749|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080905
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080905]
+10/03 08:26:28.749|END         |
+10/03 08:26:28.749|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.749|BRANCH_END  |
+10/03 08:26:28.749|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080612
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080612]
+10/03 08:26:28.749|END         |
+10/03 08:26:28.749|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.749|BRANCH_END  |
+10/03 08:26:28.749|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080420
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080420]
+10/03 08:26:28.754|END         |
+10/03 08:26:28.754|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.754|BRANCH_END  |
+10/03 08:26:28.754|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080107
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080107]
+10/03 08:26:28.754|END         |
+10/03 08:26:28.754|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.754|BRANCH_END  |
+10/03 08:26:28.754|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075832
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075832]
+10/03 08:26:28.754|END         |
+10/03 08:26:28.754|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.754|BRANCH_END  |
+10/03 08:26:28.754|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075623
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075623]
+10/03 08:26:28.754|END         |
+10/03 08:26:28.754|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.754|BRANCH_END  |
+10/03 08:26:28.754|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075310
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075310]
+10/03 08:26:28.754|END         |
+10/03 08:26:28.754|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:28.754|BRANCH_END  |
+10/03 08:26:28.754|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828074944
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828074944]
+10/03 08:26:28.759|END         |
+10/03 08:26:28.759|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=false
+10/03 08:26:28.759|BRANCH_END  |
+10/03 08:26:28.759|START       |NAME=deleteFile 
+10/03 08:26:28.759|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMKQ0002_20240828074944
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+10/03 08:26:28.759|START       |NAME=init 
+10/03 08:26:28.759|END         |
+10/03 08:26:28.759|TRY_START   |NAME=try_catch
+10/03 08:26:28.759|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:28.794|END         |
+10/03 08:26:28.794|TRY_END     |
+10/03 08:26:28.794|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:28.799|END         |
+10/03 08:26:28.799|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:28.799|END         |
+10/03 08:26:28.799|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:28.799|BRANCH_END  |
+10/03 08:26:28.799|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:28.799|END         |
+10/03 08:26:28.799|LOOP_END    |COUNT=15
+10/03 08:26:28.799|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:28.799|END         |
+10/03 08:26:28.799|TRY_END     |
+10/03 08:26:28.799|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:28.799|END         |
+10/03 08:26:28.799|START       |NAME=2020_ms 
+10/03 08:26:28.799|SCRIPT_START|SCRIPT=mapping/2020_sendGenMgmtFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=2
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/backup/data/mdst0001
+10/03 08:26:28.799|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+--/-- --:--:--.---|VARIABLE    |NAME=genMgmtFileName, VALUE=FCMMS0002_20241003082628
+--/-- --:--:--.---|INFO        |genMgmtFileName(String) 入力=[FCMMS0002_20241003082628]
+--/-- --:--:--.---|VARIABLE    |NAME=matchPattern, VALUE=FCMMS0002_??????????????
+--/-- --:--:--.---|INFO        |matchPattern(String) 入力=[FCMMS0002_??????????????]
+10/03 08:26:28.799|END         |
+10/03 08:26:28.799|TRY_START   |NAME=try_catch
+10/03 08:26:28.799|START       |NAME=copyGenMgmtFile [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMMS0002]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:28.874|END         |
+10/03 08:26:28.874|START       |NAME=putGenMgmtFile 
+10/03 08:26:28.874|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMMS0002_20241003082628
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdst0001
+10/03 08:26:28.874|START       |NAME=init 
+10/03 08:26:28.874|END         |
+10/03 08:26:28.874|TRY_START   |NAME=try_catch
+10/03 08:26:28.874|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:29.630|END         |
+10/03 08:26:29.630|TRY_END     |
+10/03 08:26:29.630|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:29.635|END         |
+10/03 08:26:29.635|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:29.640|END         |
+10/03 08:26:29.640|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:29.640|BRANCH_END  |
+10/03 08:26:29.640|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:29.640|END         |
+10/03 08:26:29.640|START       |NAME=checkGenMgmtFile 
+10/03 08:26:29.640|SCRIPT_START|SCRIPT=sub/ifFileBkAndGenMgmt, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=33
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMMS0002_??????????????
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdst0001
+10/03 08:26:29.640|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(int) 入力=[14]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:29.640|END         |
+10/03 08:26:29.640|START       |NAME=listBlobTargetDir [windows_azure_blob_adapter/get]
+--/-- --:--:--.---|INFO        |BLOB取得: [15]件を処理しました。(成功:[15]件、失敗[0]件)
+10/03 08:26:29.878|END         |
+10/03 08:26:29.878|START       |NAME=extractFile 
+10/03 08:26:29.883|END         |
+10/03 08:26:29.883|START       |NAME=sortData 
+10/03 08:26:29.883|END         |
+10/03 08:26:29.883|LOOP_START  |NAME=foreach
+10/03 08:26:29.888|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20241003082628
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20241003082628]
+10/03 08:26:29.888|END         |
+10/03 08:26:29.888|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.888|BRANCH_END  |
+10/03 08:26:29.888|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20241003082014
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20241003082014]
+10/03 08:26:29.888|END         |
+10/03 08:26:29.888|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.888|BRANCH_END  |
+10/03 08:26:29.888|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240926050448
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240926050448]
+10/03 08:26:29.888|END         |
+10/03 08:26:29.888|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.888|BRANCH_END  |
+10/03 08:26:29.888|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240917062612
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240917062612]
+10/03 08:26:29.893|END         |
+10/03 08:26:29.893|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.893|BRANCH_END  |
+10/03 08:26:29.893|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240911024355
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240911024355]
+10/03 08:26:29.893|END         |
+10/03 08:26:29.893|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.893|BRANCH_END  |
+10/03 08:26:29.893|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828082031
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828082031]
+10/03 08:26:29.893|END         |
+10/03 08:26:29.893|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.893|BRANCH_END  |
+10/03 08:26:29.893|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828081651
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828081651]
+10/03 08:26:29.893|END         |
+10/03 08:26:29.893|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.893|BRANCH_END  |
+10/03 08:26:29.893|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080908
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080908]
+10/03 08:26:29.893|END         |
+10/03 08:26:29.893|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.893|BRANCH_END  |
+10/03 08:26:29.893|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080615
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080615]
+10/03 08:26:29.893|END         |
+10/03 08:26:29.893|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.893|BRANCH_END  |
+10/03 08:26:29.893|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080423
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080423]
+10/03 08:26:29.898|END         |
+10/03 08:26:29.898|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.898|BRANCH_END  |
+10/03 08:26:29.898|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080110
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080110]
+10/03 08:26:29.898|END         |
+10/03 08:26:29.898|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.898|BRANCH_END  |
+10/03 08:26:29.898|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075835
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075835]
+10/03 08:26:29.898|END         |
+10/03 08:26:29.898|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.898|BRANCH_END  |
+10/03 08:26:29.898|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075626
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075626]
+10/03 08:26:29.898|END         |
+10/03 08:26:29.898|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.898|BRANCH_END  |
+10/03 08:26:29.898|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075312
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075312]
+10/03 08:26:29.898|END         |
+10/03 08:26:29.898|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:29.898|BRANCH_END  |
+10/03 08:26:29.898|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828074946
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828074946]
+10/03 08:26:29.898|END         |
+10/03 08:26:29.898|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=false
+10/03 08:26:29.898|BRANCH_END  |
+10/03 08:26:29.898|START       |NAME=deleteFile 
+10/03 08:26:29.898|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMMS0002_20240828074946
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+10/03 08:26:29.903|START       |NAME=init 
+10/03 08:26:29.903|END         |
+10/03 08:26:29.903|TRY_START   |NAME=try_catch
+10/03 08:26:29.903|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:29.938|END         |
+10/03 08:26:29.938|TRY_END     |
+10/03 08:26:29.938|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:29.943|END         |
+10/03 08:26:29.943|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:29.948|END         |
+10/03 08:26:29.948|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:29.948|BRANCH_END  |
+10/03 08:26:29.948|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:29.948|END         |
+10/03 08:26:29.948|LOOP_END    |COUNT=15
+10/03 08:26:29.948|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:29.948|END         |
+10/03 08:26:29.948|TRY_END     |
+10/03 08:26:29.948|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:29.948|END         |
+10/03 08:26:29.948|START       |NAME=2020_st 
+10/03 08:26:29.948|SCRIPT_START|SCRIPT=mapping/2020_sendGenMgmtFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=2
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=fileName, VALUE=FCMDH0001
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/backup/data/mdupc002
+10/03 08:26:29.948|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+--/-- --:--:--.---|VARIABLE    |NAME=genMgmtFileName, VALUE=FCMDH0001_20241003082629
+--/-- --:--:--.---|INFO        |genMgmtFileName(String) 入力=[FCMDH0001_20241003082629]
+--/-- --:--:--.---|VARIABLE    |NAME=matchPattern, VALUE=FCMDH0001_??????????????
+--/-- --:--:--.---|INFO        |matchPattern(String) 入力=[FCMDH0001_??????????????]
+10/03 08:26:29.948|END         |
+10/03 08:26:29.948|TRY_START   |NAME=try_catch
+10/03 08:26:29.948|START       |NAME=copyGenMgmtFile [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMDH0001]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:30.028|END         |
+10/03 08:26:30.028|START       |NAME=putGenMgmtFile 
+10/03 08:26:30.028|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMDH0001_20241003082629
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdupc002
+10/03 08:26:30.028|START       |NAME=init 
+10/03 08:26:30.028|END         |
+10/03 08:26:30.028|TRY_START   |NAME=try_catch
+10/03 08:26:30.028|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:30.820|END         |
+10/03 08:26:30.820|TRY_END     |
+10/03 08:26:30.820|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:30.825|END         |
+10/03 08:26:30.825|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:30.825|END         |
+10/03 08:26:30.825|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:30.825|BRANCH_END  |
+10/03 08:26:30.825|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:30.825|END         |
+10/03 08:26:30.825|START       |NAME=checkGenMgmtFile 
+10/03 08:26:30.825|SCRIPT_START|SCRIPT=sub/ifFileBkAndGenMgmt, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=33
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMDH0001_??????????????
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdupc002
+10/03 08:26:30.825|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(int) 入力=[14]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:30.825|END         |
+10/03 08:26:30.830|START       |NAME=listBlobTargetDir [windows_azure_blob_adapter/get]
+--/-- --:--:--.---|INFO        |BLOB取得: [15]件を処理しました。(成功:[15]件、失敗[0]件)
+10/03 08:26:30.900|END         |
+10/03 08:26:30.900|START       |NAME=extractFile 
+10/03 08:26:30.905|END         |
+10/03 08:26:30.905|START       |NAME=sortData 
+10/03 08:26:30.905|END         |
+10/03 08:26:30.905|LOOP_START  |NAME=foreach
+10/03 08:26:30.910|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20241003082629
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20241003082629]
+10/03 08:26:30.910|END         |
+10/03 08:26:30.910|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.910|BRANCH_END  |
+10/03 08:26:30.910|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20241003082015
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20241003082015]
+10/03 08:26:30.910|END         |
+10/03 08:26:30.910|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.910|BRANCH_END  |
+10/03 08:26:30.910|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240926050449
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240926050449]
+10/03 08:26:30.910|END         |
+10/03 08:26:30.910|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.910|BRANCH_END  |
+10/03 08:26:30.910|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240917062613
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240917062613]
+10/03 08:26:30.910|END         |
+10/03 08:26:30.910|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.910|BRANCH_END  |
+10/03 08:26:30.915|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240911024356
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240911024356]
+10/03 08:26:30.915|END         |
+10/03 08:26:30.915|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.915|BRANCH_END  |
+10/03 08:26:30.915|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828082034
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828082034]
+10/03 08:26:30.915|END         |
+10/03 08:26:30.915|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.915|BRANCH_END  |
+10/03 08:26:30.915|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828081654
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828081654]
+10/03 08:26:30.915|END         |
+10/03 08:26:30.915|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.915|BRANCH_END  |
+10/03 08:26:30.915|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080911
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080911]
+10/03 08:26:30.915|END         |
+10/03 08:26:30.915|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.915|BRANCH_END  |
+10/03 08:26:30.915|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080618
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080618]
+10/03 08:26:30.915|END         |
+10/03 08:26:30.915|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.915|BRANCH_END  |
+10/03 08:26:30.915|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080426
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080426]
+10/03 08:26:30.920|END         |
+10/03 08:26:30.920|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.920|BRANCH_END  |
+10/03 08:26:30.920|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080113
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080113]
+10/03 08:26:30.920|END         |
+10/03 08:26:30.920|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.920|BRANCH_END  |
+10/03 08:26:30.920|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075838
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075838]
+10/03 08:26:30.920|END         |
+10/03 08:26:30.920|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.920|BRANCH_END  |
+10/03 08:26:30.920|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075629
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075629]
+10/03 08:26:30.920|END         |
+10/03 08:26:30.920|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.920|BRANCH_END  |
+10/03 08:26:30.920|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075315
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075315]
+10/03 08:26:30.920|END         |
+10/03 08:26:30.920|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:30.920|BRANCH_END  |
+10/03 08:26:30.920|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828074949
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828074949]
+10/03 08:26:30.920|END         |
+10/03 08:26:30.925|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=false
+10/03 08:26:30.925|BRANCH_END  |
+10/03 08:26:30.925|START       |NAME=deleteFile 
+10/03 08:26:30.925|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMDH0001_20240828074949
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+10/03 08:26:30.925|START       |NAME=init 
+10/03 08:26:30.925|END         |
+10/03 08:26:30.925|TRY_START   |NAME=try_catch
+10/03 08:26:30.925|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:30.958|END         |
+10/03 08:26:30.958|TRY_END     |
+10/03 08:26:30.958|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:30.963|END         |
+10/03 08:26:30.963|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:30.968|END         |
+10/03 08:26:30.968|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:30.968|BRANCH_END  |
+10/03 08:26:30.968|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:30.968|END         |
+10/03 08:26:30.968|LOOP_END    |COUNT=15
+10/03 08:26:30.968|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:30.968|END         |
+10/03 08:26:30.968|TRY_END     |
+10/03 08:26:30.968|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:30.968|END         |
+10/03 08:26:30.968|START       |NAME=2021_ef 
+10/03 08:26:30.968|SCRIPT_START|SCRIPT=mapping/2021_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMAW0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+10/03 08:26:30.968|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:30.968|END         |
+10/03 08:26:30.968|TRY_START   |NAME=try_catch
+10/03 08:26:30.968|START       |NAME=deleteData 
+10/03 08:26:30.968|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMAW0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:30.968|START       |NAME=init 
+10/03 08:26:30.968|END         |
+10/03 08:26:30.968|TRY_START   |NAME=try_catch
+10/03 08:26:30.968|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:31.003|END         |
+10/03 08:26:31.003|TRY_END     |
+10/03 08:26:31.003|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:31.003|END         |
+10/03 08:26:31.003|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:31.008|END         |
+10/03 08:26:31.008|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:31.008|BRANCH_END  |
+10/03 08:26:31.008|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.008|END         |
+10/03 08:26:31.008|TRY_END     |
+10/03 08:26:31.008|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.008|END         |
+10/03 08:26:31.008|START       |NAME=2021_upc 
+10/03 08:26:31.008|SCRIPT_START|SCRIPT=mapping/2021_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMKQ0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+10/03 08:26:31.008|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.008|END         |
+10/03 08:26:31.008|TRY_START   |NAME=try_catch
+10/03 08:26:31.008|START       |NAME=deleteData 
+10/03 08:26:31.008|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMKQ0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:31.008|START       |NAME=init 
+10/03 08:26:31.008|END         |
+10/03 08:26:31.008|TRY_START   |NAME=try_catch
+10/03 08:26:31.008|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:31.043|END         |
+10/03 08:26:31.043|TRY_END     |
+10/03 08:26:31.043|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:31.048|END         |
+10/03 08:26:31.048|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:31.053|END         |
+10/03 08:26:31.053|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:31.053|BRANCH_END  |
+10/03 08:26:31.053|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.053|END         |
+10/03 08:26:31.053|TRY_END     |
+10/03 08:26:31.053|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.053|END         |
+10/03 08:26:31.053|START       |NAME=2021_ms 
+10/03 08:26:31.053|SCRIPT_START|SCRIPT=mapping/2021_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMMS0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+10/03 08:26:31.053|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.053|END         |
+10/03 08:26:31.053|TRY_START   |NAME=try_catch
+10/03 08:26:31.053|START       |NAME=deleteData 
+10/03 08:26:31.053|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMMS0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:31.053|START       |NAME=init 
+10/03 08:26:31.053|END         |
+10/03 08:26:31.053|TRY_START   |NAME=try_catch
+10/03 08:26:31.053|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:31.088|END         |
+10/03 08:26:31.088|TRY_END     |
+10/03 08:26:31.088|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:31.093|END         |
+10/03 08:26:31.093|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:31.093|END         |
+10/03 08:26:31.093|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:31.093|BRANCH_END  |
+10/03 08:26:31.093|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.093|END         |
+10/03 08:26:31.093|TRY_END     |
+10/03 08:26:31.093|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.093|END         |
+10/03 08:26:31.093|START       |NAME=2021_st 
+10/03 08:26:31.093|SCRIPT_START|SCRIPT=mapping/2021_deleteData, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMDH0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+10/03 08:26:31.093|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.093|END         |
+10/03 08:26:31.093|TRY_START   |NAME=try_catch
+10/03 08:26:31.093|START       |NAME=deleteData 
+10/03 08:26:31.093|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMDH0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=needsErrorFileNonExist, VALUE=false
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+10/03 08:26:31.098|START       |NAME=init 
+10/03 08:26:31.098|END         |
+10/03 08:26:31.098|TRY_START   |NAME=try_catch
+10/03 08:26:31.098|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:31.133|END         |
+10/03 08:26:31.133|TRY_END     |
+10/03 08:26:31.133|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:31.133|END         |
+10/03 08:26:31.133|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:31.138|END         |
+10/03 08:26:31.138|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:31.138|BRANCH_END  |
+10/03 08:26:31.138|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.138|END         |
+10/03 08:26:31.138|TRY_END     |
+10/03 08:26:31.138|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.138|END         |
+10/03 08:26:31.138|START       |NAME=2030_ef 
+10/03 08:26:31.138|SCRIPT_START|SCRIPT=mapping/2030_sendEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMAW0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMAW0001
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+10/03 08:26:31.138|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.138|END         |
+10/03 08:26:31.138|TRY_START   |NAME=try_catch
+10/03 08:26:31.138|START       |NAME=makeEndFile 
+10/03 08:26:31.138|SCRIPT_START|SCRIPT=sub/makeEndFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=27
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMAW0001
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=filler, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMAW0001.fen
+10/03 08:26:31.138|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=dsExecutionId, VALUE=po0000m2j6am0citnepovue8p4kb
+--/-- --:--:--.---|INFO        |dsExecutionId(String) 入力=[po0000m2j6am0citnepovue8p4kb]
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|INFO        |characterCode(String) 入力=[EUC-JP]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.138|END         |
+10/03 08:26:31.138|START       |NAME=setData 
+10/03 08:26:31.138|END         |
+10/03 08:26:31.138|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=condition_CRLF, RESULT=false
+--/-- --:--:--.---|EVALUATION  |NAME=condition_LF, RESULT=true
+10/03 08:26:31.138|START       |NAME=writeEndFile(1) [fixedlength_adapter/put_data]
+--/-- --:--:--.---|INFO        |[1]行書き込みました。
+10/03 08:26:31.183|END         |
+10/03 08:26:31.183|BRANCH_END  |
+10/03 08:26:31.183|START       |NAME=putFile 
+10/03 08:26:31.183|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMAW0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ef
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdef0001
+10/03 08:26:31.183|START       |NAME=init 
+10/03 08:26:31.183|END         |
+10/03 08:26:31.183|TRY_START   |NAME=try_catch
+10/03 08:26:31.183|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:31.968|END         |
+10/03 08:26:31.968|TRY_END     |
+10/03 08:26:31.968|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:31.968|END         |
+10/03 08:26:31.968|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:31.973|BRANCH_END  |
+10/03 08:26:31.973|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|TRY_END     |
+10/03 08:26:31.973|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|START       |NAME=2030_upc 
+10/03 08:26:31.973|SCRIPT_START|SCRIPT=mapping/2030_sendEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMKQ0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=Shift_JIS
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+10/03 08:26:31.973|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|TRY_START   |NAME=try_catch
+10/03 08:26:31.973|START       |NAME=makeEndFile 
+10/03 08:26:31.973|SCRIPT_START|SCRIPT=sub/makeEndFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=27
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMKQ0002
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=filler, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=Shift_JIS
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMKQ0002.fen
+10/03 08:26:31.973|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=dsExecutionId, VALUE=po0000m2j6am0citnepovue8p4kb
+--/-- --:--:--.---|INFO        |dsExecutionId(String) 入力=[po0000m2j6am0citnepovue8p4kb]
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=Shift_JIS
+--/-- --:--:--.---|INFO        |characterCode(String) 入力=[Shift_JIS]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|START       |NAME=setData 
+10/03 08:26:31.973|END         |
+10/03 08:26:31.973|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=condition_CRLF, RESULT=false
+--/-- --:--:--.---|EVALUATION  |NAME=condition_LF, RESULT=true
+10/03 08:26:31.973|START       |NAME=writeEndFile(1) [fixedlength_adapter/put_data]
+--/-- --:--:--.---|INFO        |[1]行書き込みました。
+10/03 08:26:32.008|END         |
+10/03 08:26:32.008|BRANCH_END  |
+10/03 08:26:32.008|START       |NAME=putFile 
+10/03 08:26:32.008|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMKQ0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdupc002
+10/03 08:26:32.008|START       |NAME=init 
+10/03 08:26:32.008|END         |
+10/03 08:26:32.008|TRY_START   |NAME=try_catch
+10/03 08:26:32.008|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:32.804|END         |
+10/03 08:26:32.804|TRY_END     |
+10/03 08:26:32.804|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:32.809|END         |
+10/03 08:26:32.809|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:32.814|BRANCH_END  |
+10/03 08:26:32.814|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|TRY_END     |
+10/03 08:26:32.814|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|START       |NAME=2030_ms 
+10/03 08:26:32.814|SCRIPT_START|SCRIPT=mapping/2030_sendEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMMS0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+10/03 08:26:32.814|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|TRY_START   |NAME=try_catch
+10/03 08:26:32.814|START       |NAME=makeEndFile 
+10/03 08:26:32.814|SCRIPT_START|SCRIPT=sub/makeEndFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=27
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMMS0002
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=filler, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMMS0002.fen
+10/03 08:26:32.814|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=dsExecutionId, VALUE=po0000m2j6am0citnepovue8p4kb
+--/-- --:--:--.---|INFO        |dsExecutionId(String) 入力=[po0000m2j6am0citnepovue8p4kb]
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|INFO        |characterCode(String) 入力=[EUC-JP]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|START       |NAME=setData 
+10/03 08:26:32.814|END         |
+10/03 08:26:32.814|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=condition_CRLF, RESULT=false
+--/-- --:--:--.---|EVALUATION  |NAME=condition_LF, RESULT=true
+10/03 08:26:32.814|START       |NAME=writeEndFile(1) [fixedlength_adapter/put_data]
+--/-- --:--:--.---|INFO        |[1]行書き込みました。
+10/03 08:26:32.849|END         |
+10/03 08:26:32.849|BRANCH_END  |
+10/03 08:26:32.849|START       |NAME=putFile 
+10/03 08:26:32.849|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMMS0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdms0002
+10/03 08:26:32.849|START       |NAME=init 
+10/03 08:26:32.849|END         |
+10/03 08:26:32.849|TRY_START   |NAME=try_catch
+10/03 08:26:32.849|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:33.619|END         |
+10/03 08:26:33.619|TRY_END     |
+10/03 08:26:33.619|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:33.624|END         |
+10/03 08:26:33.624|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:33.629|BRANCH_END  |
+10/03 08:26:33.629|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|TRY_END     |
+10/03 08:26:33.629|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|START       |NAME=2030_st 
+10/03 08:26:33.629|SCRIPT_START|SCRIPT=mapping/2030_sendEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMDH0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMDH0001
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+10/03 08:26:33.629|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|TRY_START   |NAME=try_catch
+10/03 08:26:33.629|START       |NAME=makeEndFile 
+10/03 08:26:33.629|SCRIPT_START|SCRIPT=sub/makeEndFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=27
+--/-- --:--:--.---|VARIABLE    |NAME=fileId, VALUE=FCMDH0001
+--/-- --:--:--.---|VARIABLE    |NAME=recordCount, VALUE=0
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=newLineCode, VALUE=LF
+--/-- --:--:--.---|VARIABLE    |NAME=filler, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMDH0001.fen
+10/03 08:26:33.629|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=dsExecutionId, VALUE=po0000m2j6am0citnepovue8p4kb
+--/-- --:--:--.---|INFO        |dsExecutionId(String) 入力=[po0000m2j6am0citnepovue8p4kb]
+--/-- --:--:--.---|VARIABLE    |NAME=characterCode, VALUE=EUC-JP
+--/-- --:--:--.---|INFO        |characterCode(String) 入力=[EUC-JP]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|START       |NAME=setData 
+10/03 08:26:33.629|END         |
+10/03 08:26:33.629|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=condition_CRLF, RESULT=false
+--/-- --:--:--.---|EVALUATION  |NAME=condition_LF, RESULT=true
+10/03 08:26:33.629|START       |NAME=writeEndFile(1) [fixedlength_adapter/put_data]
+--/-- --:--:--.---|INFO        |[1]行書き込みました。
+10/03 08:26:33.659|END         |
+10/03 08:26:33.659|BRANCH_END  |
+10/03 08:26:33.659|START       |NAME=putFile 
+10/03 08:26:33.659|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMDH0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/ftp/mdst0001
+10/03 08:26:33.659|START       |NAME=init 
+10/03 08:26:33.659|END         |
+10/03 08:26:33.659|TRY_START   |NAME=try_catch
+10/03 08:26:33.659|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:34.436|END         |
+10/03 08:26:34.436|TRY_END     |
+10/03 08:26:34.436|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:34.441|END         |
+10/03 08:26:34.441|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:34.441|END         |
+10/03 08:26:34.441|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:34.441|BRANCH_END  |
+10/03 08:26:34.441|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:34.441|END         |
+10/03 08:26:34.441|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:34.441|END         |
+10/03 08:26:34.441|TRY_END     |
+10/03 08:26:34.441|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:34.441|END         |
+10/03 08:26:34.441|START       |NAME=2040_upc 
+10/03 08:26:34.446|SCRIPT_START|SCRIPT=mapping/2040_sendGenMgmtEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=1
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMKQ0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/backup/data/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+10/03 08:26:34.446|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+--/-- --:--:--.---|VARIABLE    |NAME=genMgmtEndFileName, VALUE=FCMKQ0002_20241003082634.fen
+--/-- --:--:--.---|INFO        |genMgmtEndFileName(String) 入力=[FCMKQ0002_20241003082634.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=matchPattern, VALUE=FCMKQ0002*.fen
+--/-- --:--:--.---|INFO        |matchPattern(String) 入力=[FCMKQ0002*.fen]
+10/03 08:26:34.446|END         |
+10/03 08:26:34.446|TRY_START   |NAME=try_catch
+10/03 08:26:34.446|START       |NAME=copyGenMgmtEndFile [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMKQ0002.fen]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:34.521|END         |
+10/03 08:26:34.521|START       |NAME=putGenMgmtEndFile 
+10/03 08:26:34.521|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMKQ0002_20241003082634.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdms0002
+10/03 08:26:34.521|START       |NAME=init 
+10/03 08:26:34.521|END         |
+10/03 08:26:34.521|TRY_START   |NAME=try_catch
+10/03 08:26:34.521|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:35.316|END         |
+10/03 08:26:35.316|TRY_END     |
+10/03 08:26:35.316|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:35.321|END         |
+10/03 08:26:35.321|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:35.326|END         |
+10/03 08:26:35.326|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:35.326|BRANCH_END  |
+10/03 08:26:35.326|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:35.326|END         |
+10/03 08:26:35.326|START       |NAME=checkGenMgmtEndFile 
+10/03 08:26:35.326|SCRIPT_START|SCRIPT=sub/ifFileBkAndGenMgmt, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=33
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMKQ0002*.fen
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdms0002
+10/03 08:26:35.326|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(int) 入力=[14]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:35.326|END         |
+10/03 08:26:35.326|START       |NAME=listBlobTargetDir [windows_azure_blob_adapter/get]
+--/-- --:--:--.---|INFO        |BLOB取得: [15]件を処理しました。(成功:[15]件、失敗[0]件)
+10/03 08:26:35.371|END         |
+10/03 08:26:35.371|START       |NAME=extractFile 
+10/03 08:26:35.376|END         |
+10/03 08:26:35.376|START       |NAME=sortData 
+10/03 08:26:35.376|END         |
+10/03 08:26:35.376|LOOP_START  |NAME=foreach
+10/03 08:26:35.381|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20241003082634.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20241003082634.fen]
+10/03 08:26:35.381|END         |
+10/03 08:26:35.381|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.381|BRANCH_END  |
+10/03 08:26:35.381|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20241003082019.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20241003082019.fen]
+10/03 08:26:35.381|END         |
+10/03 08:26:35.381|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.381|BRANCH_END  |
+10/03 08:26:35.381|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240926050457.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240926050457.fen]
+10/03 08:26:35.381|END         |
+10/03 08:26:35.381|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.381|BRANCH_END  |
+10/03 08:26:35.381|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240917062617.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240917062617.fen]
+10/03 08:26:35.381|END         |
+10/03 08:26:35.381|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.381|BRANCH_END  |
+10/03 08:26:35.381|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240911024400.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240911024400.fen]
+10/03 08:26:35.386|END         |
+10/03 08:26:35.386|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.386|BRANCH_END  |
+10/03 08:26:35.386|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828082048.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828082048.fen]
+10/03 08:26:35.386|END         |
+10/03 08:26:35.386|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.386|BRANCH_END  |
+10/03 08:26:35.386|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828081708.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828081708.fen]
+10/03 08:26:35.386|END         |
+10/03 08:26:35.386|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.386|BRANCH_END  |
+10/03 08:26:35.386|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080924.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080924.fen]
+10/03 08:26:35.386|END         |
+10/03 08:26:35.386|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.386|BRANCH_END  |
+10/03 08:26:35.386|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080631.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080631.fen]
+10/03 08:26:35.386|END         |
+10/03 08:26:35.386|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.386|BRANCH_END  |
+10/03 08:26:35.386|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080439.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080439.fen]
+10/03 08:26:35.391|END         |
+10/03 08:26:35.391|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.391|BRANCH_END  |
+10/03 08:26:35.391|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828080126.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828080126.fen]
+10/03 08:26:35.391|END         |
+10/03 08:26:35.391|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.391|BRANCH_END  |
+10/03 08:26:35.391|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075852.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075852.fen]
+10/03 08:26:35.391|END         |
+10/03 08:26:35.391|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.391|BRANCH_END  |
+10/03 08:26:35.391|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075643.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075643.fen]
+10/03 08:26:35.391|END         |
+10/03 08:26:35.391|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.391|BRANCH_END  |
+10/03 08:26:35.391|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075325.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075325.fen]
+10/03 08:26:35.391|END         |
+10/03 08:26:35.391|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:35.391|BRANCH_END  |
+10/03 08:26:35.391|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMKQ0002_20240828075003.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMKQ0002_20240828075003.fen]
+10/03 08:26:35.396|END         |
+10/03 08:26:35.396|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=false
+10/03 08:26:35.396|BRANCH_END  |
+10/03 08:26:35.396|START       |NAME=deleteFile 
+10/03 08:26:35.396|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMKQ0002_20240828075003.fen
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdms0002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-upc
+10/03 08:26:35.396|START       |NAME=init 
+10/03 08:26:35.396|END         |
+10/03 08:26:35.396|TRY_START   |NAME=try_catch
+10/03 08:26:35.396|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:35.431|END         |
+10/03 08:26:35.431|TRY_END     |
+10/03 08:26:35.431|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:35.436|END         |
+10/03 08:26:35.436|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:35.436|END         |
+10/03 08:26:35.441|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:35.441|BRANCH_END  |
+10/03 08:26:35.441|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:35.441|END         |
+10/03 08:26:35.441|LOOP_END    |COUNT=15
+10/03 08:26:35.441|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:35.441|END         |
+10/03 08:26:35.441|TRY_END     |
+10/03 08:26:35.441|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:35.441|END         |
+10/03 08:26:35.441|START       |NAME=2040_ms 
+10/03 08:26:35.441|SCRIPT_START|SCRIPT=mapping/2040_sendGenMgmtEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=1
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMMS0002.fen
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/backup/data/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+10/03 08:26:35.441|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+--/-- --:--:--.---|VARIABLE    |NAME=genMgmtEndFileName, VALUE=FCMMS0002_20241003082635.fen
+--/-- --:--:--.---|INFO        |genMgmtEndFileName(String) 入力=[FCMMS0002_20241003082635.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=matchPattern, VALUE=FCMMS0002*.fen
+--/-- --:--:--.---|INFO        |matchPattern(String) 入力=[FCMMS0002*.fen]
+10/03 08:26:35.441|END         |
+10/03 08:26:35.441|TRY_START   |NAME=try_catch
+10/03 08:26:35.441|START       |NAME=copyGenMgmtEndFile [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMMS0002.fen]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:35.516|END         |
+10/03 08:26:35.516|START       |NAME=putGenMgmtEndFile 
+10/03 08:26:35.516|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMMS0002_20241003082635.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdst0001
+10/03 08:26:35.516|START       |NAME=init 
+10/03 08:26:35.516|END         |
+10/03 08:26:35.516|TRY_START   |NAME=try_catch
+10/03 08:26:35.516|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:36.332|END         |
+10/03 08:26:36.332|TRY_END     |
+10/03 08:26:36.332|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:36.337|END         |
+10/03 08:26:36.337|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:36.342|END         |
+10/03 08:26:36.342|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:36.342|BRANCH_END  |
+10/03 08:26:36.342|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:36.342|END         |
+10/03 08:26:36.342|START       |NAME=checkGenMgmtEndFile 
+10/03 08:26:36.342|SCRIPT_START|SCRIPT=sub/ifFileBkAndGenMgmt, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=33
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMMS0002*.fen
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdst0001
+10/03 08:26:36.342|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(int) 入力=[14]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:36.342|END         |
+10/03 08:26:36.342|START       |NAME=listBlobTargetDir [windows_azure_blob_adapter/get]
+--/-- --:--:--.---|INFO        |BLOB取得: [15]件を処理しました。(成功:[15]件、失敗[0]件)
+10/03 08:26:36.374|END         |
+10/03 08:26:36.374|START       |NAME=extractFile 
+10/03 08:26:36.374|END         |
+10/03 08:26:36.374|START       |NAME=sortData 
+10/03 08:26:36.379|END         |
+10/03 08:26:36.379|LOOP_START  |NAME=foreach
+10/03 08:26:36.379|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20241003082635.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20241003082635.fen]
+10/03 08:26:36.379|END         |
+10/03 08:26:36.379|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.379|BRANCH_END  |
+10/03 08:26:36.379|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20241003082020.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20241003082020.fen]
+10/03 08:26:36.379|END         |
+10/03 08:26:36.379|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.384|BRANCH_END  |
+10/03 08:26:36.384|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240926050459.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240926050459.fen]
+10/03 08:26:36.384|END         |
+10/03 08:26:36.384|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.384|BRANCH_END  |
+10/03 08:26:36.384|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240917062618.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240917062618.fen]
+10/03 08:26:36.384|END         |
+10/03 08:26:36.384|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.384|BRANCH_END  |
+10/03 08:26:36.384|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240911024402.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240911024402.fen]
+10/03 08:26:36.384|END         |
+10/03 08:26:36.384|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.384|BRANCH_END  |
+10/03 08:26:36.384|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828082051.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828082051.fen]
+10/03 08:26:36.384|END         |
+10/03 08:26:36.384|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.384|BRANCH_END  |
+10/03 08:26:36.384|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828081711.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828081711.fen]
+10/03 08:26:36.384|END         |
+10/03 08:26:36.384|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.384|BRANCH_END  |
+10/03 08:26:36.384|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080927.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080927.fen]
+10/03 08:26:36.389|END         |
+10/03 08:26:36.389|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.389|BRANCH_END  |
+10/03 08:26:36.389|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080634.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080634.fen]
+10/03 08:26:36.389|END         |
+10/03 08:26:36.389|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.389|BRANCH_END  |
+10/03 08:26:36.389|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080442.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080442.fen]
+10/03 08:26:36.389|END         |
+10/03 08:26:36.389|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.389|BRANCH_END  |
+10/03 08:26:36.389|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828080129.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828080129.fen]
+10/03 08:26:36.389|END         |
+10/03 08:26:36.389|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.389|BRANCH_END  |
+10/03 08:26:36.389|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075855.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075855.fen]
+10/03 08:26:36.389|END         |
+10/03 08:26:36.389|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.389|BRANCH_END  |
+10/03 08:26:36.389|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075646.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075646.fen]
+10/03 08:26:36.389|END         |
+10/03 08:26:36.389|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.389|BRANCH_END  |
+10/03 08:26:36.389|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075326.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075326.fen]
+10/03 08:26:36.394|END         |
+10/03 08:26:36.394|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:36.394|BRANCH_END  |
+10/03 08:26:36.394|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMMS0002_20240828075006.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMMS0002_20240828075006.fen]
+10/03 08:26:36.394|END         |
+10/03 08:26:36.394|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=false
+10/03 08:26:36.394|BRANCH_END  |
+10/03 08:26:36.394|START       |NAME=deleteFile 
+10/03 08:26:36.394|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMMS0002_20240828075006.fen
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdst0001
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-ms
+10/03 08:26:36.394|START       |NAME=init 
+10/03 08:26:36.394|END         |
+10/03 08:26:36.394|TRY_START   |NAME=try_catch
+10/03 08:26:36.394|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:36.434|END         |
+10/03 08:26:36.434|TRY_END     |
+10/03 08:26:36.434|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:36.439|END         |
+10/03 08:26:36.439|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:36.439|END         |
+10/03 08:26:36.439|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:36.439|BRANCH_END  |
+10/03 08:26:36.439|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:36.439|END         |
+10/03 08:26:36.439|LOOP_END    |COUNT=15
+10/03 08:26:36.439|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:36.439|END         |
+10/03 08:26:36.439|TRY_END     |
+10/03 08:26:36.439|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:36.439|END         |
+10/03 08:26:36.439|START       |NAME=2040_st 
+10/03 08:26:36.439|SCRIPT_START|SCRIPT=mapping/2040_sendGenMgmtEndFile, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=1
+--/-- --:--:--.---|VARIABLE    |NAME=endFileName, VALUE=FCMDH0001.fen
+--/-- --:--:--.---|VARIABLE    |NAME=tempDirectoryPath, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDir, VALUE=/backup/data/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+10/03 08:26:36.439|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+--/-- --:--:--.---|VARIABLE    |NAME=genMgmtEndFileName, VALUE=FCMDH0001_20241003082636.fen
+--/-- --:--:--.---|INFO        |genMgmtEndFileName(String) 入力=[FCMDH0001_20241003082636.fen]
+--/-- --:--:--.---|VARIABLE    |NAME=matchPattern, VALUE=FCMDH0001*.fen
+--/-- --:--:--.---|INFO        |matchPattern(String) 入力=[FCMDH0001*.fen]
+10/03 08:26:36.439|END         |
+10/03 08:26:36.439|TRY_START   |NAME=try_catch
+10/03 08:26:36.439|START       |NAME=copyGenMgmtEndFile [file_operation_adapter/copy_file]
+--/-- --:--:--.---|INFO        |[/data/test/users/e-ls-dev-133/test/earth_md_md01/FCMDH0001.fen]ファイル/ディレクトリをコピーしました。
+--/-- --:--:--.---|INFO        |[1]件をコピーしました。
+10/03 08:26:36.514|END         |
+10/03 08:26:36.514|START       |NAME=putGenMgmtEndFile 
+10/03 08:26:36.514|SCRIPT_START|SCRIPT=sub/putFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=5
+--/-- --:--:--.---|VARIABLE    |NAME=errorMessage, VALUE=
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMDH0001_20241003082636.fen
+--/-- --:--:--.---|VARIABLE    |NAME=localDirectoryName, VALUE=/data/test/users/e-ls-dev-133/test/earth_md_md01
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdupc002
+10/03 08:26:36.514|START       |NAME=init 
+10/03 08:26:36.514|END         |
+10/03 08:26:36.514|TRY_START   |NAME=try_catch
+10/03 08:26:36.514|START       |NAME=putBlobFile [windows_azure_blob_adapter/put]
+--/-- --:--:--.---|INFO        |BLOB登録: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:37.306|END         |
+10/03 08:26:37.306|TRY_END     |
+10/03 08:26:37.306|START       |NAME=setNonUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=nonUpdatedFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |nonUpdatedFileCount(int) 入力=[0]
+10/03 08:26:37.306|END         |
+10/03 08:26:37.306|START       |NAME=setUpdatedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=updatedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |updatedFileCount(int) 入力=[1]
+10/03 08:26:37.311|END         |
+10/03 08:26:37.311|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:37.311|BRANCH_END  |
+10/03 08:26:37.311|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.311|END         |
+10/03 08:26:37.311|START       |NAME=checkGenMgmtEndFile 
+10/03 08:26:37.311|SCRIPT_START|SCRIPT=sub/ifFileBkAndGenMgmt, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=33
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+--/-- --:--:--.---|VARIABLE    |NAME=localFileName, VALUE=FCMDH0001*.fen
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdupc002
+10/03 08:26:37.311|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=archiveRetentionPeriod, VALUE=14
+--/-- --:--:--.---|INFO        |archiveRetentionPeriod(int) 入力=[14]
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:37.311|END         |
+10/03 08:26:37.311|START       |NAME=listBlobTargetDir [windows_azure_blob_adapter/get]
+--/-- --:--:--.---|INFO        |BLOB取得: [15]件を処理しました。(成功:[15]件、失敗[0]件)
+10/03 08:26:37.345|END         |
+10/03 08:26:37.345|START       |NAME=extractFile 
+10/03 08:26:37.345|END         |
+10/03 08:26:37.345|START       |NAME=sortData 
+10/03 08:26:37.350|END         |
+10/03 08:26:37.350|LOOP_START  |NAME=foreach
+10/03 08:26:37.350|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20241003082636.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20241003082636.fen]
+10/03 08:26:37.350|END         |
+10/03 08:26:37.350|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.350|BRANCH_END  |
+10/03 08:26:37.350|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20241003082021.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20241003082021.fen]
+10/03 08:26:37.350|END         |
+10/03 08:26:37.350|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.350|BRANCH_END  |
+10/03 08:26:37.350|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240926050502.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240926050502.fen]
+10/03 08:26:37.355|END         |
+10/03 08:26:37.355|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.355|BRANCH_END  |
+10/03 08:26:37.355|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240917062619.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240917062619.fen]
+10/03 08:26:37.355|END         |
+10/03 08:26:37.355|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.355|BRANCH_END  |
+10/03 08:26:37.355|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240911024403.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240911024403.fen]
+10/03 08:26:37.355|END         |
+10/03 08:26:37.355|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.355|BRANCH_END  |
+10/03 08:26:37.355|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828082053.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828082053.fen]
+10/03 08:26:37.355|END         |
+10/03 08:26:37.355|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.355|BRANCH_END  |
+10/03 08:26:37.355|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828081714.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828081714.fen]
+10/03 08:26:37.355|END         |
+10/03 08:26:37.355|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.355|BRANCH_END  |
+10/03 08:26:37.355|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080929.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080929.fen]
+10/03 08:26:37.360|END         |
+10/03 08:26:37.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.360|BRANCH_END  |
+10/03 08:26:37.360|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080637.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080637.fen]
+10/03 08:26:37.360|END         |
+10/03 08:26:37.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.360|BRANCH_END  |
+10/03 08:26:37.360|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080445.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080445.fen]
+10/03 08:26:37.360|END         |
+10/03 08:26:37.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.360|BRANCH_END  |
+10/03 08:26:37.360|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828080132.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828080132.fen]
+10/03 08:26:37.360|END         |
+10/03 08:26:37.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.360|BRANCH_END  |
+10/03 08:26:37.360|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075858.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075858.fen]
+10/03 08:26:37.360|END         |
+10/03 08:26:37.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.360|BRANCH_END  |
+10/03 08:26:37.360|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075649.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075649.fen]
+10/03 08:26:37.360|END         |
+10/03 08:26:37.360|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.360|BRANCH_END  |
+10/03 08:26:37.360|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075327.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075327.fen]
+10/03 08:26:37.365|END         |
+10/03 08:26:37.365|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=true
+10/03 08:26:37.365|BRANCH_END  |
+10/03 08:26:37.365|START       |NAME=setProperty 
+--/-- --:--:--.---|VARIABLE    |NAME=deleteTargetFileName, VALUE=FCMDH0001_20240828075009.fen
+--/-- --:--:--.---|INFO        |deleteTargetFileName(String) 入力=[FCMDH0001_20240828075009.fen]
+10/03 08:26:37.365|END         |
+10/03 08:26:37.365|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=nonPurger, RESULT=false
+10/03 08:26:37.365|BRANCH_END  |
+10/03 08:26:37.365|START       |NAME=deleteFile 
+10/03 08:26:37.365|SCRIPT_START|SCRIPT=sub/deleteFile, PROJECT=Z_TEST01_earth_cm_blob_Common, REPOSITORY=/share/projects/earth_cm_blob_Common, VERSION=13
+--/-- --:--:--.---|VARIABLE    |NAME=blobTargetFileName, VALUE=FCMDH0001_20240828075009.fen
+--/-- --:--:--.---|VARIABLE    |NAME=virtualDirectory, VALUE=/backup/data/mdupc002
+--/-- --:--:--.---|VARIABLE    |NAME=containerName, VALUE=fileif-st
+10/03 08:26:37.365|START       |NAME=init 
+10/03 08:26:37.365|END         |
+10/03 08:26:37.365|TRY_START   |NAME=try_catch
+10/03 08:26:37.365|START       |NAME=deleteBlobFile [windows_azure_blob_adapter/delete]
+--/-- --:--:--.---|INFO        |BLOB削除: [1]件を処理しました。(成功:[1]件、失敗[0]件)
+10/03 08:26:37.405|END         |
+10/03 08:26:37.405|TRY_END     |
+10/03 08:26:37.405|START       |NAME=setErrorFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=errorFileCount, VALUE=0
+--/-- --:--:--.---|INFO        |errorFileCount(int) 入力=[0]
+10/03 08:26:37.405|END         |
+10/03 08:26:37.405|START       |NAME=setDeletedFileCount 
+--/-- --:--:--.---|VARIABLE    |NAME=deletedFileCount, VALUE=1
+--/-- --:--:--.---|INFO        |deletedFileCount(int) 入力=[1]
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|BRANCH_START|NAME=if
+--/-- --:--:--.---|EVALUATION  |NAME=confirmError, RESULT=false
+10/03 08:26:37.410|BRANCH_END  |
+10/03 08:26:37.410|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|LOOP_END    |COUNT=15
+10/03 08:26:37.410|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|TRY_END     |
+10/03 08:26:37.410|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|START       |NAME=2050 
+10/03 08:26:37.410|SCRIPT_START|SCRIPT=mapping/2050_exctTimeMgmtUpd, PROJECT=null, REPOSITORY=/share/projects/earth_md_md01, VERSION=1
+--/-- --:--:--.---|VARIABLE    |NAME=exctDateForSystem, VALUE=1727943967062
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceId, VALUE=md01
+--/-- --:--:--.---|VARIABLE    |NAME=companyCode, VALUE=B002
+--/-- --:--:--.---|VARIABLE    |NAME=exctDateForBusiness, VALUE=2024-10-03T00:00:00.000+0000
+10/03 08:26:37.410|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=type, VALUE=Z_TEST01
+--/-- --:--:--.---|INFO        |type(String) 入力=[Z_TEST01]
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|TRY_START   |NAME=try_catch
+10/03 08:26:37.410|START       |NAME=exctTimeMgmtUpd 
+10/03 08:26:37.410|SCRIPT_START|SCRIPT=sub/exctTimeMgmtUpd, PROJECT=Z_TEST01_earth_cm_util_Common, REPOSITORY=/share/projects/earth_cm_util_Common, VERSION=10
+--/-- --:--:--.---|VARIABLE    |NAME=companyCode, VALUE=B002
+--/-- --:--:--.---|VARIABLE    |NAME=exctDateForBusiness, VALUE=1727913600000
+--/-- --:--:--.---|VARIABLE    |NAME=interfaceId, VALUE=md01
+--/-- --:--:--.---|VARIABLE    |NAME=exctDateForSystem, VALUE=1727943967062
+10/03 08:26:37.410|START       |NAME=init 
+--/-- --:--:--.---|VARIABLE    |NAME=companyCode, VALUE=B002
+--/-- --:--:--.---|INFO        |companyCode(String) 入力=[B002]
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|START       |NAME=setSchema 
+10/03 08:26:37.410|END         |
+10/03 08:26:37.410|START       |NAME=upsertDate [sqlazure_adapter/execute_update_query]
+--/-- --:--:--.---|INFO        |[1]件のデータが更新されました。
+10/03 08:26:37.420|END         |
+10/03 08:26:37.420|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.420|END         |
+10/03 08:26:37.420|TRY_END     |
+10/03 08:26:37.420|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.420|END         |
+10/03 08:26:37.420|START       |NAME=setCount 
+--/-- --:--:--.---|VARIABLE    |NAME=totalRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |totalRecordCount(int) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=upcSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |upcSuccessRecordCount(String) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=efSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |efSuccessRecordCount(String) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=msSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |msSuccessRecordCount(String) 入力=[0]
+--/-- --:--:--.---|VARIABLE    |NAME=stSuccessRecordCount, VALUE=0
+--/-- --:--:--.---|INFO        |stSuccessRecordCount(String) 入力=[0]
+10/03 08:26:37.420|END         |
+10/03 08:26:37.420|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.420|END         |
+10/03 08:26:37.425|SCRIPT_END  |EXIT_STATUS=0
+10/03 08:26:37.425|EXEC_END    |EXIT_STATUS=0
