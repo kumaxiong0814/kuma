@@ -1,0 +1,2 @@
+string headerCustomContent = LS_BT_00003.HeaderOutPutFileName + "_" + nowtime + LS_BT_00003.Filler.PadRight(3, ' ') + headerParam.DataList.Count.ToString().PadLeft(8, '0') + LS_BT_00003.Filler.PadRight(26, ' ') + "\n";
+string headerCustomContent = $"{headerParam.OutPutFileName.PadRight(16, ' ')}{headerParam.DataList.Count.ToString().PadLeft(8, '0')}{LS_BT_00257.Filler.PadRight(26, ' ')}{headerParam.EndNotificationFileNewlineCode?.ToString()}";
