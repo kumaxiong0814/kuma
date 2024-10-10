@@ -1,64 +1,225 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using earth.CommonFunctions.AzureFunction.Utils;
+using earth.CommonFunctions.AzureFunction;
+using earth.CommonFunctions.AzureFunction.Operations;
+using LegacySystem.Common.Batch.CommonAppBatch2.LegacySystem.Common.Batch.CommonAppBatch;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace Fujifilm.Earth.Common.Ls.DurableFunction
 {
-    public static class OutBoundEndProcessForCreateCustomizeEndFileFunctionHelper
+    class OutBoundEndProcessForCreateCustomizeEndFileFunctionHelper_BusinessLogic : FunctionBase
     {
-        const string FunctionNameHttpStart = "OutBoundEndProcessForCreateCustomizeEndFileFunctionHttp";
-        const string FunctionNameOrchestrator = "OutBoundEndProcessForCreateCustomizeEndFileFunctionOrchestration";
-        const string FunctionNameActivity = "DoOutBoundEndProcessForCreateCustomizeEndFileFunctionAction";
+        public OutBoundEndProcessForCreateCustomizeEndFileFunctionHelper_BusinessLogic(ILogger log, ExecutionContext context) : base(log, context) { }
 
-
-        [FunctionName(FunctionNameHttpStart)]
-        public static async Task<HttpResponseMessage> HttpStart(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post",
-             Route = "OutBoundEndProcessForCreateCustomizeEndFileFunctionHttp/{doAction}")] HttpRequestMessage req,
-            [DurableClient] IDurableOrchestrationClient starter,
-            ILogger log)
+        protected override object BussinessLogic(params object[] inputList)
         {
-            try
+            var operation = new LegacySystemOperations();
+            var shortTimeCycleOperations = new ShortTimeCycleOperations();
+            var paramList = (JArray)inputList[0];
+            List<Dictionary<string, string>> deleteOutsideLoopList = new List<Dictionary<string, string>>();
+
+            Log.LogInformation($"paramList:{paramList}");
+            foreach (var paramitem in paramList)
             {
-                //パラメータ取得
-                var data = JArray.Parse(await req.Content.ReadAsStringAsync());
-                //インスタンスID取得
-                string instanceId = await starter.StartNewAsync(FunctionNameOrchestrator, data);
-                //RunOrchestratorの実行
-                return starter.CreateCheckStatusResponse(req, instanceId);
+                var countRowsNumberParam = GetCountRowsNumberParam(paramitem.ToObject<JObject>());
+                var copyIFFileToSharedStorageParam = GetCopyIFFileToSharedStorageParam(paramitem.ToObject<JObject>());
+                var copyEndNotificationFileToSharedStorageParam = GetCopyEndNotificationFileToSharedStorageParam(paramitem.ToObject<JObject>());
+                //世代管理を実行するするか
+                var generationManagementFlag = GetGenerationManagementFlag(paramitem.ToObject<JObject>());
+                //終了通知ファイルを作成するか
+                var endFileCreationflag = paramitem.Value<bool>("endfilecreationflag");
+                //0件ファイルを連携するか
+                var zeroFileLinkageflag = paramitem.Value<bool>("zerofilelinkageflag");
+                //共通ストレージ用のパラメータ設定
+                var callIFFileSharedArchiveParam = GetCallSharedIFFileArchiveParam(paramitem.ToObject<JObject>());
+                var callEndFileSharedArchiveParam = GetCallSharedEndFileArchiveParam(paramitem.ToObject<JObject>());
+                var callDeleteTmpFileParam = GetDeleteTmpFileParam(paramitem.ToObject<JObject>());
+                //外部IFチーム AzureFunctionFileArchive（earth-工程-func-jpe-ls-general）
+                //HandleFileFunction.DoGetFileRowsCountAction実行し対象ファイル件数カウントする
+                int rowNumber = Convert.ToInt32(operation.CountRowsNumber(countRowsNumberParam, Log));
+                //ループ処理中に作業ファイルを削除するか
+                bool deleteInLoopFlag = GetDeleteInLoopFlag(paramitem.ToObject<JObject>());
+
+                if (endFileCreationflag)
+                {
+                    //IF要件に応じて、終了通知ファイルを作成する。
+                    shortTimeCycleOperations.CreateEndFileWithDateTime(paramitem.ToObject<JObject>());
+                }
+
+                if (zeroFileLinkageflag || rowNumber > 0)
+                {
+                    //個別ストレージから共有ストレージにIFファイルをコピーする
+                    operation.CopyFileToSharedStorage(copyIFFileToSharedStorageParam, Log);
+                    //終了通知ファイルが作成される場合のみ
+                    if (endFileCreationflag)
+                    {
+                        //個別ストレージから共有ストレージに終了通知ファイルをコピーする
+                        operation.CopyFileToSharedStorage(copyEndNotificationFileToSharedStorageParam, Log);
+                    }
+
+                    //GETの場合世代管理後、再度ファイル配置 世代管理フラグがfalseの場合はスキップ
+                    if (paramitem.Value<string>("transfertype") == "GET" && generationManagementFlag)
+                    {
+                        //アーキチーム AzureFunctionFileArchive（earth-工程-func-jpe-cm-filearchive）実行しIFファイルを世代管理処理
+                        operation.CallFileArchive(callIFFileSharedArchiveParam, true, Log);
+                        //個別ストレージから共有ストレージにIFファイルをコピーする
+                        operation.CopyFileToSharedStorage(copyIFFileToSharedStorageParam, Log);
+                        //終了通知ファイルが作成される場合のみ
+                        if (endFileCreationflag)
+                        {
+                            //アーキチーム AzureFunctionFileArchive（earth-工程-func-jpe-cm-filearchive）実行し終了通知ファイル世代管理処理
+                            operation.CallFileArchive(callEndFileSharedArchiveParam, true, Log);
+                            //個別ストレージから共有ストレージに終了通知ファイルをコピーする
+                            operation.CopyFileToSharedStorage(copyEndNotificationFileToSharedStorageParam, Log);
+                        }
+                    }
+                }
+                if (deleteInLoopFlag)
+                {
+                    //指定した個別ストレージ内の作業ファイルを削除する。
+                    //operation.DeleteTmpFile(callDeleteTmpFileParam, Log);
+                }
+                else
+                {
+                    //ループ処理外で削除する作業ファイルをリストに追加する
+                    deleteOutsideLoopList.Add(callDeleteTmpFileParam);
+                }
             }
-            catch (Exception ex)
+            
+            //ループ処理外で削除するファイルの削除処理を行う
+            foreach (var tmpFile in deleteOutsideLoopList)
             {
-                log.LogError(MessageStrings.EARTHCME090001, ex.ToString());
-                throw;
+                //指定した個別ストレージ内の作業ファイルを削除する。
+                //operation.DeleteTmpFile(tmpFile, Log);
             }
+            return null;
         }
 
-        [FunctionName(FunctionNameOrchestrator)]
-        public static async Task<string> RunOrchestrator(
-            [OrchestrationTrigger] IDurableOrchestrationContext context)
+        private Dictionary<string, string> GetCountRowsNumberParam(JObject inputparam)
         {
-            return await context.CallActivityAsync<string>(FunctionNameActivity, context.GetInput<JArray>());
+            var keyValuePairs = new Dictionary<string, string>()
+                {
+                    { "containername", inputparam.Value<string>("container") },
+                    { "mainfilefolder", inputparam.Value<string>("resultfolder") },
+                    { "mainfile", inputparam.Value<string>("resultfile") },
+                    { "excludelinescount", inputparam.Value<string>("excludelinesc")},
+                    { "encoder", inputparam.Value<string>("encoding") }
+                };
+            return keyValuePairs;
         }
 
-        [FunctionName(FunctionNameActivity)]
-        public static string DoExternalIFCommonFunction_Call([ActivityTrigger] JArray param, ILogger log, ExecutionContext executionContext)
+        private Dictionary<string, string> GetCopyIFFileToSharedStorageParam(JObject inputparam)
         {
-            string res = "";
-            using (var logic = new OutBoundEndProcessForCreateCustomizeEndFileFunctionHelper_BusinessLogic(log, executionContext))
+            var keyValuePairs = new Dictionary<string, string>()
+                {
+                    { "Container", inputparam.Value<string>("container") },
+                    { "InputFolder", inputparam.Value<string>("resultfolder") },
+                    { "InputFile", inputparam.Value<string>("resultfile") },
+                    { "SharedStorageContainer", inputparam.Value<string>("sharedstoragecontainer")},
+                    { "SharedStorageIFFileFolder", inputparam.Value<string>("sharedstorageiffilefolder") }
+                };
+            return keyValuePairs;
+        }
+
+        private Dictionary<string, string> GetCopyEndNotificationFileToSharedStorageParam(JObject inputparam)
+        {
+            var sharedStorageEndfileFolder = string.Empty;
+            if (inputparam.Value<string>("fileid").Contains("mainfile"))
             {
-                res = (string)logic.Run(param);
+                sharedStorageEndfileFolder = inputparam.Value<string>("sharedstorageiffilefolder").Replace(inputparam.Value<string>("fileid"), inputparam.Value<string>("endFileId"));
+            }
+            else
+            {
+                sharedStorageEndfileFolder = inputparam.Value<string>("sharedstorageiffilefolder");
+            }
+            var keyValuePairs = new Dictionary<string, string>()
+                {
+                    { "Container", inputparam.Value<string>("container") },
+                    { "InputFolder", inputparam.Value<string>("endfilefolder") },
+                    { "InputFile",  GetEndFileName(inputparam)},
+                    { "SharedStorageContainer", inputparam.Value<string>("sharedstoragecontainer")},
+                    { "SharedStorageIFFileFolder", sharedStorageEndfileFolder }
+                };
+            return keyValuePairs;
+        }
+
+
+        private Dictionary<string, string> GetCallSharedIFFileArchiveParam(JObject inputparam)
+        {
+            var keyValuePairs = new Dictionary<string, string>()
+                {
+                    { "interfaceFileDirectoryPath",$"/{inputparam.Value<string>("sharedstoragecontainer")}/{inputparam.Value<string>("sharedstorageiffilefolder")}"},
+                    { "interfaceFileName",  inputparam.Value<string>("resultfile") },
+                    { "archiveDirectoryPath", $"/{inputparam.Value<string>("sharedstoragecontainer")}/{inputparam.Value<string>("sharedstoragearchivefolder")}"},
+                    { "generationNumber",  inputparam.Value<string>("generationnumber") },
+                    { "addDateFlag",  inputparam.Value<string>("adddateflag") }
+                };
+            return keyValuePairs;
+        }
+
+        private Dictionary<string, string> GetCallSharedEndFileArchiveParam(JObject inputparam)
+        {
+            var keyValuePairs = new Dictionary<string, string>()
+                {
+                    { "interfaceFileDirectoryPath",$"/{inputparam.Value<string>("sharedstoragecontainer")}/{inputparam.Value<string>("sharedstorageiffilefolder")}"},
+                    { "interfaceFileName",  GetEndFileName(inputparam) },
+                    { "archiveDirectoryPath", $"/{inputparam.Value<string>("sharedstoragecontainer")}/{inputparam.Value<string>("sharedstoragearchivefolder")}"},
+                    { "generationNumber",  inputparam.Value<string>("generationnumber") },
+                    { "addDateFlag",  inputparam.Value<string>("adddateflag") }
+                };
+            return keyValuePairs;
+        }
+
+        private Dictionary<string, string> GetDeleteTmpFileParam(JObject inputparam)
+        {
+            var keyValuePairs = new Dictionary<string, string>()
+                {
+                    { "Container", inputparam.Value<string>("container")},
+                    { "ResultFolder", inputparam.Value<string>("resultfolder")},
+                    { "EndFileFolder", inputparam.Value<string>("endfilefolder")},
+                    { "MainFileFolder", ""},
+                };
+            return keyValuePairs;
+        }
+
+        private string GetEndFileName(JObject inputparam)
+        {
+            string endFile = inputparam.Value<string>("endfile");
+            if (string.IsNullOrWhiteSpace(endFile))
+            {
+                // 未設定の場合、IFファイル名.fenを既定の終了通知ファイル名とする
+                endFile = $"{inputparam.Value<string>("resultfile")}.fen";
             }
 
-            return res;
+            return endFile;
+        }
+
+        private bool GetGenerationManagementFlag(JObject inputparam)
+        {
+            bool generationManagementFlag = inputparam.Value<bool>("generationmanagementflag");
+
+            if (string.IsNullOrWhiteSpace(inputparam.Value<string>("generationmanagementflag")))
+            {
+                // 未設定の場合、trueとし世代管理実行する
+                generationManagementFlag = true;
+            }
+
+            return generationManagementFlag;
+        }
+
+        private bool GetDeleteInLoopFlag(JObject inputparam)
+        {
+            bool deleteInLoopFlag = inputparam.Value<bool>("deleteinloopflag");
+
+            if (string.IsNullOrWhiteSpace(inputparam.Value<string>("deleteinloopflag")))
+            {
+                // 未設定の場合、trueとしループ処理中に作業ファイルを削除する
+                deleteInLoopFlag = true;
+            }
+
+            return deleteInLoopFlag;
         }
     }
 }
