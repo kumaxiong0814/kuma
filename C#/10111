@@ -6,3 +6,41 @@
 2（D365側三国間）の場合
 →1（レガシー側三国間）
 ※三国間区分0（Blank）は業務上発生しないため記載しない
+
+
+private void HeaderFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 既存の発注依頼日、発注完了日、有償無償区分の処理...
+
+    // 有償無償区分PayFreeTypeの変換を追加
+    var payFreeType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.PayFreeType);
+    if (!string.IsNullOrEmpty(payFreeType))
+    {
+        if (payFreeType.Equals("0"))
+        {
+            data[earth_dp_LS_BT_00271FLONE0004.PayFreeType] = "N";
+        }
+        else if (payFreeType.Equals("1"))
+        {
+            data[earth_dp_LS_BT_00271FLONE0004.PayFreeType] = "Y";
+        }
+    }
+
+    // 三国間区分TrilateralTypeの変換を追加
+    var trilateralType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.TrilateralType);
+    if (!string.IsNullOrEmpty(trilateralType))
+    {
+        // 1（D365側二国間）の場合 → 2（レガシー側二国間）
+        if (trilateralType.Equals("1"))
+        {
+            data[earth_dp_LS_BT_00271FLONE0004.TrilateralType] = "2";
+        }
+        // 2（D365側三国間）の場合 → 1（レガシー側三国間）
+        else if (trilateralType.Equals("2"))
+        {
+            data[earth_dp_LS_BT_00271FLONE0004.TrilateralType] = "1";
+        }
+    }
+
+    // その他既存の処理...
+}
