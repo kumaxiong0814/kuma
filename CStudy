@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using earth.CommonFunctions.AzureFunction.Utils;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.DurableTask;
+using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+
+namespace Fujifilm.Earth.Common.Ls.DurableFunction
+{
+    public static class OutBoundEndProcessForCreateCustomizeEndFileFunctionHelper
+    {
+        const string FunctionNameHttpStart = "OutBoundEndProcessForCreateCustomizeEndFileFunctionHttp";
+        const string FunctionNameOrchestrator = "OutBoundEndProcessForCreateCustomizeEndFileFunctionOrchestration";
+        const string FunctionNameActivity = "DoOutBoundEndProcessForCreateCustomizeEndFileFunctionAction";
+
+
+        [FunctionName(FunctionNameHttpStart)]
+        public static async Task<HttpResponseMessage> HttpStart(
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post",
+             Route = "OutBoundEndProcessForCreateCustomizeEndFileFunctionHttp/{doAction}")] HttpRequestMessage req,
+            [DurableClient] IDurableOrchestrationClient starter,
+            ILogger log)
+        {
+            try
+            {
+                //パラメータ取得
+                var data = JArray.Parse(await req.Content.ReadAsStringAsync());
+                //インスタンスID取得
+                string instanceId = await starter.StartNewAsync(FunctionNameOrchestrator, data);
+                //RunOrchestratorの実行
+                return starter.CreateCheckStatusResponse(req, instanceId);
+            }
+            catch (Exception ex)
+            {
+                log.LogError(MessageStrings.EARTHCME090001, ex.ToString());
+                throw;
+            }
+        }
+
+        [FunctionName(FunctionNameOrchestrator)]
+        public static async Task<string> RunOrchestrator(
+            [OrchestrationTrigger] IDurableOrchestrationContext context)
+        {
+            return await context.CallActivityAsync<string>(FunctionNameActivity, context.GetInput<JArray>());
+        }
+
+        [FunctionName(FunctionNameActivity)]
+        public static string DoExternalIFCommonFunction_Call([ActivityTrigger] JArray param, ILogger log, ExecutionContext executionContext)
+        {
+            string res = "";
+            using (var logic = new OutBoundEndProcessForCreateCustomizeEndFileFunctionHelper_BusinessLogic(log, executionContext))
+            {
+                res = (string)logic.Run(param);
+            }
+
+            return res;
+        }
+    }
+}
