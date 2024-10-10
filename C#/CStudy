@@ -62,3 +62,8 @@ namespace Fujifilm.Earth.Common.Ls.DurableFunction
         }
     }
 }
+
+
+代码遍历paramList中的每一项，执行如文件复制，创建结束通知文件和归档文件的操作（如果满足条件）
+如果文件没有在循环中删除，将其添加到一个待删除的列表，之后统一删除。
+使用LegacySystemOperations和ShortTimeCycleOperations来执行文件复制，行数计算和文件归档等操作
