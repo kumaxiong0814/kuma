@@ -1,7 +1,254 @@
-   //No.54 消耗品：注意事項の印刷 読替処理 設計者に確認中　対応は保留
-   //・0(設定なし)→null 1(注意事項の非印刷)→1  ・3(配送注意事項のみ印刷)→3
-   string srcConsumablesPrintNotes = dictionaryUtil.GetDataString(data, earth_dp_LogistcsInstructionsEntity.ConsumablesPrintNotes);
-   if (!string.IsNullOrEmpty(srcConsumablesPrintNotes) && "0".Equals(srcConsumablesPrintNotes))
-   {
-       data[earth_dp_LogistcsInstructionsEntity.ConsumablesPrintNotes] = string.Empty;
-   }
+using Azure.Messaging.ServiceBus;
+using earth.CommonFunctions.AzureFunction;
+using earth.CommonFunctions.AzureFunction.Utils;
+using LegacySystem.DemandPlanning.FO.Out.Messaging.ExtendsEntity;
+using LegacySystem.DemandPlanning.FO.Out.Messaging.LS_BT_00000;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+
+namespace LegacySystem.DemandPlanning.FO.Out.Messaging.LS_BT_00271
+{
+    public class LS_BT_00271_ServiceBusTriggerBusinessLogic : FunctionBase
+    {
+        private const string DATETIME_FORMAT_YYYYMMDD = "yyyyMMdd";
+
+        public LS_BT_00271_ServiceBusTriggerBusinessLogic(ILogger log, ExecutionContext context) : base(log, context) { }
+
+        protected override object BussinessLogic(params object[] inputList)
+        {
+            var myQueueItem = (ServiceBusReceivedMessage)inputList[0];
+            var myQueueItemMessage = myQueueItem.Body.ToString();
+            Log.LogInformation(myQueueItemMessage);
+            // ParseJsonExtractで読み込める形に変換
+            var transformedQueueItem = TransformPublish(myQueueItemMessage, true);
+            var LS_BT_00271 = new LS_BT_00271();
+
+            // FOのビジネスイベントシステム項目を削除しDictionary形式に変換
+            var detailFieldDefinition = new FieldDefinition(earth_dp_LS_BT_00271FLONE0005.EntityName);
+            LS_BT_00271.HeaderFieldDefinitions.Add(detailFieldDefinition);
+            var headerData = parseJsonUtil.ParseJsonExtract(transformedQueueItem, LS_BT_00271.HeaderFieldDefinitions);
+            LS_BT_00271.HeaderFieldDefinitions.Remove(detailFieldDefinition);
+
+            if (!headerData.ContainsKey(earth_dp_LS_BT_00271FLONE0005.EntityName))
+            {
+                throw new ApplicationException($"There is no entry with key {earth_dp_LS_BT_00271FLONE0005.EntityName} in message.");
+            }
+
+            // 明細テーブルのデータをDictionary形式に変換
+            var detailDataList = parseJsonUtil.ParseJsonExtract((JArray)headerData[earth_dp_LS_BT_00271FLONE0005.EntityName]);
+
+            if (detailDataList == null || detailDataList.Count == 0)
+            {
+                throw new ApplicationException("Detail data is empty.");
+            }
+
+            Log.LogInformation("detailDataList:" + headerData[earth_dp_LS_BT_00271FLONE0005.EntityName]);
+
+            // ヘッダーテーブルのデータから明細テーブルの情報を削除
+            headerData.Remove(earth_dp_LS_BT_00271FLONE0005.EntityName);
+
+            //読み替え表の取得
+            var codeFromFOtoEhubMap = new Dictionary<string, string>();
+
+            //以降読み替え表の変更できません。
+            var readOnlyCodeMap = new ReadOnlyDictionary<string, string>(codeFromFOtoEhubMap);
+            // ヘッダーテーブルのデータの項目編集
+            HeaderFieldItemConvertion(ref headerData, readOnlyCodeMap);
+
+            // 明細テーブルのデータの項目編集
+            var tgtDetailDataList = new List<Dictionary<string, object>>();
+            foreach (var item in detailDataList)
+            {
+                Dictionary<string, object> data = item;
+                DetailFieldItemConvertion(ref data, readOnlyCodeMap);
+                tgtDetailDataList.Add(data);
+            }
+
+            //SQLへレコードの登録を行う共通関数にヘッダーと明細のレコード情報を渡す
+            var headerSQLUtilParam = new SqlUtilParam(LS_BT_00271.HeaderTableName, LS_BT_00271.HeaderFieldDefinitions, headerData);
+            Log.LogInformation("テーブル名：" + headerSQLUtilParam.TableName);
+
+            var detailSQLUtilParam = new SqlUtilParam(LS_BT_00271.DetailTableName, LS_BT_00271.DetailFieldDefinitions, tgtDetailDataList);
+            Log.LogInformation("明細テーブル名：" + detailSQLUtilParam.TableName);
+            Log.LogInformation(BuildTableSchema(headerSQLUtilParam, detailSQLUtilParam));
+
+            sqlUtil.InsertToAzureSQL(new List<SqlUtilParam> { headerSQLUtilParam, detailSQLUtilParam }, myQueueItem);
+
+            return null;
+        }
+
+        /// <summary>
+        /// ヘッダーテーブルのデータを編集する
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private void HeaderFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+        {
+            // 発注依頼日  発注依頼日  Date→CHARへ変換が必要(date⇒yyyymmdd)
+            // 19000101の場合は、空白へ変換する。
+            var strPoRequisitionDate = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.PoRequisitionDate);
+            if (!string.IsNullOrEmpty(strPoRequisitionDate))
+            {
+                DateTime dtPoRequisitionDate = DateTime.ParseExact(strPoRequisitionDate, DATETIME_FORMAT_YYYYMMDD, null);
+                var convertedPoRequisitionDate = string.Empty;
+                if (!CustomizeOperations.IsD365DateTimeNull(dtPoRequisitionDate))
+                {
+                    convertedPoRequisitionDate = dtPoRequisitionDate.ToString(DATETIME_FORMAT_YYYYMMDD);
+                }
+                data[earth_dp_LS_BT_00271FLONE0004.PoRequisitionDate] = convertedPoRequisitionDate;
+            }
+
+            // 発注完了日  発注完了日  Date→CHARへ変換が必要(date⇒yyyymmdd)
+            // 19000101の場合は、空白へ変換する。
+            var strPoCompleteDate = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.PoCompleteDate);
+            if (!string.IsNullOrEmpty(strPoCompleteDate))
+            {
+                DateTime dtPoCompleteDate = DateTime.ParseExact(strPoCompleteDate, DATETIME_FORMAT_YYYYMMDD, null);
+                var convertedPoCompleteDate = string.Empty;
+                if (!CustomizeOperations.IsD365DateTimeNull(dtPoCompleteDate))
+                {
+                    convertedPoCompleteDate = dtPoCompleteDate.ToString(DATETIME_FORMAT_YYYYMMDD);
+                }
+                data[earth_dp_LS_BT_00271FLONE0004.PoCompleteDate] = convertedPoCompleteDate;
+            }
+
+            // P/O区分 『14』固定
+            data[earth_dp_LS_BT_00271FLONE0004.PoType] = "14";
+        }
+
+        /// <summary>
+        /// 明細テーブルのデータを編集する
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="convertCodeMap"></param>
+        /// <returns></returns>
+        private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+        {
+            // 希望納期  希望納期  Date→CHARへ変換が必要(date⇒yyyymmdd)
+            // 19000101の場合は、空白へ変換する。
+            var strDeliveryDueDate = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.DeliveryDueDate);
+            if (!string.IsNullOrEmpty(strDeliveryDueDate))
+            {
+                DateTime dtDeliveryDueDate = DateTime.ParseExact(strDeliveryDueDate, DATETIME_FORMAT_YYYYMMDD, null);
+                var convertedDeliveryDueDate = string.Empty;
+                if (!CustomizeOperations.IsD365DateTimeNull(dtDeliveryDueDate))
+                {
+                    convertedDeliveryDueDate = dtDeliveryDueDate.ToString(DATETIME_FORMAT_YYYYMMDD);
+                }
+                data[earth_dp_LS_BT_00271FLONE0005.DeliveryDueDate] = convertedDeliveryDueDate;
+            }
+
+            // 回答納期  回答納期  Date→CHARへ変換が必要(date⇒yyyymmdd)
+            // 19000101の場合は、空白へ変換する。
+            var strReplyDueDate = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.ReplyDueDate);
+            if (!string.IsNullOrEmpty(strReplyDueDate))
+            {
+                DateTime dtReplyDueDate = DateTime.ParseExact(strReplyDueDate, DATETIME_FORMAT_YYYYMMDD, null);
+                var convertedReplyDueDate = string.Empty;
+                if (!CustomizeOperations.IsD365DateTimeNull(dtReplyDueDate))
+                {
+                    convertedReplyDueDate = dtReplyDueDate.ToString(DATETIME_FORMAT_YYYYMMDD);
+                }
+                data[earth_dp_LS_BT_00271FLONE0005.ReplyDueDate] = convertedReplyDueDate;
+            }
+
+            // 出荷希望日  出荷希望日  Date→CHARへ変換が必要(date⇒yyyymmdd)
+            // 19000101の場合は、空白へ変換する。
+            var strShippedDueDate = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.ShippedDueDate);
+            if (!string.IsNullOrEmpty(strShippedDueDate))
+            {
+                DateTime dtShippedDueDate = DateTime.ParseExact(strShippedDueDate, DATETIME_FORMAT_YYYYMMDD, null);
+                var convertedShippedDueDate = string.Empty;
+                if (!CustomizeOperations.IsD365DateTimeNull(dtShippedDueDate))
+                {
+                    convertedShippedDueDate = dtShippedDueDate.ToString(DATETIME_FORMAT_YYYYMMDD);
+                }
+                data[earth_dp_LS_BT_00271FLONE0005.ShippedDueDate] = convertedShippedDueDate;
+            }
+
+            // 発注単価 『1』固定
+            data[earth_dp_LS_BT_00271FLONE0005.UnitPrice] = "1";
+        }
+
+        private static string BuildTableSchema(SqlUtilParam headerSQLUtilParam, SqlUtilParam detailSQLUtilParam)
+        {
+            StringBuilder buffer = new();
+
+            buffer.AppendLine("テーブル：");
+
+            buffer.AppendLine($"表題 ({headerSQLUtilParam.TableName})");
+            buffer.AppendLine(BuildTableFieldDefinitions(headerSQLUtilParam.FieldDefinitions));
+
+            buffer.AppendLine($"明細 ({detailSQLUtilParam.TableName})");
+            buffer.AppendLine(BuildTableFieldDefinitions(detailSQLUtilParam.FieldDefinitions));
+
+            return buffer.ToString();
+        }
+
+        private static string BuildTableFieldDefinitions(IList<FieldDefinition> fieldDefinitions)
+        {
+            StringBuilder buffer = new();
+
+            const string SPACE = "    ";
+            int spaceWidth = SPACE.Length;
+
+            int maxFieldLength = fieldDefinitions.Max(field => field.FieldDigit);
+            int totalFieldLength = fieldDefinitions.Sum(field => field.FieldDigit);
+
+            int maxFieldNameWidth = fieldDefinitions.Max(field => field.FieldName.Length);
+
+            int fieldCount = fieldDefinitions.Count;
+
+            // 番目    項目名         桁数
+            int numberTitleWidth = 4;
+
+            int numberLeftPadWidth = fieldCount.ToString().Length;
+            string numberRightSpace = string.Empty.PadRight(numberTitleWidth + spaceWidth - numberLeftPadWidth);
+
+            int itemNameWidth = 6;
+            int itemNameRightPadWidth = Math.Max(itemNameWidth, maxFieldNameWidth) + spaceWidth;
+
+            int lengthLeftPadWidth = maxFieldLength.ToString().Length;
+
+            int rulerLength = numberTitleWidth + spaceWidth + itemNameRightPadWidth + 4 /* 桁数 */;
+            string ruler = string.Empty.PadRight(rulerLength, '-');
+
+            string itemNameRightSpaces = string.Empty.PadRight(itemNameRightPadWidth - itemNameWidth);
+
+            buffer.AppendLine(ruler);
+            buffer.AppendLine($"番目{SPACE}項目名{itemNameRightSpaces}桁数");
+            buffer.AppendLine(ruler);
+
+            for (int i = 0; i < fieldCount; i++)
+            {
+                FieldDefinition field = fieldDefinitions[i];
+
+                buffer.Append((i + 1).ToString().PadLeft(numberLeftPadWidth));
+                buffer.Append(numberRightSpace);
+
+                buffer.Append(field.FieldName.PadRight(itemNameRightPadWidth));
+
+                buffer.Append(field.FieldDigit.ToString().PadLeft(lengthLeftPadWidth));
+
+                buffer.AppendLine();
+            }
+
+            buffer.AppendLine(ruler);
+
+            int sumLeftPadWidth = numberTitleWidth + spaceWidth + itemNameRightPadWidth + lengthLeftPadWidth;
+            int sumStatementWidth = 8 + totalFieldLength.ToString().Length;
+
+            string sumLeftSpaces = string.Empty.PadLeft(sumLeftPadWidth - sumStatementWidth);
+
+            buffer.AppendLine($"{sumLeftSpaces}合計：  {totalFieldLength}");
+
+            return buffer.ToString();
+        }
+    }
+}
