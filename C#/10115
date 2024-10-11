@@ -1,0 +1,9 @@
+这种写法呢
+
+            ExecuteConvertion(
+                    ConvertTransMethodCode,
+                    earth_dp_LS_BT_00257FLONE0006.TransMethodCode,
+                    data,
+                    alsoConvertEmptyValue: true,
+                    isHeader: true
+                );
