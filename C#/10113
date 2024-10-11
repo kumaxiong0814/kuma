@@ -33,3 +33,39 @@ private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IRea
         }
     }
 }
+
+private void HeaderFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 三国間区分の変換を追加
+    var trilateralMap = new Dictionary<string, string>
+    {
+        { "1", "2" },  // 二国間 -> 二国間
+        { "2", "1" }   // 三国間 -> 三国間
+    };
+
+    // 获取三国間区分的值并进行转换
+    var trilateralType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.TrilateralType);
+    if (!string.IsNullOrEmpty(trilateralType) && trilateralMap.TryGetValue(trilateralType, out var mappedTrilateral))
+    {
+        data[earth_dp_LS_BT_00271FLONE0004.TrilateralType] = mappedTrilateral;
+    }
+}
+
+private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 有償無償区分の変換を追加
+    var payFreeMap = new Dictionary<string, string>
+    {
+        { "0", "N" },  // 有償 -> N
+        { "1", "Y" }   // 無償 -> Y
+    };
+
+    // 获取有償無償区分的值并进行转换
+    var payFreeType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.PayFreeType);
+    if (!string.IsNullOrEmpty(payFreeType) && payFreeMap.TryGetValue(payFreeType, out var mappedPayFree))
+    {
+        data[earth_dp_LS_BT_00271FLONE0005.PayFreeType] = mappedPayFree;
+    }
+}
+
+
