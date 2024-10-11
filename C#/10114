@@ -1,0 +1,9 @@
+能不能换成这种格式呢
+
+foCode.ToLower() switch
+        {
+            "sea" => "10",
+            "air" => "40",
+            "truck" => "T",
+            _ => foCode,
+        };
