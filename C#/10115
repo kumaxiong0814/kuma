@@ -7,3 +7,59 @@
                     alsoConvertEmptyValue: true,
                     isHeader: true
                 );
+
+
+
+你可以按照这种方式，为两个字段写出类似的逻辑。下面是你提到的两个字段的实现方式，按照之前的 ExecuteConvertion 逻辑进行重构。
+
+1. 三国間区分 TrilateralType 的转换逻辑
+
+首先，定义 ConvertTrilateralType 转换函数：
+
+private string ConvertTrilateralType(string trilateralType)
+{
+    return trilateralType switch
+    {
+        "1" => "2",  // 1（D365側二国間）の場合 → 2（レガシー側二国間）
+        "2" => "1",  // 2（D365側三国間）の場合 → 1（レガシー側三国間）
+        _ => trilateralType,  // 保持不变
+    };
+}
+
+然后使用 ExecuteConvertion 方法来应用这个转换逻辑：
+
+ExecuteConvertion(
+    ConvertTrilateralType,
+    earth_dp_LS_BT_00271FLONE0004.TrilateralType,
+    data,
+    alsoConvertEmptyValue: false,  // 空白值不需要转换
+    isHeader: true  // 这是在header中
+);
+
+2. 有償無償区分 PayFreeType 的转换逻辑
+
+同样，定义 ConvertPayFreeType 转换函数：
+
+private string ConvertPayFreeType(string payFreeType)
+{
+    return payFreeType switch
+    {
+        "0" => "N",  // 0（D365側有償）の場合 → N（レガシー側有償）
+        "1" => "Y",  // 1（D365側無償）の場合 → Y（レガシー側無償）
+        _ => payFreeType,  // 保持不变
+    };
+}
+
+然后在对应字段中调用：
+
+ExecuteConvertion(
+    ConvertPayFreeType,
+    earth_dp_LS_BT_00271FLONE0004.PayFreeType,
+    data,
+    alsoConvertEmptyValue: false,  // 空白值不需要转换
+    isHeader: false  // 这是在detail中
+);
+
+最终效果
+
+这样，通过 ExecuteConvertion 方法，你将不同的转换逻辑抽象出来，代码更加简洁、可维护。如果未来需要新增字段转换，只需要定义新的转换函数并调用 ExecuteConvertion 即可，无需重复编写转换逻辑。
