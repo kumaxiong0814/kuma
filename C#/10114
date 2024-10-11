@@ -7,3 +7,30 @@ foCode.ToLower() switch
             "truck" => "T",
             _ => foCode,
         };
+
+
+
+
+private void HeaderFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 三国間区分の変換を追加
+    var trilateralType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.TrilateralType);
+    data[earth_dp_LS_BT_00271FLONE0004.TrilateralType] = trilateralType switch
+    {
+        "1" => "2",  // 1（D365側二国間）の場合 → 2（レガシー側二国間）
+        "2" => "1",  // 2（D365側三国間）の場合 → 1（レガシー側三国間）
+        _ => trilateralType  // 其他情况保持不变
+    };
+}
+
+private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 有償無償区分の変換を追加
+    var payFreeType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.PayFreeType);
+    data[earth_dp_LS_BT_00271FLONE0005.PayFreeType] = payFreeType switch
+    {
+        "0" => "N",  // 0（D365側有償）の場合 → N（レガシー側有償）
+        "1" => "Y",  // 1（D365側無償）の場合 → Y（レガシー側無償）
+        _ => payFreeType  // 其他情况保持不变
+    };
+}
