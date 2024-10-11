@@ -1,0 +1,35 @@
+private void HeaderFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 三国間区分の変換を追加
+    var trilateralType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0004.TrilateralType);
+    if (!string.IsNullOrEmpty(trilateralType))
+    {
+        switch (trilateralType)
+        {
+            case "1":
+                data[earth_dp_LS_BT_00271FLONE0004.TrilateralType] = "2";  // 二国間 -> 二国間
+                break;
+            case "2":
+                data[earth_dp_LS_BT_00271FLONE0004.TrilateralType] = "1";  // 三国間 -> 三国間
+                break;
+        }
+    }
+}
+
+private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 有償無償区分の変換を追加
+    var payFreeType = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.PayFreeType);
+    if (!string.IsNullOrEmpty(payFreeType))
+    {
+        switch (payFreeType)
+        {
+            case "0":
+                data[earth_dp_LS_BT_00271FLONE0005.PayFreeType] = "N";  // 有償 -> N
+                break;
+            case "1":
+                data[earth_dp_LS_BT_00271FLONE0005.PayFreeType] = "Y";  // 無償 -> Y
+                break;
+        }
+    }
+}
