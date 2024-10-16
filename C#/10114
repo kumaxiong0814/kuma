@@ -70,3 +70,19 @@ private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IRea
 受注番号（輸出）：0000000123 
 受注明細番号（輸出）：1のとき、
 設定値：00000001230000000000000000000001
+
+private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+{
+    // 受注番号（輸出）OrderNumber + 桁数の限り0埋め + 受注明細番号（輸出）OrderLineNumber
+    var orderNumber = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.OrderNumber); // 受注番号（輸出）
+    var orderLineNumber = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.OrderLineNumber); // 受注明細番号（輸出）
+
+    if (!string.IsNullOrEmpty(orderNumber) && !string.IsNullOrEmpty(orderLineNumber))
+    {
+        // NO21 字段的处理逻辑：OrderNumber + 受注明細番号（輸出）OrderLineNumber，桁数の限り0埋め
+        var processedOrderLineNumber = orderNumber.PadLeft(32 - orderLineNumber.Length, '0') + orderLineNumber;
+        
+        // 更新 NO21 字段
+        data[earth_dp_LS_BT_00271FLONE0005.NO21] = processedOrderLineNumber;
+    }
+}
