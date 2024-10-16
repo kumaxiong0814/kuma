@@ -5,3 +5,52 @@
 受注No：0000000123
 受注明細No：1.0000000000のとき、
 設定値：100000001230001
+
+
+/// <summary>
+/// 明細テーブルのデータを編集する
+/// </summary>
+/// <param name="data"></param>
+private static void DetailFieldItemConvertion(ref Dictionary<string, object> data)
+{
+    // 既存のOrderLineNumber処理
+    ExecuteConvertion(
+            RetrieveIntegerPartOnly,
+            earth_dp_LS_BT_00257FLONE0007.OrderLineNumber,
+            data
+        );
+
+    // 受注No（OrderNumber）を取得
+    string orderNumber = GetFieldValue(earth_dp_LS_BT_00257FLONE0007.OrderNumber, data).PadLeft(10, '0');
+    
+    // 受注明細Noを取得し、整数部分のみを4桁に加工
+    string orderLineNumber = GetFieldValue(earth_dp_LS_BT_00257FLONE0007.OrderLineNumber, data);
+    string formattedOrderLineNumber = RetrieveIntegerPartOnly(orderLineNumber).PadLeft(4, '0');
+
+    // 固定値「1」と組み合わせて加工
+    string processedOrderLineNumber = "1" + orderNumber + formattedOrderLineNumber;
+
+    // 加工後の値をdataに設定
+    data[earth_dp_LS_BT_00257FLONE0007.OrderLineNumber] = processedOrderLineNumber;
+
+    // 他の処理（省略）
+    ExecuteConvertion(
+            RemoveNewlines,
+            new string[]
+            {
+                earth_dp_LS_BT_00257FLONE0007.ProductName1,
+                earth_dp_LS_BT_00257FLONE0007.ProductName2,
+                earth_dp_LS_BT_00257FLONE0007.ProductName3,
+                earth_dp_LS_BT_00257FLONE0007.LastCustProductName1,
+                earth_dp_LS_BT_00257FLONE0007.LastCustProductName2,
+                earth_dp_LS_BT_00257FLONE0007.LastCustProductName3,
+            },
+            data
+        );
+
+    ExecuteConvertion(
+            value => RemoveStartChars(value, 5),
+            earth_dp_LS_BT_00257FLONE0007.OrderNumber,
+            data
+        );
+}
