@@ -10,3 +10,18 @@ traces
 | where timestamp >= datetime(2024-10-15T03:00:00Z) and timestamp <= datetime(2024-10-15T04:00:00Z)
 | where cloud_RoleName =~ 'earth-stg-func-jpe-ls-dp-fo-in-batch-st2' and operation_Name =~ 'Do_LS_BT_00301_Action'
 | order by timestamp desc
+
+
+traces
+| project
+    timestamp,
+    message,
+    operation_Name,
+    operation_Id,
+    cloud_RoleName,
+    invocationId=customDimensions['InvocationId']
+| where timestamp >= datetime(2024-10-15T00:00:00Z) and timestamp <= datetime(2024-10-15T23:59:59Z)
+| where cloud_RoleName =~ 'earth-stg-func-jpe-ls-dp-fo-in-batch-st2' 
+| where operation_Name =~ 'Do_LS_BT_00301_Action'
+| where message contains 'error'
+| order by timestamp desc
