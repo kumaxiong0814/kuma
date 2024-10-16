@@ -18,6 +18,7 @@
 受注明細ID：100000001230101のとき、
 設定値：101
 
+replace 原始版
 CASE
     -- 处理32位受注明細ID
     WHEN LEN(A.OrderLineNumber) = 32 
@@ -28,6 +29,24 @@ CASE
     THEN CAST(REPLACE(CAST(SUBSTRING(A.OrderLineNumber, 12, LEN(A.OrderLineNumber)) AS BIGINT), '0', '') AS BIGINT)
 
     -- 如果不符合上述条件，则按原逻辑处理
+    ELSE 
+        CASE 
+            WHEN A.OrderLineNumber = '' THEN NULL 
+            ELSE CAST(A.OrderLineNumber AS BIGINT) 
+        END
+END AS OrderLineNumber
+
+简化版
+CASE
+    -- 处理32位受注明細ID
+    WHEN LEN(A.OrderLineNumber) = 32 
+    THEN CAST(SUBSTRING(A.OrderLineNumber, 11, 22) AS BIGINT)
+
+    -- 处理15位受注明細ID
+    WHEN LEN(A.OrderLineNumber) = 15 
+    THEN CAST(SUBSTRING(A.OrderLineNumber, 12, 4) AS BIGINT)
+
+    -- 如果不符合上述条件，按原逻辑处理
     ELSE 
         CASE 
             WHEN A.OrderLineNumber = '' THEN NULL 
