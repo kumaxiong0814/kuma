@@ -61,3 +61,12 @@ private void DetailFieldItemConvertion(ref Dictionary<string, object> data, IRea
         _ => payFreeType // 保持不变
     };
 }
+
+受注明細番号(輸出)OrderLineNumberの加工処理を追加 
+是明细表earth_dp_LS_BT_00271FLONE0005里面的NO21字段
+ーーー
+受注番号（輸出）OrderNumber+桁数の限り0埋め+受注明細番号（輸出）　に加工する。
+例.
+受注番号（輸出）：0000000123 
+受注明細番号（輸出）：1のとき、
+設定値：00000001230000000000000000000001
