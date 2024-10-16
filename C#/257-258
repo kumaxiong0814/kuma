@@ -1,0 +1,489 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+using Azure.Messaging.ServiceBus;
+
+using earth.CommonFunctions.AzureFunction;
+using earth.CommonFunctions.AzureFunction.Utils;
+
+using LegacySystem.DemandPlanning.FO.Out.Messaging.ExtendsEntity;
+using LegacySystem.DemandPlanning.FO.Out.Messaging.LS_BT_00000;
+
+using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json.Linq;
+
+namespace LegacySystem.DemandPlanning.FO.Out.Messaging.LS_BT_00257
+{
+    public class LS_BT_00257_ServiceBusTriggerBusinessLogic : FunctionBase
+    {
+        #region 読替コード
+
+        // FROM
+        private const string CONVERT_FROM_SYSTEM = "FO";
+
+        // TO
+        private const string CONVERT_TO_SYSTEM = "eHUB";
+
+        private const string CONVERT_CATEGORY_EARTH_DP_PAYFREETYPEINTERFACE = "earth_dp_PayFreeTypeInterface";
+
+        private const string CONVERT_CATEGORY_EARTH_DP_ACCRUEDRECEIVABLEFLAG = "earth_dp_AccruedReceivableFlag";
+
+        private const string CONVERT_CATEGORY_EARTH_DP_FROMIMPORTSYSTEM = "earth_dp_FromImportSystem";
+
+        #endregion
+
+        private const string DATETIME_FORMAT_YYYYMMDD = "yyyyMMdd";
+
+        public LS_BT_00257_ServiceBusTriggerBusinessLogic(ILogger log, ExecutionContext context) : base(log, context) { }
+
+        protected override object BussinessLogic(params object[] inputList)
+        {
+            ServiceBusReceivedMessage myQueueItem = (ServiceBusReceivedMessage)inputList[0];
+            string myQueueItemMessage = myQueueItem.Body.ToString();
+
+            Log.LogTrace(myQueueItemMessage);
+
+            // ParseJsonExtractで読み込める形に変換
+            string transformedQueueItem = TransformPublish(myQueueItemMessage, true);
+            LS_BT_00257 ls_bt_00257 = new();
+
+            // FOのビジネスイベントシステム項目を削除しDictionary形式に変換
+            FieldDefinition detailFieldDefinition = new(earth_dp_LS_BT_00257FLONE0007.EntityName);
+            ls_bt_00257.HeaderFieldDefinitions.Add(detailFieldDefinition);
+
+            // ヘッダレコードのデータをDictionary形式に変換
+            Dictionary<string, object> headerData = parseJsonUtil.ParseJsonExtract(transformedQueueItem, ls_bt_00257.HeaderFieldDefinitions);
+
+            if (!headerData.ContainsKey(earth_dp_LS_BT_00257FLONE0007.EntityName))
+            {
+                throw new ApplicationException($"There is no entry with key {earth_dp_LS_BT_00257FLONE0007.EntityName} in message.");
+            }
+
+            // 明細テーブルのデータをDictionary形式に変換
+            List<Dictionary<string, object>> detailDataList = parseJsonUtil.ParseJsonExtract((JArray)headerData[earth_dp_LS_BT_00257FLONE0007.EntityName]);
+
+            if (detailDataList == null || detailDataList.Count == 0)
+            {
+                throw new ApplicationException("Detail data is empty.");
+            }
+
+            Log.LogTrace("InvoiceNo:" + headerData[earth_dp_LS_BT_00257FLONE0006.InvoiceNo]);
+            Log.LogTrace("detailDataList:" + headerData[earth_dp_LS_BT_00257FLONE0007.EntityName]);
+
+            // ヘッダーテーブルのデータから明細テーブルの情報を削除
+            headerData.Remove(earth_dp_LS_BT_00257FLONE0007.EntityName);
+            ls_bt_00257.HeaderFieldDefinitions.Remove(detailFieldDefinition);
+
+            // 読み替え表の取得
+            var codeFromFOtoEhubMap = new Dictionary<string, string>();
+
+            // 外部IF用にEnum値のデータ変換する
+            // 外部IF用のコード変換は以下のコード変換機能を使用すること。
+            string funcUrl = Environment.GetEnvironmentVariable("ConvertionFunctionUrl");
+            string funcKey = Environment.GetEnvironmentVariable("ConvertionFunctionKey");
+            string funcFullUrl = $"{funcUrl}{funcKey}";
+
+            // 以降 読み替えキーが増える場合はここで取得してください。
+            string[] categories =
+            {
+                CONVERT_CATEGORY_EARTH_DP_PAYFREETYPEINTERFACE,
+                CONVERT_CATEGORY_EARTH_DP_ACCRUEDRECEIVABLEFLAG,
+                CONVERT_CATEGORY_EARTH_DP_FROMIMPORTSYSTEM,
+            };
+
+            foreach (string category in categories)
+            {
+                codeFromFOtoEhubMap[category] = Convertion.GetConvertionCode(
+                        funcFullUrl,
+                        category,
+                        CONVERT_FROM_SYSTEM,
+                        CONVERT_TO_SYSTEM
+                    );
+            }
+
+            foreach (string category in categories)
+            {
+                Log.LogInformation($"====={category}=====");
+                Log.LogInformation(codeFromFOtoEhubMap.ContainsKey(category) ? codeFromFOtoEhubMap[category] : "Not Retrieved");
+            }
+
+            // 以降読み替え表の変更できません。
+            ReadOnlyDictionary<string, string> readOnlyCodeMap = new(codeFromFOtoEhubMap);
+
+            // ヘッダーテーブルのデータの項目編集
+            HeaderFieldItemConvertion(headerData, readOnlyCodeMap);
+
+            // 明細テーブルのデータの項目編集
+            List<Dictionary<string, object>> tgtDetailDataList = new();
+
+            foreach (var item in detailDataList)
+            {
+                Dictionary<string, object> data = item;
+
+                DetailFieldItemConvertion(ref data);
+                tgtDetailDataList.Add(data);
+            }
+
+            // SQLへレコードの登録を行う共通関数にヘッダーと明細のレコード情報を渡す
+            SqlUtilParam headerSQLUtilParam = new(LS_BT_00257.HeaderTableName, ls_bt_00257.HeaderFieldDefinitions, headerData);
+            SqlUtilParam detailSQLUtilParam = new(LS_BT_00257.DetailTableName, ls_bt_00257.DetailFieldDefinitions, tgtDetailDataList);
+
+            Log.LogInformation(BuildTableSchema(headerSQLUtilParam, detailSQLUtilParam));
+
+            sqlUtil.InsertToAzureSQL(
+                    new List<SqlUtilParam>
+                    {
+                        headerSQLUtilParam,
+                        detailSQLUtilParam,
+                    },
+                    myQueueItem
+                );
+
+            return null;
+        }
+
+        /// <summary>
+        /// ヘッダーテーブルのデータを編集する
+        /// </summary>
+        /// <param name="data"></param>
+        private static void HeaderFieldItemConvertion(Dictionary<string, object> data, IReadOnlyDictionary<string, string> convertCodeMap)
+        {
+            ExecuteConvertion(
+                RemoveNewlines,
+                new string[]
+                {
+                    earth_dp_LS_BT_00257FLONE0006.SoldToAddress1,
+                    earth_dp_LS_BT_00257FLONE0006.SoldToAddress2,
+                    earth_dp_LS_BT_00257FLONE0006.SoldToAddress3,
+                    earth_dp_LS_BT_00257FLONE0006.SoldToAddress4,
+                    earth_dp_LS_BT_00257FLONE0006.ConsigneeAddress1,
+                    earth_dp_LS_BT_00257FLONE0006.ConsigneeAddress2,
+                    earth_dp_LS_BT_00257FLONE0006.ConsigneeAddress3,
+                    earth_dp_LS_BT_00257FLONE0006.ConsigneeAddress4,
+                    earth_dp_LS_BT_00257FLONE0006.DeliveryToAddress1,
+                    earth_dp_LS_BT_00257FLONE0006.DeliveryToAddress2,
+                    earth_dp_LS_BT_00257FLONE0006.DeliveryToAddress3,
+                    earth_dp_LS_BT_00257FLONE0006.DeliveryToAddress4,
+                    earth_dp_LS_BT_00257FLONE0006.NotifyAddress1,
+                    earth_dp_LS_BT_00257FLONE0006.NotifyAddress2,
+                    earth_dp_LS_BT_00257FLONE0006.NotifyAddress3,
+                    earth_dp_LS_BT_00257FLONE0006.NotifyAddress4,
+                    earth_dp_LS_BT_00257FLONE0006.LastSoldToAddress1,
+                    earth_dp_LS_BT_00257FLONE0006.LastSoldToAddress2,
+                    earth_dp_LS_BT_00257FLONE0006.LastSoldToAddress3,
+                    earth_dp_LS_BT_00257FLONE0006.LastSoldToAddress4,
+                },
+                data,
+                isHeader: true
+            );
+
+            ExecuteConvertion(
+                    ConvertDate,
+                    new string[]
+                    {
+                        earth_dp_LS_BT_00257FLONE0006.PriceDate,
+                        earth_dp_LS_BT_00257FLONE0006.FASDueDate,
+                        earth_dp_LS_BT_00257FLONE0006.FOBDueDate,
+                        earth_dp_LS_BT_00257FLONE0006.InvoiceCreationDate,
+                        earth_dp_LS_BT_00257FLONE0006.ETADate,
+                    },
+                    data,
+                    isHeader: true
+                );
+
+            ExecuteConvertion(
+                    ConvertTransMethodCode,
+                    earth_dp_LS_BT_00257FLONE0006.TransMethodCode,
+                    data,
+                    alsoConvertEmptyValue: true,
+                    isHeader: true
+                );
+
+            (string, string)[] fieldCategories = new (string, string)[]
+            {
+                (earth_dp_LS_BT_00257FLONE0006.PayFreeType, CONVERT_CATEGORY_EARTH_DP_PAYFREETYPEINTERFACE),
+                (earth_dp_LS_BT_00257FLONE0006.StillReceiptFlag, CONVERT_CATEGORY_EARTH_DP_ACCRUEDRECEIVABLEFLAG),
+                (earth_dp_LS_BT_00257FLONE0006.FromImpSys, CONVERT_CATEGORY_EARTH_DP_FROMIMPORTSYSTEM)
+            };
+
+            foreach ((string field, string codeCategory) in fieldCategories)
+            {
+                ExecuteConvertion(
+                        foValue => CovertCodeByLookup(foValue, codeCategory, convertCodeMap),
+                        field,
+                        data,
+                        alsoConvertEmptyValue: true,
+                        isHeader: true
+                    );
+            }
+        }
+
+        /// <summary>
+        /// 明細テーブルのデータを編集する
+        /// </summary>
+        /// <param name="data"></param>
+        private static void DetailFieldItemConvertion(ref Dictionary<string, object> data)
+        {
+            ExecuteConvertion(
+                    RetrieveIntegerPartOnly,
+                    earth_dp_LS_BT_00257FLONE0007.OrderLineNumber,
+                    data
+                );
+
+            ExecuteConvertion(
+                    RemoveNewlines,
+                    new string[]
+                    {
+                        earth_dp_LS_BT_00257FLONE0007.ProductName1,
+                        earth_dp_LS_BT_00257FLONE0007.ProductName2,
+                        earth_dp_LS_BT_00257FLONE0007.ProductName3,
+                        earth_dp_LS_BT_00257FLONE0007.LastCustProductName1,
+                        earth_dp_LS_BT_00257FLONE0007.LastCustProductName2,
+                        earth_dp_LS_BT_00257FLONE0007.LastCustProductName3,
+                    },
+                    data
+                );
+
+            ExecuteConvertion(
+                    value => RemoveStartChars(value, 5),
+                    earth_dp_LS_BT_00257FLONE0007.OrderNumber,
+                    data
+                );
+        }
+
+        #region 転換
+
+        /// <summary>
+        /// FO値の転換
+        /// </summary>
+        /// <param name="converter">転換のロジック</param>
+        /// <param name="field">対象のフィールド</param>
+        /// <param name="record">レコード</param>
+        /// <param name="alsoConvertEmptyValue">ブランク値が転換するかどうかを指定する。規定値はfalseである。</param>
+        private static void ExecuteConvertion(
+                Func<string, string> converter,
+                string field,
+                Dictionary<string, object> record,
+                bool isHeader = false,
+                bool alsoConvertEmptyValue = false
+            )
+        {
+            ExecuteConvertion(
+                    converter,
+                    new string[] { field },
+                    record,
+                    isHeader,
+                    alsoConvertEmptyValue
+                );
+        }
+
+        /// <summary>
+        /// FO値の転換
+        /// </summary>
+        /// <param name="converter">転換のロジック</param>
+        /// <param name="fields">対象のフィールドの配列</param>
+        /// <param name="record">レコード</param>
+        /// <param name="alsoConvertEmptyValue">ブランク値が転換するかどうかを指定する。規定値はfalseである。</param>
+        private static void ExecuteConvertion(
+                Func<string, string> converter,
+                IList<string> fields,
+                Dictionary<string, object> record,
+                bool isHeader = false,
+                bool alsoConvertEmptyValue = false
+            )
+        {
+            foreach (string field in fields)
+            {
+                string value = GetFieldValue(field, record);
+
+                try
+                {
+                    record[field] = value.Length == 0 && !alsoConvertEmptyValue
+                                    ? value
+                                    : converter(value);
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException($"Transform field of {(isHeader ? "header" : "detail")} failed.\r\nName: {field}\r\nValue: {value}\r\nReason: {ex.Message}", ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// フィールドの値の取得
+        /// </summary>
+        /// <param name="field">フィールド</param>
+        /// <param name="record">レコード</param>
+        /// <returns>文字列の値</returns>
+        private static string GetFieldValue(string field, Dictionary<string, object> record) =>
+            record[field]?.ToString() ?? string.Empty;
+
+        /// <summary>
+        /// FO値の中に改行コードが含まれる場合、改行コードを削除する
+        /// </summary>
+        /// <param name="value">FO値</param>
+        /// <returns>改行コードを削除するFO値</returns>
+        private static string RemoveNewlines(string value) =>
+            Regex.Replace(value, @"\r?\n|\r", string.Empty);
+
+        /// <summary>
+        /// 先頭指定された桁を除いた値を設定する。
+        /// </summary>
+        /// <param name="value">FO値</param>
+        /// <param name="removingCharCount">除いた桁数</param>
+        /// <returns></returns>
+        private static string RemoveStartChars(string value, int removingCharCount) =>
+            value.Length > removingCharCount
+            ? value[removingCharCount..]
+            : string.Empty;
+
+        /// <summary>
+        /// 日付が（yyyyMMdd）の形に変換、19000101の場合は、空白へ変換する。
+        /// </summary>
+        /// <param name="value">FO値</param>
+        /// <returns>（yyyyMMdd）の形の日付</returns>
+        private static string ConvertDate(string value)
+        {
+            DateTime date;
+
+            try
+            {
+                date = DateTime.Parse(value);
+            }
+            catch (FormatException)
+            {
+                date = DateTime.ParseExact(value, DATETIME_FORMAT_YYYYMMDD, null);
+            }
+
+            return !CustomizeOperations.IsD365DateTimeNull(date)
+                ? date.ToString(DATETIME_FORMAT_YYYYMMDD)
+                : string.Empty;
+        }
+
+        /// <summary>
+        /// 輸送方法コードの転換
+        /// </summary>
+        /// <param name="foCode">FOコード</param>
+        /// <returns>eHubコード</returns>
+        private static string ConvertTransMethodCode(string foCode) => foCode.ToLower() switch
+        {
+            "sea" => "10",
+            "air" => "40",
+            "truck" => "T",
+            _ => foCode,
+        };
+
+        /// <summary>
+        /// 読み替えの転換
+        /// </summary>
+        /// <param name="foValue">FOコード</param>
+        /// <param name="codeCategory">コードカテゴリ</param>
+        /// <param name="convertCodeMap">読み替えテーブル</param>
+        /// <returns>eHubコード</returns>
+        private static string CovertCodeByLookup(
+                string foValue,
+                string codeCategory,
+                IReadOnlyDictionary<string, string> convertCodeMap
+            ) => Convertion.GetConvertionCodeBySourceCode(
+                        convertCodeMap[codeCategory],
+                        codeCategory,
+                        foValue
+                    );
+
+        /// <summary>
+        /// Realの整数部分のみを設定する。
+        /// </summary>
+        /// <param name="number">Real数字</param>
+        /// <returns>Realの整数部分のみ</returns>
+        private static string RetrieveIntegerPartOnly(string number)
+        {
+            decimal result = decimal.Parse(number);
+            ulong integer = (ulong)Math.Floor(result);
+
+            return integer.ToString();
+        }
+
+        #endregion
+
+        private static string BuildTableSchema(SqlUtilParam headerSQLUtilParam, SqlUtilParam detailSQLUtilParam)
+        {
+            StringBuilder buffer = new();
+
+            buffer.AppendLine("テーブル：");
+
+            buffer.AppendLine($"表題 ({headerSQLUtilParam.TableName})");
+            buffer.AppendLine(BuildTableFieldDefinitions(headerSQLUtilParam.FieldDefinitions));
+
+            buffer.AppendLine($"明細 ({detailSQLUtilParam.TableName})");
+            buffer.AppendLine(BuildTableFieldDefinitions(detailSQLUtilParam.FieldDefinitions));
+
+            return buffer.ToString();
+        }
+
+        private static string BuildTableFieldDefinitions(IList<FieldDefinition> fieldDefinitions)
+        {
+            StringBuilder buffer = new();
+
+            const string SPACE = "    ";
+            int spaceWidth = SPACE.Length;
+
+            int maxFieldLength = fieldDefinitions.Max(field => field.FieldDigit);
+            int totalFieldLength = fieldDefinitions.Sum(field => field.FieldDigit);
+
+            int maxFieldNameWidth = fieldDefinitions.Max(field => field.FieldName.Length);
+
+            int fieldCount = fieldDefinitions.Count;
+
+            // 番目    項目名         桁数
+            int numberTitleWidth = 4;
+
+            int numberLeftPadWidth = fieldCount.ToString().Length;
+            string numberRightSpace = string.Empty.PadRight(numberTitleWidth + spaceWidth - numberLeftPadWidth);
+
+            int itemNameWidth = 6;
+            int itemNameRightPadWidth = Math.Max(itemNameWidth, maxFieldNameWidth) + spaceWidth;
+
+            int lengthLeftPadWidth = maxFieldLength.ToString().Length;
+
+            int rulerLength = numberTitleWidth + spaceWidth + itemNameRightPadWidth + 4 /* 桁数 */;
+            string ruler = string.Empty.PadRight(rulerLength, '-');
+
+            string itemNameRightSpaces = string.Empty.PadRight(itemNameRightPadWidth - itemNameWidth);
+
+            buffer.AppendLine(ruler);
+            buffer.AppendLine($"番目{SPACE}項目名{itemNameRightSpaces}桁数");
+            buffer.AppendLine(ruler);
+
+            for (int i = 0; i < fieldCount; i++)
+            {
+                FieldDefinition field = fieldDefinitions[i];
+
+                buffer.Append((i + 1).ToString().PadLeft(numberLeftPadWidth));
+                buffer.Append(numberRightSpace);
+
+                buffer.Append(field.FieldName.PadRight(itemNameRightPadWidth));
+
+                buffer.Append(field.FieldDigit.ToString().PadLeft(lengthLeftPadWidth));
+
+                buffer.AppendLine();
+            }
+
+            buffer.AppendLine(ruler);
+
+            int sumLeftPadWidth = numberTitleWidth + spaceWidth + itemNameRightPadWidth + lengthLeftPadWidth;
+            int sumStatementWidth = 8 + totalFieldLength.ToString().Length;
+
+            string sumLeftSpaces = string.Empty.PadLeft(sumLeftPadWidth - sumStatementWidth);
+
+            buffer.AppendLine($"{sumLeftSpaces}合計：  {totalFieldLength}");
+
+            return buffer.ToString();
+        }
+    }
+}
