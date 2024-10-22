@@ -1,0 +1,13 @@
+traces
+| project
+    timestamp,
+    message,
+    operation_Name,
+    operation_Id,
+    cloud_RoleName,
+    invocationId=customDimensions['InvocationId']
+| where timestamp >= datetime(2024-10-01T00:00:00Z) and timestamp <= datetime(2024-10-22T23:59:59Z)
+| where cloud_RoleName =~ 'earth-stg-func-jpe-ls-dp-fo-in-batch-st2' 
+| where operation_Name =~ 'Do_LS_BT_00302_Action'
+| where message contains 'error'
+| order by timestamp desc
