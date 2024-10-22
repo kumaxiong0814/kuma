@@ -11,3 +11,19 @@ traces
 | where operation_Name =~ 'Do_LS_BT_00302_Action'
 | where message contains 'error'
 | order by timestamp desc
+
+traces
+| project
+    timestamp,
+    message,
+    operation_Name,
+    operation_Id,
+    cloud_RoleName,
+    invocationId=customDimensions['InvocationId'],
+    resultData=customDimensions['ResultData']  // 假设ResultData字段包含数据量信息
+| where timestamp >= datetime(2024-10-01T00:00:00Z) and timestamp <= now()
+| where cloud_RoleName =~ 'earth-stg-func-jpe-ls-dp-fo-in-batch-st2' 
+| where operation_Name =~ 'Do_LS_BT_00302_Action'
+| where not(message contains 'error')  // 过滤掉包含错误信息的日志
+| where toint(resultData) > 0  // 假设ResultData是表示结果数据量的字段，且需要大于0
+| order by timestamp desc
