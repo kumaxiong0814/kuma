@@ -35,10 +35,11 @@ traces
     operation_Name,
     operation_Id,
     cloud_RoleName,
-    invocationId=customDimensions['InvocationId']
+    invocationId=customDimensions['InvocationId'],
+    resultData=customDimensions['ResultData'] 
 | where timestamp >= datetime(2024-10-01T00:00:00Z) and timestamp <= now()
 | where cloud_RoleName =~ 'earth-stg-func-jpe-ls-dp-fo-in-batch-st2' 
-| where operation_Name =~ 'Do_LS_BT_00302_Action'
-| where not(message contains 'error' or message contains 'Failed')  // 过滤掉失败或出错的日志
-| where message contains "StatusCode: 200"  // 假设200表示成功状态码
+| where operation_Name =~ 'Do_LS_BT_00296_Action'
+| where not(message contains 'error' or message contains 'Failed') 
+| where message contains ".zip" 
 | order by timestamp desc
