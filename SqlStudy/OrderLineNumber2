@@ -25,3 +25,7 @@ CASE
             ELSE CAST(A.OrderLineNumber AS BIGINT) 
         END
 END AS OrderLineNumber
+
+
+这个32位项目的编辑需求是，它目前过来的数据形式是15桁の数値（固定値「1」＋受注番号(10桁)+受注明細No(4桁））＋17位スペース埋め。
+当这个项目为空的时候等于NULL，这个项目要转换成数据型。
