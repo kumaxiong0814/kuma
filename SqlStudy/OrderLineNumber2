@@ -36,3 +36,22 @@ END AS OrderLineNumber
 設定値：空
 受注明細ID：100000001230101のとき、
 設定値：101
+
+原来
+    CASE WHEN A.OrderLineNumber = ''											
+      THEN NULL											
+    ELSE CAST(A.OrderLineNumber as bigint)											
+    END AS OrderLineNumber,											
+现在
+    CASE 
+        WHEN A.OrderLineNumber = '' 
+        THEN NULL 
+        WHEN LEN(a.OrderLineNumber) = 15
+        THEN 
+            CAST(SUBSTRING(A.OrderLineNumber, 12, 4) AS BIGINT) 
+        ELSE CAST(A.OrderLineNumber AS BIGINT)
+    END AS OrderLineNumber,
+										
+										
+										
+
