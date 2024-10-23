@@ -29,3 +29,11 @@ END AS OrderLineNumber
 
 这个32位项目的编辑需求是，它目前过来的数据形式是15桁の数値（固定値「1」＋受注番号(10桁)+受注明細No(4桁））＋17位スペース埋め。
 当这个项目为空的时候等于NULL，这个项目要转换成数据型。
+
+ {
+    "errorCode": "2200",
+    "message": "Failure happened on 'Source' side. ErrorCode=SqlOperationFailed,'Type=Microsoft.DataTransfer.Common.Shared.HybridDeliveryException,Message=A database operation failed with the following error: 'The replace function requires 3 argument(s).',Source=,''Type=System.Data.SqlClient.SqlException,Message=The replace function requires 3 argument(s).,Source=.Net SqlClient Data Provider,SqlErrorNumber=174,Class=15,ErrorCode=-2146232060,State=1,Errors=[{Class=15,Number=174,State=1,Message=The replace function requires 3 argument(s).,},],'",
+    "failureType": "UserError",
+    "target": "ac_tran_CreateFileFromAzureDB",
+    "details": []
+} 
