@@ -12,3 +12,17 @@ END AS OrderLineNumber,
 例.
 受注明細ID：100000001230101のとき、
 設定値：101
+
+
+CASE
+    -- 15桁の数値（固定値「1」＋受注番号(10桁)+受注明細No(4桁※)）＋スペース埋めで連携されるとき
+    WHEN LEN(A.OrderLineNumber) = 15 
+    THEN CAST(LITRIM(SUBSTRING(A.OrderLineNumber, 12, 4),0) AS BIGINT)
+
+    -- その以外のとき
+    ELSE 
+        CASE 
+            WHEN A.OrderLineNumber = '' THEN NULL 
+            ELSE CAST(A.OrderLineNumber AS BIGINT) 
+        END
+END AS OrderLineNumber,
