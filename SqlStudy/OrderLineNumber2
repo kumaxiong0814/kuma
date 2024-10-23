@@ -1,0 +1,14 @@
+原来的逻辑受注明細No(OrderLineNumber)
+CASE WHEN A.OrderLineNumber = ''
+  THEN NULL												
+  ELSE CAST(A.OrderLineNumber as bigint)
+END AS OrderLineNumber,
+
+现在要改的逻辑
+15桁の数値（固定値「1」＋受注番号(10桁)+受注明細No(4桁※)）＋スペース埋めで連携されるため受注明細Noのみになるよう以下形式に加工する。
+※受注明細Noが4桁に満たない場合は0埋めされている。
+ 
+・先頭11桁を削除し、残った数値が0埋めされている場合は0を削除した数値を受注明細Noに設定
+例.
+受注明細ID：100000001230101のとき、
+設定値：101
