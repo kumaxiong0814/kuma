@@ -1,0 +1,7 @@
+CAST(
+    IIF(
+        LEN(A.OrderLineNumber) = 15,
+        RIGHT(A.OrderLineNumber, 4),
+        NULLIF(A.OrderLineNumber, '')
+    ) AS BIGINT
+) AS OrderLineNumber
