@@ -1,0 +1,214 @@
+earth-dev-func-jpe-ls-dp-fo-out-messaging-uttech
+271
+個別ストレージ　externalif-ne
+共通ストレージ　fileif-ne　dpne0011
+表题与明细(FFLONE0004、FLONE0005)
+1588491
+https://dev.azure.com/earthPJ/Earth%20Program%20-%20Core%20Template/_workitems/edit/1588491
+〇実施内容
+Azure側での項目編集仕様を正しく修正する
+・MIMEコードの左空白詰め　　已经修正完了了吗？
+⇒CUST/MIMEコード　CustmimeCode
+修正前　左スペース
+修正後
+⇒最終顧客CUST/MIMEコード　LastCustmimeCode
+修正前　左スペース　
+修正後
+№,項目名         ,物理byte数,ZEROSPACE詰め,左右詰め,データタイプ,符号有無,小数桁数,小数桁数オーバー
+修正前
+28,CUST/MIMEコード,         4,            0,       R,           1,       1,       0,
+
+修正後
+28,CUST/MIMEコード,         4,            1,       L,           0,        ,        ,
+
+
+表题
+・三国間区分の読替を行う　TrilateralType
+三国間区分の変換を追加
+1（D365側二国間）の場合
+→2（レガシー側二国間）
+2（D365側三国間）の場合
+→1（レガシー側三国間）
+※三国間区分0（Blank）は業務上発生しないため記載しない
+
+明细
+・有償無償区分ExportPayFreeTypeの読替を行う　
+有償/無償区分の変換を追加
+0（D365側有償）の場合
+→N（レガシー側有償）
+1（D365側無償）の場合
+→Y（レガシー側無償）
+
+三国間区分の変換を追加
+三国間区分、有償/無償区分の変換を追加
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+257
+個別ストレージ　externalif-ne
+共通ストレージ　fileif-ne　dpne0009
+表题与明细(FLONE0006、FLONE0007)
+271
+個別ストレージ　externalif-ne
+共通ストレージ　fileif-ne　dpne0011
+表题与明细(FFLONE0004、FLONE0005)
+1586335
+https://dev.azure.com/earthPJ/Earth%20Program%20-%20Core%20Template/_workitems/edit/1586335/
+
+案④：需給非標準終了通知ファイル作成事後共通処理を作成し、需給Inバッチ関数アプリに配置　→決定
+
+修正前 终了file 直接在共同blob上生成
+修正后  终了file 跟其他标准终了通知文件得生成方法一样。先在①　然后copy到②
+这次测试基本0件就可以了，不用特别在messaging上做数据(331为啥除外不明)，
+
+单体257-258
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F20%20IF%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F02%20%E3%83%86%E3%82%B9%E3%83%88%E7%B5%90%E6%9E%9C%2F%E9%9C%80%E7%B5%A6%EF%BD%A5%E7%89%A9%E6%B5%81%2FIF0257%5F0258%5FOut%5F%E5%87%BA%E8%8D%B7%E4%BE%9D%E9%A0%BC%E6%83%85%E5%A0%B1%EF%BC%88%E8%A1%A8%E9%A1%8C%E3%80%81%E6%98%8E%E7%B4%B0%EF%BC%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%90%E3%82%B9%E3%83%99%E3%83%BC%E3%82%B9%2FAzure&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+单体271-272
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F20%20IF%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F02%20%E3%83%86%E3%82%B9%E3%83%88%E7%B5%90%E6%9E%9C%2F%E9%9C%80%E7%B5%A6%EF%BD%A5%E7%89%A9%E6%B5%81%2FIF0271%5F0272%5FOUT%5F%E7%99%BA%E6%B3%A8%E6%83%85%E5%A0%B1%EF%BC%88%E8%A1%A8%E9%A1%8C%E3%83%BB%E6%98%8E%E7%B4%B0%EF%BC%89%2FAzure%2F%E6%96%B0%E4%BB%95%E6%A7%98%E6%9B%B8&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+
+详细设计书257-258
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=E7SBJy&cid=41527c01%2D3d9d%2D4c59%2D93e5%2D5b120d44d411&FolderCTID=0x0120005B33784E5E986B488678F673559B73E5&OR=Teams%2DHL&CT=1705047685241&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzExMzAyNjIwMiIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D&id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F10%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%2F%E9%9C%80%E7%B5%A6%E7%89%A9%E6%B5%81%2F0257%5F0258%5FOUT%5F%E5%87%BA%E8%8D%B7%E4%BE%9D%E9%A0%BC%E6%83%85%E5%A0%B1%EF%BC%88%E8%A1%A8%E9%A1%8C%E3%83%BB%E6%98%8E%E7%B4%B0%EF%BC%89%2FAzure&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+详细设计书271-272
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=E7SBJy&cid=41527c01%2D3d9d%2D4c59%2D93e5%2D5b120d44d411&FolderCTID=0x0120005B33784E5E986B488678F673559B73E5&OR=Teams%2DHL&CT=1705047685241&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzExMzAyNjIwMiIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D&id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F10%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%2F%E9%9C%80%E7%B5%A6%E7%89%A9%E6%B5%81%2F0271%5F0272%5FOUT%5F%E7%99%BA%E6%B3%A8%E6%83%85%E5%A0%B1%EF%BC%88%E8%A1%A8%E9%A1%8C%E3%83%BB%E6%98%8E%E7%B4%B0%EF%BC%89%2FAzure&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+
+
+string headerCustomContent = LS_BT_00003.HeaderOutPutFileName + "_" + nowtime + LS_BT_00003.Filler.PadRight(3, ' ') + headerParam.DataList.Count.ToString().PadLeft(8, '0') + LS_BT_00003.Filler.PadRight(26, ' ') + "\n";
+LS_BT_00003.HeaderOutPutFileName + "_" + nowtime + LS_BT_00003.Filler.PadRight(3, ' ') + headerParam.DataList.Count.ToString().PadLeft(8, '0') + LS_BT_00003.Filler.PadRight(26, ' ') + "\n"											
+
+string headerCustomContent = $"{headerParam.OutPutFileName.PadRight(16, ' ')}{headerParam.DataList.Count.ToString().PadLeft(8, '0')}{LS_BT_00257.Filler.PadRight(26, ' ')}{headerParam.EndNotificationFileNewlineCode?.ToString()}";
+LS_BT_00257.HeaderOutPutFileName.PadRight(16, ' ') + headerParam.DataList.Count.ToString().PadLeft(8, '0') + LS_BT_00257.Filler.PadRight(26, ' ') + headerParam.EndNotificationFileNewlineCode?.ToString()
+string detailCustomContent = $"{detailParam.OutPutFileName.PadRight(16, ' ')}{detailParam.DataList.Count.ToString().PadLeft(8, '0')}{LS_BT_00257.Filler.PadRight(26, ' ')}{detailParam.EndNotificationFileNewlineCode?.ToString()}";
+LS_BT_00257.DetailOutPutFileName.PadRight(16, ' ') + detailParam.DataList.Count.ToString().PadLeft(8, '0') + LS_BT_00257.Filler.PadRight(26, ' ') + detailParam.EndNotificationFileNewlineCode?.ToString()
+
+string headerCustomContent = $"{headerParam.OutPutFileName.PadRight(16, ' ')}{headerParam.DataList.Count.ToString().PadLeft(8, '0')}{LS_BT_00271.Filler.PadRight(26, ' ')}{headerParam.EndNotificationFileNewlineCode?.ToString()}";
+LS_BT_00257.DetailOutPutFileName.PadRight(16, ' ') + detailParam.DataList.Count.ToString().PadLeft(8, '0') + LS_BT_00257.Filler.PadRight(26, ' ') + detailParam.EndNotificationFileNewlineCode?.ToString()
+
+
+SpecialEndFileCreateFunction.cs
+legacySystemOperation.OutBoundEndProcess(paramList);
+legacySystemOperation.OutBoundEndProcessForCreateCustomizeEndFile(paramList1);
+
+
+
+  //IFファイルパラメーターを共通関数に渡すためにリスト化
+            var paramList1 = new List<CreateFileParamData> { headerParam, detailParam };
+            legacySystemOperation.OutBoundEndProcess(paramList1);
+            
+//IFファイルパラメーターを共通関数に渡すためにリスト化
+            var paramList1 = new List<CreateCustomizeFileParamData> { headerParam, detailParam };
+            //legacySystemOperation.OutBoundEndProcess(paramList1);
+            legacySystemOperation.OutBoundEndProcessForCreateCustomizeEndFile(paramList1);
+            
+
+
+1591706
+https://dev.azure.com/earthPJ/Earth%20Program%20-%20Core%20Template/_workitems/edit/1591706
+
+对应IF271，257，116项目改修
+
+
+271-272
+詳細設計書
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=E7SBJy&cid=41527c01%2D3d9d%2D4c59%2D93e5%2D5b120d44d411&FolderCTID=0x0120005B33784E5E986B488678F673559B73E5&OR=Teams%2DHL&CT=1705047685241&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzExMzAyNjIwMiIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D&id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F10%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%2F%E9%9C%80%E7%B5%A6%E7%89%A9%E6%B5%81%2F0271%5F0272%5FOUT%5F%E7%99%BA%E6%B3%A8%E6%83%85%E5%A0%B1%EF%BC%88%E8%A1%A8%E9%A1%8C%E3%83%BB%E6%98%8E%E7%B4%B0%EF%BC%89%2FAzure&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+更新前
+受注明細番号(輸出)の加工処理を追加 OrderLineNumber
+是明细表里面的NO21
+ーーー
+受注番号（輸出）+桁数の限り0埋め+受注明細番号（輸出）　に加工する。
+例.
+受注番号（輸出）OrderNumber：0000000123 
+受注明細番号（輸出）：1のとき、
+設定値：00000001230000000000000000000001
+
+更新後
+受注明細番号(輸出)の加工処理を追加
+ーーー
+固定値「1」＋受注番号（輸出）(10桁)+受注明細番号（輸出）(受注明細番号（輸出）が4桁に満たない場合は0埋めして4桁にする)　に加工する。
+例.
+受注番号（輸出）：0000000123
+受注明細番号（輸出）：101のとき、
+設定値：100000001230101
+
+code修正
+// 固定値「1」＋受注No(10桁)+受注明細No(受注明細Noを整数部のみに加工後、4桁に満たない場合は0埋めして4桁にする)　に加工する。
+// 例. 受注No：0000000123
+// 受注明細No：101のとき、
+// 設定値：100000001230101
+var strOrderNumber = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.OrderNumber);
+var strOrderLineNumber = dictionaryUtil.GetDataString(data, earth_dp_LS_BT_00271FLONE0005.OrderLineNumber).Trim();
+data[earth_dp_LS_BT_00271FLONE0005.OrderLineNumber] = string.Concat("1", strOrderNumber.PadLeft(10, '0')[0..10], strOrderLineNumber.PadLeft(4, '0')[^4..]);
+            
+
+116 
+fileif-ne
+ftp/nedp0001
+詳細設計書
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=E7SBJy&cid=41527c01%2D3d9d%2D4c59%2D93e5%2D5b120d44d411&FolderCTID=0x0120005B33784E5E986B488678F673559B73E5&OR=Teams%2DHL&CT=1705047685241&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzExMzAyNjIwMiIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D&id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F10%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%2F%E9%9C%80%E7%B5%A6%E7%89%A9%E6%B5%81%2F0116%5FIn%5F%E5%87%BA%E5%BA%AB%E7%A2%BA%E5%AE%9A%E6%83%85%E5%A0%B1%2FAzure&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+更新前
+受注明細IDの加工処理を追加　OrderLineNumber
+ーーー
+下記いずれかの形式に加工する。
+1. 最大桁数（32桁すべてが数値埋めされている※三国間）のとき、以下形式に加工する。
+・先頭10桁と11桁目以降の0埋めを削除した数値を受注明細Noに設定
+例.
+受注明細ID：00000001230000000000000000000101のとき、
+設定値：101
+2. 15桁の数値（スペース埋め＋数値15桁になっている※二国間）のとき、以下形式に加工する。
+・先頭11桁と12桁目以降の0埋めを削除した数値を受注明細Noに設定
+例.
+受注明細ID：100000001230101のとき、
+設定値：101
+
+更新後
+受注明細IDの加工処理を追加
+ーーー
+15桁の数値（固定値「1」＋受注番号(10桁)+受注明細No(4桁※)）＋スペース埋めで連携されるため受注明細Noのみになるよう以下形式に加工する。
+※受注明細Noが4桁に満たない場合は0埋めされている。
+
+・先頭11桁を削除し、残った数値が0埋めされている場合は0を削除した数値を受注明細Noに設定
+例.
+受注明細ID：100000001230101のとき、
+設定値：101
+
+code修正
+前
+CASE WHEN A.OrderLineNumber = ''
+  THEN NULL
+ELSE CAST(A.OrderLineNumber as bigint)
+后
+CAST(
+     NULLIF(RIGHT(A.OrderLineNumber, 4),'') AS BIGINT
+ ) AS OrderLineNumber,
+
+257-258
+詳細設計書
+https://fujifilm0.sharepoint.com/teams/g-fx-mci/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=E7SBJy&cid=41527c01%2D3d9d%2D4c59%2D93e5%2D5b120d44d411&FolderCTID=0x0120005B33784E5E986B488678F673559B73E5&OR=Teams%2DHL&CT=1705047685241&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzExMzAyNjIwMiIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D&id=%2Fteams%2Fg%2Dfx%2Dmci%2FShared%20Documents%2FT22%5F%E5%A4%96%E9%83%A8%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9%2F05%20%E6%88%90%E6%9E%9C%E7%89%A9%5F%E4%BB%95%E6%8E%9B%2F40%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%E3%83%BB%E9%96%8B%E7%99%BA%E3%83%BB%E5%8D%98%E4%BD%93%E3%83%86%E3%82%B9%E3%83%88%2F10%20%E8%A9%B3%E7%B4%B0%E8%A8%AD%E8%A8%88%2F%E9%9C%80%E7%B5%A6%E7%89%A9%E6%B5%81%2F0257%5F0258%5FOUT%5F%E5%87%BA%E8%8D%B7%E4%BE%9D%E9%A0%BC%E6%83%85%E5%A0%B1%EF%BC%88%E8%A1%A8%E9%A1%8C%E3%83%BB%E6%98%8E%E7%B4%B0%EF%BC%89%2FAzure&viewid=19376a7d%2D3185%2D4adc%2D8eab%2D7929b7120311
+更新前
+受注明細NOの加工処理を追加　OrderLineNumber
+ーーー
+固定値「1」＋受注No(10桁)+受注明細No(整数部のみ数値4桁)　に加工する。
+例.
+受注No：0000000123
+受注明細No：1.0000000000のとき、
+設定値：100000001230001
+
+更新後
+受注明細NOの加工処理を追加
+ーーー
+固定値「1」＋受注No(10桁)+受注明細No(受注明細Noを整数部のみに加工後、4桁に満たない場合は0埋めして4桁にする)　に加工する。
+例.
+受注No：0000000123
+受注明細No：101.0000000000のとき、
+設定値：100000001230101
+
+code修正
+// 固定値「1」＋受注No(10桁)+受注明細No(受注明細Noを整数部のみに加工後、4桁に満たない場合は0埋めして4桁にする)　に加工する。
+ // 例. 受注No：0000000123
+ // 受注明細No：101.0000000000のとき、
+ // 設定値：100000001230101
+ var strOrderNumber = GetFieldValue(earth_dp_LS_BT_00257FLONE0007.OrderNumber, data);
+ ExecuteConvertion(
+         value => ConvertOrderLineNumber(orderNumber: strOrderNumber, orderLineNumber: value),
+         earth_dp_LS_BT_00257FLONE0007.OrderLineNumber,
+         data
+     );
+
