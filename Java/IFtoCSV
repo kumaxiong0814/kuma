@@ -8,57 +8,57 @@ public class FixedLengthToCSV {
 
     // 定义字段配置（字段名称和长度）
     private static final String[][] FIELD_CONFIG = {
-    		{"ContractNumber,10"},
-    		{"DeliveryScheduledDate,8"},
-    		{"AutoReplenishmentNumber,7"},
-    		{"OrderSourceName,2"},
-    		{"SpecifiedTime,9"},
-    		{"UrgentFlag,1"},
-    		{"CollectionFlag,1"},
-    		{"NextVisitDate,8"},
-    		{"SalesResponsibleName,20"},
-    		{"BuildingName,34"},
-    		{"ShipToFloor,6"},
-    		{"ShipToDivision,40"},
-    		{"OrdererName,20"},
-    		{"DeliveryToNotes,60"},
-    		{"SalesOrderNotes,60"},
-    		{"NumberOfLines,2"},
-    		{"ItemCode01,14"},
-    		{"Quantity01,7"},
-    		{"ItemCode02,14"},
-    		{"Quantity02,7"},
-    		{"ItemCode03,14"},
-    		{"Quantity03,7"},
-    		{"ItemCode04,14"},
-    		{"Quantity04,7"},
-    		{"ItemCode05,14"},
-    		{"Quantity05,7"},
-    		{"ItemCode06,14"},
-    		{"Quantity06,7"},
-    		{"ItemCode07,14"},
-    		{"Quantity07,7"},
-    		{"ItemCode08,14"},
-    		{"Quantity08,7"},
-    		{"ItemCode09,14"},
-    		{"Quantity09,7"},
-    		{"ItemCode10,14"},
-    		{"Quantity10,7"},
-    		{"ItemCode11,14"},
-    		{"Quantity11,7"},
-    		{"ItemCode12,14"},
-    		{"Quantity12,7"},
-    		{"ItemCode13,14"},
-    		{"Quantity13,7"},
-    		{"ItemCode14,14"},
-    		{"Quantity14,7"},
-    		{"ItemCode15,14"},
-    		{"Quantity15,7"},
+            {"ContractNumber", "10"},
+            {"DeliveryScheduledDate", "8"},
+            {"AutoReplenishmentNumber", "7"},
+            {"OrderSourceName", "2"},
+            {"SpecifiedTime", "9"},
+            {"UrgentFlag", "1"},
+            {"CollectionFlag", "1"},
+            {"NextVisitDate", "8"},
+            {"SalesResponsibleName", "20"},
+            {"BuildingName", "34"},
+            {"ShipToFloor", "6"},
+            {"ShipToDivision", "40"},
+            {"OrdererName", "20"},
+            {"DeliveryToNotes", "60"},
+            {"SalesOrderNotes", "60"},
+            {"NumberOfLines", "2"},
+            {"ItemCode01", "14"},
+            {"Quantity01", "7"},
+            {"ItemCode02", "14"},
+            {"Quantity02", "7"},
+            {"ItemCode03", "14"},
+            {"Quantity03", "7"},
+            {"ItemCode04", "14"},
+            {"Quantity04", "7"},
+            {"ItemCode05", "14"},
+            {"Quantity05", "7"},
+            {"ItemCode06", "14"},
+            {"Quantity06", "7"},
+            {"ItemCode07", "14"},
+            {"Quantity07", "7"},
+            {"ItemCode08", "14"},
+            {"Quantity08", "7"},
+            {"ItemCode09", "14"},
+            {"Quantity09", "7"},
+            {"ItemCode10", "14"},
+            {"Quantity10", "7"},
+            {"ItemCode11", "14"},
+            {"Quantity11", "7"},
+            {"ItemCode12", "14"},
+            {"Quantity12", "7"},
+            {"ItemCode13", "14"},
+            {"Quantity13", "7"},
+            {"ItemCode14", "14"},
+            {"Quantity14", "7"},
+            {"ItemCode15", "14"},
+            {"Quantity15", "7"},
     };
 
     public static void main(String[] args) {
         String inputFile = "C:\\Users\\e-ls-dev-315\\Desktop\\0275\\FSNLO0001";  // 固定长度文件路径
-        String outputFile = "C:\\Users\\e-ls-dev-315\\Desktop\\0275\\FSNLO0001.csv";           // 输出的 CSV 文件路径
+        String outputFile = "C:\\Users\\e-ls-dev-315\\Desktop\\0275\\FSNLO0001.csv";  // 输出的 CSV 文件路径
         
         try {
             convertToCSV(inputFile, outputFile);
@@ -90,7 +90,7 @@ public class FixedLengthToCSV {
 
                 int start = 0;
                 for (String[] field : FIELD_CONFIG) {
-                    int length = Integer.parseInt(field[1]);
+                    int length = Integer.parseInt(field[1]); // 获取字段长度
                     String value = line.substring(start, Math.min(start + length, line.length())).trim();
                     values.add(value);
                     
