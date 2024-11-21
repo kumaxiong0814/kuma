@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FixedLengthToCSV {
+
+    // 定义字段配置（字段名称和长度）
+    private static final String[][] FIELD_CONFIG = {
+        {"Field1", "10"},  // 字段1，长度10
+        {"Field2", "8"},   // 字段2，长度8
+        {"Field3", "12"},  // 字段3，长度12
+        {"Field4", "6"}    // 字段4，长度6
+    };
+
+    public static void main(String[] args) {
+        String inputFile = "fixed_length_file.txt";  // 固定长度文件路径
+        String outputFile = "output.csv";           // 输出的 CSV 文件路径
+        
+        try {
+            convertToCSV(inputFile, outputFile);
+            System.out.println("文件已成功转换为 CSV 文件：" + outputFile);
+        } catch (IOException e) {
+            System.err.println("文件处理过程中出错: " + e.getMessage());
+        }
+    }
+
+    public static void convertToCSV(String inputFile, String outputFile) throws IOException {
+        // 读取固定长度文件
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+
+            // 写入 CSV 表头
+            List<String> headers = new ArrayList<>();
+            for (String[] field : FIELD_CONFIG) {
+                headers.add(field[0]);
+            }
+            headers.add("Empty_Check");
+            writer.write(String.join(",", headers));
+            writer.newLine();
+
+            // 逐行读取文件并处理
+            String line;
+            while ((line = reader.readLine()) != null) {
+                List<String> values = new ArrayList<>();
+                boolean hasEmptyField = false;
+
+                int start = 0;
+                for (String[] field : FIELD_CONFIG) {
+                    int length = Integer.parseInt(field[1]);
+                    String value = line.substring(start, Math.min(start + length, line.length())).trim();
+                    values.add(value);
+                    
+                    if (value.isEmpty()) {
+                        hasEmptyField = true;
+                    }
+                    start += length;
+                }
+
+                // 添加空值检查结果
+                values.add(hasEmptyField ? "Yes" : "No");
+
+                // 写入 CSV 行
+                writer.write(String.join(",", values));
+                writer.newLine();
+            }
+        }
+    }
+}
