@@ -1,5 +1,5 @@
 /**
- * 处理固定长度文件，并检查空值
+ * 处理固定长度文件，并检查空值，返回空值字段
  */
 public static void processFixedLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -10,6 +10,7 @@ public static void processFixedLengthFile(File inputFile, String outputFile, Str
         for (String[] field : fieldDefinitions) {
             headers.add(field[0]);
         }
+        headers.add("Empty_Check"); // 增加空值检查列
         writer.write(String.join(",", headers));
         writer.newLine();
 
@@ -17,24 +18,26 @@ public static void processFixedLengthFile(File inputFile, String outputFile, Str
         String line;
         while ((line = reader.readLine()) != null) {
             List<String> values = new ArrayList<>();
+            List<String> emptyFields = new ArrayList<>();  // 用于保存空字段的名称
             int start = 0;
-            boolean hasEmptyField = false;  // 记录是否有空字段
 
             for (String[] field : fieldDefinitions) {
                 int length = Integer.parseInt(field[1]);
                 String value = line.substring(start, Math.min(start + length, line.length())).trim();
-                if (value.isEmpty()) {
-                    hasEmptyField = true; // 标记空字段
-                }
                 values.add(value);
                 start += length;
+
+                // 如果字段为空，记录字段名称
+                if (value.isEmpty()) {
+                    emptyFields.add(field[0]);
+                }
             }
 
-            // 如果有空字段，则在行末尾加上"Yes"
-            if (hasEmptyField) {
-                values.add("Yes");
+            // 在最后一列添加空值字段信息
+            if (!emptyFields.isEmpty()) {
+                values.add(String.join(";", emptyFields)); // 如果有空字段，列出空字段名称
             } else {
-                values.add("No");
+                values.add("No Empty Fields");
             }
 
             writer.write(String.join(",", values));
@@ -44,7 +47,7 @@ public static void processFixedLengthFile(File inputFile, String outputFile, Str
 }
 
 /**
- * 处理可变长度文件，并检查空值
+ * 处理可变长度文件，并检查空值，返回空值字段
  */
 public static void processVariableLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -64,22 +67,25 @@ public static void processVariableLengthFile(File inputFile, String outputFile, 
 
         while ((line = reader.readLine()) != null) {
             String[] fields = line.split("\\|");  // 可变长度字段分隔符
-
-            // 检查空值
-            boolean hasEmptyField = false;
             List<String> fieldList = new ArrayList<>();
-            for (String field : fields) {
-                fieldList.add(field.trim());
-                if (field.trim().isEmpty()) {
-                    hasEmptyField = true;  // 标记有空字段
+            List<String> emptyFields = new ArrayList<>();  // 用于保存空字段的名称
+
+            // 遍历字段，检查是否为空
+            for (int i = 0; i < fields.length; i++) {
+                String field = fields[i].trim();
+                fieldList.add(field);
+
+                if (field.isEmpty()) {
+                    // 获取字段名称，如果为空字段，记录其名称
+                    emptyFields.add(fieldDefinitions[i][0]);
                 }
             }
 
-            // 如果有空字段，则在行末尾加上"Yes"
-            if (hasEmptyField) {
-                fieldList.add("Yes");
+            // 如果有空字段，则在行末尾加上空字段信息
+            if (!emptyFields.isEmpty()) {
+                fieldList.add(String.join(";", emptyFields)); // 列出所有空字段
             } else {
-                fieldList.add("No");
+                fieldList.add("No Empty Fields");
             }
 
             writer.write(String.join(",", fieldList));
