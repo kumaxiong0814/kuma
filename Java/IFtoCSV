@@ -79,6 +79,7 @@ public class FixedLengthToCSV {
                 headers.add(field[0]);
             }
             headers.add("Empty_Check");
+            headers.add("Empty_Fields"); // 添加定位空字段的列
             writer.write(String.join(",", headers));
             writer.newLine();
 
@@ -87,6 +88,7 @@ public class FixedLengthToCSV {
             while ((line = reader.readLine()) != null) {
                 List<String> values = new ArrayList<>();
                 boolean hasEmptyField = false;
+                List<String> emptyFields = new ArrayList<>();
 
                 int start = 0;
                 for (String[] field : FIELD_CONFIG) {
@@ -96,12 +98,16 @@ public class FixedLengthToCSV {
                     
                     if (value.isEmpty()) {
                         hasEmptyField = true;
+                        emptyFields.add(field[0]); // 记录空字段名称
                     }
                     start += length;
                 }
 
                 // 添加空值检查结果
                 values.add(hasEmptyField ? "Yes" : "No");
+
+                // 添加具体空字段信息
+                values.add(String.join(";", emptyFields));
 
                 // 写入 CSV 行
                 writer.write(String.join(",", values));
