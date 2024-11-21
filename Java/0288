@@ -1,59 +1,14 @@
-        fieldConfigMap.put("0288", new FieldConfig(FileType.FIXED_LENGTH, new String[][]{
-        	{"OrderSourceName" , "3"},
-        	{"RequestDate" , "10"},
-        	{"SerialNumber" , "6"},
-        	{"ContractNumber" , "10"},
-        	{"Segment1" , "8"},
-        	{"ShipToName" , "40"},
-        	{"ShipToDivision" , "40"},
-        	{"OrigSysDocumentRef" , "20"},
-        	{"IncidentNumber" , "20"},
-        	{"OrderedInstructions" , "60"},
-        	{"ShippingInstructions" , "168"},
-        	{"OrderContact" , "20"},
-        	{"CustomerTelNumber" , "12"},
-        	{"ShipToAddressNum" , "44"},
-        	{"ShipToBuilding" , "40"},
-        	{"ShipToFloor" , "6"},
-        	{"ShipToAddress" , "100"},
-        	{"ItemId1" , "14"},
-        	{"SalesQty1" , "7"},
-        	{"ItemId2" , "14"},
-        	{"SalesQty2" , "7"},
-        	{"ItemId3" , "14"},
-        	{"SalesQty3" , "7"},
-        	{"ItemId4" , "14"},
-        	{"SalesQty4" , "7"},
-        	{"ItemId5" , "14"},
-        	{"SalesQty5" , "7"},
-        	{"ItemId6" , "14"},
-        	{"SalesQty6" , "7"},
-        	{"ItemId7" , "14"},
-        	{"SalesQty7" , "7"},
-        	{"ItemId8" , "14"},
-        	{"SalesQty8" , "7"},
-        	{"ItemId9" , "14"},
-        	{"SalesQty9" , "7"},
-        	{"ItemId10" , "14"},
-        	{"SalesQty10" , "7"},
-        	{"ItemId11" , "14"},
-        	{"SalesQty11" , "7"},
-        	{"ItemId12" , "14"},
-        	{"SalesQty12" , "7"},
-        	{"ItemId13" , "14"},
-        	{"SalesQty13" , "7"},
-        	{"ItemId14" , "14"},
-        	{"SalesQty14" , "7"},
-        	{"ItemId15" , "14"},
-        	{"SalesQty15" , "7"},
-        	{"ItemId16" , "14"},
-        	{"SalesQty16" , "7"},
-        	{"ItemId17" , "14"},
-        	{"SalesQty17" , "7"},
-        	{"ItemId18" , "14"},
-        	{"SalesQty18" , "7"},
-        	{"ItemId19" , "14"},
-        	{"SalesQty19" , "7"},
-        	{"ItemId20" , "14"},
-        	{"SalesQty20" , "7"}
-        }));
+while ((line = reader.readLine()) != null) {
+    System.out.println("Line Length: " + line.length());
+    
+    int start = 0;
+    for (String[] field : FIELD_CONFIG) {
+        int length = Integer.parseInt(field[1]);
+        String value = line.substring(start, Math.min(start + length, line.length())).trim();
+        
+        // 打印每个字段的位置和内容
+        System.out.println("Field: " + field[0] + ", Value: '" + value + "'");
+
+        start += length;
+    }
+}
