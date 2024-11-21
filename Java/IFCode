@@ -1,1 +1,52 @@
+package com.a;
 
+public class FixedLengthToCSVApp {
+
+    public static void main(String[] args) {
+        // 文件 1 的字段配置
+        String[][] fieldConfig1 = {
+                {"ContractNumber", "10"},
+                {"DeliveryScheduledDate", "8"},
+                {"AutoReplenishmentNumber", "7"},
+                {"OrderSourceName", "2"},
+                {"SpecifiedTime", "9"},
+                {"UrgentFlag", "1"},
+                {"CollectionFlag", "1"},
+                {"NextVisitDate", "8"},
+                {"SalesResponsibleName", "20"},
+                {"BuildingName", "34"},
+                {"ShipToFloor", "6"},
+                {"ShipToDivision", "40"},
+                {"OrdererName", "20"},
+                {"DeliveryToNotes", "60"},
+                {"SalesOrderNotes", "60"},
+                {"NumberOfLines", "2"},
+        };
+
+        // 文件 2 的字段配置
+        String[][] fieldConfig2 = {
+                {"FieldA", "15"},
+                {"FieldB", "20"},
+                {"FieldC", "10"},
+                {"FieldD", "5"},
+                {"FieldE", "30"}
+        };
+
+        try {
+            // 处理文件 1
+            String inputFile1 = "C:\\path\\to\\fixed_length_file1.txt";
+            String outputFile1 = "C:\\path\\to\\output_file1.csv";
+            FixedLengthFileProcessor.convertToCSV(fieldConfig1, inputFile1, outputFile1);
+            System.out.println("文件 1 转换成功：" + outputFile1);
+
+            // 处理文件 2
+            String inputFile2 = "C:\\path\\to\\fixed_length_file2.txt";
+            String outputFile2 = "C:\\path\\to\\output_file2.csv";
+            FixedLengthFileProcessor.convertToCSV(fieldConfig2, inputFile2, outputFile2);
+            System.out.println("文件 2 转换成功：" + outputFile2);
+
+        } catch (Exception e) {
+            System.err.println("处理文件时出错: " + e.getMessage());
+        }
+    }
+}
