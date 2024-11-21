@@ -17,19 +17,27 @@ public class FileProcessorApp {
             return;
         }
 
-        // 配置文件类型：固定长度文件和可变长度文件
-        Map<String, FileType> fileTypeConfig = Map.of(
-            "0275", FileType.FIXED_LENGTH,
-            "0281", FileType.FIXED_LENGTH,
-            "0288", FileType.VARIABLE_LENGTH,
-            "0290", FileType.FIXED_LENGTH,
-            "0292", FileType.FIXED_LENGTH,
-            "0295", FileType.FIXED_LENGTH,
-            "0312", FileType.FIXED_LENGTH,
-            "0313", FileType.VARIABLE_LENGTH,
-            "0331", FileType.FIXED_LENGTH,
-            "2704", FileType.VARIABLE_LENGTH
-        );
+        // 配置每个文件的字段定义
+        Map<String, FieldConfig> fieldConfigMap = new HashMap<>();
+        fieldConfigMap.put("0275", new FieldConfig(FileType.FIXED_LENGTH, new String[][]{
+            {"ContractNumber", "10"},
+            {"DeliveryScheduledDate", "8"},
+            {"OrderSourceName", "2"}
+        }));
+        fieldConfigMap.put("0288", new FieldConfig(FileType.VARIABLE_LENGTH, new String[][]{
+            {"Field1"}, {"Field2"}, {"Field3"}
+        }));
+        fieldConfigMap.put("0313", new FieldConfig(FileType.VARIABLE_LENGTH, new String[][]{
+            {"Name"}, {"Address"}, {"PhoneNumber"}
+        }));
+        fieldConfigMap.put("0290", new FieldConfig(FileType.FIXED_LENGTH, new String[][]{
+            {"ItemCode", "15"},
+            {"Quantity", "5"},
+            {"Price", "10"}
+        }));
+
+        // 添加其他文件的字段配置
+        // ...
 
         // 遍历输入目录的文件
         File folder = new File(inputFolder);
@@ -45,17 +53,20 @@ public class FileProcessorApp {
                 String fileName = file.getName();
                 String outputFile = outputFolder + fileName + ".csv";
 
+                // 加载字段配置
+                FieldConfig config = fieldConfigMap.get(fileName);
+                if (config == null) {
+                    System.out.println("未找到字段配置，跳过文件：" + fileName);
+                    continue;
+                }
+
                 try {
-                    // 根据文件名配置处理
-                    FileType fileType = fileTypeConfig.getOrDefault(fileName, FileType.UNKNOWN);
-                    if (fileType == FileType.FIXED_LENGTH) {
+                    if (config.getFileType() == FileType.FIXED_LENGTH) {
                         System.out.println("处理固定长度文件：" + fileName);
-                        processFixedLengthFile(file, outputFile);
-                    } else if (fileType == FileType.VARIABLE_LENGTH) {
+                        processFixedLengthFile(file, outputFile, config.getFieldDefinitions());
+                    } else if (config.getFileType() == FileType.VARIABLE_LENGTH) {
                         System.out.println("处理可变长度文件：" + fileName);
-                        processVariableLengthFile(file, outputFile);
-                    } else {
-                        System.out.println("无法识别的文件类型，跳过：" + fileName);
+                        processVariableLengthFile(file, outputFile, config.getFieldDefinitions());
                     }
                 } catch (Exception e) {
                     System.err.println("处理文件出错：" + fileName + "，错误原因：" + e.getMessage());
@@ -67,21 +78,13 @@ public class FileProcessorApp {
     /**
      * 处理固定长度文件
      */
-    public static void processFixedLengthFile(File inputFile, String outputFile) throws IOException {
-        // 定义固定长度字段配置（根据文件需求调整）
-        String[][] fieldConfig = {
-            {"ContractNumber", "10"},
-            {"DeliveryScheduledDate", "8"},
-            {"AutoReplenishmentNumber", "7"},
-            {"OrderSourceName", "2"}
-        };
-
+    public static void processFixedLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
 
             // 写入 CSV 表头
             List<String> headers = new ArrayList<>();
-            for (String[] field : fieldConfig) {
+            for (String[] field : fieldDefinitions) {
                 headers.add(field[0]);
             }
             writer.write(String.join(",", headers));
@@ -93,7 +96,7 @@ public class FileProcessorApp {
                 List<String> values = new ArrayList<>();
                 int start = 0;
 
-                for (String[] field : fieldConfig) {
+                for (String[] field : fieldDefinitions) {
                     int length = Integer.parseInt(field[1]);
                     String value = line.substring(start, Math.min(start + length, line.length())).trim();
                     values.add(value);
@@ -109,12 +112,16 @@ public class FileProcessorApp {
     /**
      * 处理可变长度文件
      */
-    public static void processVariableLengthFile(File inputFile, String outputFile) throws IOException {
+    public static void processVariableLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
              BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
 
-            // 写入 CSV 表头（根据需求设置）
-            writer.write("Field1,Field2,Field3,..."); // 可根据实际字段调整
+            // 写入 CSV 表头
+            List<String> headers = new ArrayList<>();
+            for (String[] field : fieldDefinitions) {
+                headers.add(field[0]);
+            }
+            writer.write(String.join(",", headers));
             writer.newLine();
 
             // 逐行解析并写入
@@ -132,7 +139,27 @@ public class FileProcessorApp {
      */
     enum FileType {
         FIXED_LENGTH,
-        VARIABLE_LENGTH,
-        UNKNOWN
+        VARIABLE_LENGTH
+    }
+
+    /**
+     * 字段配置类
+     */
+    static class FieldConfig {
+        private final FileType fileType;
+        private final String[][] fieldDefinitions;
+
+        public FieldConfig(FileType fileType, String[][] fieldDefinitions) {
+            this.fileType = fileType;
+            this.fieldDefinitions = fieldDefinitions;
+        }
+
+        public FileType getFileType() {
+            return fileType;
+        }
+
+        public String[][] getFieldDefinitions() {
+            return fieldDefinitions;
+        }
     }
 }
