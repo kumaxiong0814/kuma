@@ -24,9 +24,20 @@ public class FixedLengthToCSVApp {
             {"FieldD", "5"}
         });
 
-        // 输入输出路径
+        // 输入和输出文件夹路径
         String inputFolder = "C:\\path\\to\\input\\";
         String outputFolder = "C:\\path\\to\\output\\";
+
+        // 确保输出目录存在
+        File outputDir = new File(outputFolder);
+        if (!outputDir.exists()) {
+            if (outputDir.mkdirs()) {
+                System.out.println("输出文件夹已创建：" + outputFolder);
+            } else {
+                System.err.println("输出文件夹创建失败，请检查路径：" + outputFolder);
+                return;
+            }
+        }
 
         // 扫描输入目录下的所有文件
         File folder = new File(inputFolder);
