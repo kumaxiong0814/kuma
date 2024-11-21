@@ -1,58 +1,60 @@
 package com.a;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FixedLengthFileProcessor {
+public class FixedLengthToCSVApp {
 
-    /**
-     * 将固定长度文件转换为 CSV
-     * @param fieldConfig 字段配置（字段名称和长度）
-     * @param inputFile 输入文件路径
-     * @param outputFile 输出 CSV 文件路径
-     * @throws IOException 处理文件时的异常
-     */
-    public static void convertToCSV(String[][] fieldConfig, String inputFile, String outputFile) throws IOException {
-        // 读取固定长度文件
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+    public static void main(String[] args) {
+        // 定义文件字段配置
+        Map<String, String[][]> fileConfigurations = new HashMap<>();
+        fileConfigurations.put("FSNLO0001", new String[][]{
+            {"ContractNumber", "10"},
+            {"DeliveryScheduledDate", "8"},
+            {"AutoReplenishmentNumber", "7"},
+            {"OrderSourceName", "2"},
+            {"SpecifiedTime", "9"}
+        });
 
-            // 写入 CSV 表头
-            List<String> headers = new ArrayList<>();
-            for (String[] field : fieldConfig) {
-                headers.add(field[0]); // 添加字段名
-            }
-            headers.add("Empty_Fields"); // 添加空字段列
-            writer.write(String.join(",", headers));
-            writer.newLine();
+        fileConfigurations.put("FSNLO0002", new String[][]{
+            {"FieldA", "15"},
+            {"FieldB", "20"},
+            {"FieldC", "10"},
+            {"FieldD", "5"}
+        });
 
-            // 逐行读取文件并处理
-            String line;
-            while ((line = reader.readLine()) != null) {
-                List<String> values = new ArrayList<>();
-                List<String> emptyFields = new ArrayList<>();
+        // 输入输出路径
+        String inputFolder = "C:\\path\\to\\input\\";
+        String outputFolder = "C:\\path\\to\\output\\";
 
-                int start = 0;
-                for (String[] field : fieldConfig) {
-                    String fieldName = field[0];
-                    int length = Integer.parseInt(field[1]);
-                    String value = line.substring(start, Math.min(start + length, line.length())).trim();
-                    values.add(value);
+        // 扫描输入目录下的所有文件
+        File folder = new File(inputFolder);
+        File[] files = folder.listFiles();
 
-                    // 检查字段是否为空
-                    if (value.isEmpty()) {
-                        emptyFields.add(fieldName);
+        if (files == null || files.length == 0) {
+            System.out.println("输入目录中没有文件。");
+            return;
+        }
+
+        // 批量处理文件
+        for (File file : files) {
+            if (file.isFile()) {
+                String fileName = file.getName();
+                if (fileConfigurations.containsKey(fileName)) {
+                    String[][] fieldConfig = fileConfigurations.get(fileName);
+                    String inputFile = file.getAbsolutePath();
+                    String outputFile = outputFolder + fileName + ".csv";
+
+                    try {
+                        FixedLengthFileProcessor.convertToCSV(fieldConfig, inputFile, outputFile);
+                        System.out.println("成功转换文件：" + inputFile + " -> " + outputFile);
+                    } catch (Exception e) {
+                        System.err.println("处理文件出错：" + inputFile + "，错误原因：" + e.getMessage());
                     }
-                    start += length;
+                } else {
+                    System.out.println("文件未配置字段定义，跳过：" + fileName);
                 }
-
-                // 添加空字段信息到最后一列
-                values.add(emptyFields.isEmpty() ? "None" : String.join(";", emptyFields));
-
-                // 写入 CSV 行
-                writer.write(String.join(",", values));
-                writer.newLine();
             }
         }
     }
