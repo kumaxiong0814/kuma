@@ -1,60 +1,89 @@
 /**
-     * 处理固定长度文件
-     */
-    public static void processFixedLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+ * 处理固定长度文件，并检查空值
+ */
+public static void processFixedLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
 
-            // 写入 CSV 表头
-            List<String> headers = new ArrayList<>();
+        // 写入 CSV 表头
+        List<String> headers = new ArrayList<>();
+        for (String[] field : fieldDefinitions) {
+            headers.add(field[0]);
+        }
+        writer.write(String.join(",", headers));
+        writer.newLine();
+
+        // 逐行解析并写入
+        String line;
+        while ((line = reader.readLine()) != null) {
+            List<String> values = new ArrayList<>();
+            int start = 0;
+            boolean hasEmptyField = false;  // 记录是否有空字段
+
             for (String[] field : fieldDefinitions) {
-                headers.add(field[0]);
-            }
-            writer.write(String.join(",", headers));
-            writer.newLine();
-
-            // 逐行解析并写入
-            String line;
-            while ((line = reader.readLine()) != null) {
-                List<String> values = new ArrayList<>();
-                int start = 0;
-
-                for (String[] field : fieldDefinitions) {
-                    int length = Integer.parseInt(field[1]);
-                    String value = line.substring(start, Math.min(start + length, line.length())).trim();
-                    values.add(value);
-                    start += length;
+                int length = Integer.parseInt(field[1]);
+                String value = line.substring(start, Math.min(start + length, line.length())).trim();
+                if (value.isEmpty()) {
+                    hasEmptyField = true; // 标记空字段
                 }
-
-                writer.write(String.join(",", values));
-                writer.newLine();
+                values.add(value);
+                start += length;
             }
-        }
-    }
 
-    /**
-     * 处理可变长度文件
-     */
-    public static void processVariableLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
-
-            // 写入 CSV 表头
-            List<String> headers = new ArrayList<>();
-            for (String[] field : fieldDefinitions) {
-                headers.add(field[0]);
+            // 如果有空字段，则在行末尾加上"Yes"
+            if (hasEmptyField) {
+                values.add("Yes");
+            } else {
+                values.add("No");
             }
-            headers.add("Empty_Check");
-            writer.write(String.join(",", headers));
+
+            writer.write(String.join(",", values));
             writer.newLine();
-
-            // 逐行解析并写入
-            String line;
-            
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split("\\|");
-                writer.write(String.join(",", fields));
-                writer.newLine();
-            }
         }
     }
+}
+
+/**
+ * 处理可变长度文件，并检查空值
+ */
+public static void processVariableLengthFile(File inputFile, String outputFile, String[][] fieldDefinitions) throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+         BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+
+        // 写入 CSV 表头
+        List<String> headers = new ArrayList<>();
+        for (String[] field : fieldDefinitions) {
+            headers.add(field[0]);
+        }
+        headers.add("Empty_Check");  // 添加空值检查字段
+        writer.write(String.join(",", headers));
+        writer.newLine();
+
+        // 逐行解析并写入
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            String[] fields = line.split("\\|");  // 可变长度字段分隔符
+
+            // 检查空值
+            boolean hasEmptyField = false;
+            List<String> fieldList = new ArrayList<>();
+            for (String field : fields) {
+                fieldList.add(field.trim());
+                if (field.trim().isEmpty()) {
+                    hasEmptyField = true;  // 标记有空字段
+                }
+            }
+
+            // 如果有空字段，则在行末尾加上"Yes"
+            if (hasEmptyField) {
+                fieldList.add("Yes");
+            } else {
+                fieldList.add("No");
+            }
+
+            writer.write(String.join(",", fieldList));
+            writer.newLine();
+        }
+    }
+}
