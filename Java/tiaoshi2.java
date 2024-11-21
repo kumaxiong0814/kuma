@@ -19,16 +19,16 @@ public class FileProcessorApp {
 
         // 配置文件类型：固定长度文件和可变长度文件
         Map<String, FileType> fileTypeConfig = Map.of(
-            "1", FileType.FIXED_LENGTH,
-            "2", FileType.FIXED_LENGTH,
-            "3", FileType.FIXED_LENGTH,
-            "4", FileType.FIXED_LENGTH,
-            "5", FileType.FIXED_LENGTH,
-            "6", FileType.VARIABLE_LENGTH,
-            "7", FileType.VARIABLE_LENGTH,
-            "8", FileType.VARIABLE_LENGTH,
-            "9", FileType.VARIABLE_LENGTH,
-            "10", FileType.VARIABLE_LENGTH
+            "0275", FileType.FIXED_LENGTH,
+            "0281", FileType.FIXED_LENGTH,
+            "0288", FileType.VARIABLE_LENGTH,
+            "0290", FileType.FIXED_LENGTH,
+            "0292", FileType.FIXED_LENGTH,
+            "0295", FileType.FIXED_LENGTH,
+            "0312", FileType.FIXED_LENGTH,
+            "0313", FileType.VARIABLE_LENGTH,
+            "0331", FileType.FIXED_LENGTH,
+            "2704", FileType.VARIABLE_LENGTH
         );
 
         // 遍历输入目录的文件
@@ -114,7 +114,7 @@ public class FileProcessorApp {
              BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
 
             // 写入 CSV 表头（根据需求设置）
-            writer.write("Field1,Field2,Field3,...");
+            writer.write("Field1,Field2,Field3,..."); // 可根据实际字段调整
             writer.newLine();
 
             // 逐行解析并写入
